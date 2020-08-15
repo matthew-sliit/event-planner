@@ -6,16 +6,17 @@ android:
   - build-tools-30.0.0
   
   # The SDK version used to compile your project
-  - android-21
+  - android-22
   - extra
   - tools
   - platform-tools
   
   # Emulator env
-  - sys-img-armeabi-v7a-android-21
+  - sys-img-armeabi-v7a-google_apis-22
 
 # Emulator Management: Create, Start and Wait
 before_script:
+  - android list targets # list pre-installed targets # <---- list all installed targets
   - echo no | android create avd --force -n test -t android-22 --abi armeabi-v7a
   - emulator -avd test -no-audio -no-window &
   - android-wait-for-emulator
