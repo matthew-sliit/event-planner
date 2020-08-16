@@ -11,16 +11,24 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         tools:node="replace">
-        <activity android:name=".EditCategoryActivity"></activity>
-        <activity android:name=".AppSettingsActivity" />
-        <activity android:name=".ListBudgetsActivity" />
-        <activity android:name=".MainActivityEmu">
+        <activity android:name=".EditVendor"/>
+
+        <activity android:name=".VendorView" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
+        <activity android:name=".AddVendor" />
+        <activity android:name=".EditPayment"/>
+
+        <activity android:name=".AddPayment" />
+        <activity android:name=".EditCategoryActivity" />
+        <activity android:name=".AppSettingsActivity" />
+        <activity android:name=".ListBudgetsActivity" />
+        <activity android:name=".MainActivityEmu" />
         <activity android:name=".GraphActivity" /> <!-- android:theme="@style/AppTheme"> -->
         <activity android:name=".AddBudgetActivity" />
     </application>

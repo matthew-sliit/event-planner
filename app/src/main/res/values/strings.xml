@@ -18,4 +18,16 @@
         <item>Beauty</item>
         <item>Decor</item>
     </string-array>
+
+    <string name="textView1">Details of Vendor</string>
+    <string name="textview2">Contact Details</string>
+    <string name="textView3">Payment Info</string>
+    <string name="textview4">Add Payment</string>
+    <string name="textview5">Edit Payment</string>
+    <string name="button1">SAVE AND EXIT</string>
+    <string name="button2">Clear</string>
+    <string name="dialog_message">Dialog</string>
+    <string name="dialog_title">Dialog title</string>
+    <string name="toolbar">Add Vendor</string>
+    <string name="title_activity_vendorview">Vendorview</string>
 </resources>
