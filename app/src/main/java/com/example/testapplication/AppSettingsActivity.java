@@ -11,7 +11,10 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -38,7 +41,7 @@ public class AppSettingsActivity extends AppCompatActivity {
             //Log.d("RELOAD","is_in_cat = " + is_in_cat);
         }
         //setup toolbar
-        Toolbar toolbar = (Toolbar) findViewById(R.id.aps_menu);
+        Toolbar toolbar = findViewById(R.id.aps_menu);
         setSupportActionBar(toolbar);
         if(has_title.equalsIgnoreCase("none")){
             Log.d("RELOAD","SETTING TITLE ");
@@ -80,9 +83,12 @@ public class AppSettingsActivity extends AppCompatActivity {
         });
         String[] option_names = {"Number Standard","Manage Category"};
         //contents after toolbar
+        FloatingActionButton addCategory = findViewById(R.id.set_addCat);
+        //addCategory.setVisibility(View.INVISIBLE);
         if(is_in_setting.equalsIgnoreCase("false")) {
             //when first launched
             //show listview
+            addCategory.setVisibility(View.INVISIBLE);
             generateSettingsList(pre_intent,option_names,"false","none");
         }else{
             //after clicking on a Setting Option
@@ -92,7 +98,18 @@ public class AppSettingsActivity extends AppCompatActivity {
                 Log.d("SETTINGS GEN","Loading Categories");
                 option_names = getResources().getStringArray(R.array.default_categories);
                 generateSettingsList(pre_intent, option_names,"true",edit);
+
+                addCategory.setVisibility(View.VISIBLE);
+                addCategory.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        //go to Add Category
+                    }
+                });
+
+
             }else {
+                addCategory.setVisibility(View.INVISIBLE);
                 option_names = getResources().getStringArray(R.array.default_categories);
                 if(edit.equalsIgnoreCase(option_names[Arrays.asList(option_names).indexOf(edit)])){
                     Intent k = new Intent(getApplicationContext(), EditCategoryActivity.class);
@@ -109,7 +126,7 @@ public class AppSettingsActivity extends AppCompatActivity {
         }
     }
     private void generateSettingsList(String previous_activity, String[] options, final String set_to_cat, final String title){
-        ListView list = (ListView)findViewById(R.id.listview);
+        ListView list = findViewById(R.id.listview);
         String[] option_names = options;
         List<String> option_list = new ArrayList<String>(Arrays.asList(option_names));
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,option_list);

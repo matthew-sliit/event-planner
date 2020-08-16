@@ -18,14 +18,23 @@ import android.widget.TextView;
 public class AddBudgetActivity extends AppCompatActivity{
     //MainActivity ma = new MainActivity();
     //Class cls = ma.getClass();
-
+    private String has_title="Add Budget", name="null",desc="null",amt="0.00",paid="0.00",balance="0.00";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_budget);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.abb_menu);
+        Bundle b = getIntent().getExtras();
+        if(b!=null){
+            has_title=b.getString("title","Add Budget");
+            name=b.getString("name","Enter name");
+            desc=b.getString("desc","null");
+            amt=b.getString("amount","0.00");
+            balance=b.getString("balance","0.00");
+        }
+        Toolbar toolbar = findViewById(R.id.abb_menu);
         setSupportActionBar(toolbar);
+        toolbar.setTitle(has_title);
         toolbar.setNavigationIcon(R.drawable.back_btn);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -35,7 +44,11 @@ public class AddBudgetActivity extends AppCompatActivity{
             }
         });
 
-        ((EditText) findViewById(R.id.amountInput)).setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        ((EditText)findViewById(R.id.nameInput)).setText(name, TextView.BufferType.EDITABLE);
+        ((EditText)findViewById(R.id.amountInput)).setText(amt, TextView.BufferType.EDITABLE);
+        ((TextView)findViewById(R.id.SelectedBudgetBalance)).setText(balance);
+
+        findViewById(R.id.amountInput).setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
                 if(!b){
@@ -45,7 +58,7 @@ public class AddBudgetActivity extends AppCompatActivity{
         });
 
         final String[] defaultCat = getResources().getStringArray(R.array.default_categories);
-        Spinner cat = (Spinner)findViewById(R.id.ab_cat); //spinner
+        Spinner cat = findViewById(R.id.ab_cat); //spinner
         ArrayAdapter<String> catAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,defaultCat);
         catAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         cat.setAdapter(catAdapter);
@@ -115,7 +128,7 @@ public class AddBudgetActivity extends AppCompatActivity{
     public void setBalance(){
         double amount = Double.parseDouble(((EditText) findViewById(R.id.amountInput)).getText().toString()); //input is always a number
         Log.d("AMOUNT","amount: " + amount);
-        ((TextView) findViewById(R.id.SelectedBudgetBalance)).setVisibility(View.VISIBLE);
+        findViewById(R.id.SelectedBudgetBalance).setVisibility(View.VISIBLE);
         ((TextView) findViewById(R.id.SelectedBudgetBalance)).setText("" + amount);
     }
 }
