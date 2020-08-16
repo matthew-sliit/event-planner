@@ -13,6 +13,9 @@ android:
   
   # Emulator env
   - sys-img-armeabi-v7a-android-22
+  #gradlew exec-perm 
+before_install:
+ - chmod +x gradlew
 
 # Emulator Management: Create, Start and Wait
 before_script:
