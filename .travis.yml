@@ -22,8 +22,7 @@ android:
   
 before_install:
  - chmod +x gradlew
- - echo yes | sdkmanager --licenses || exit 0
- - echo yes | sdkmanager --update || exit 0
+ - echo yes | sdkmanager --update
  - echo yes | sdkmanager "platforms;android-22"
  - echo yes | sdkmanager "platforms;android-30"
  - echo yes | sdkmanager "build-tools;30.0.0"
