@@ -18,4 +18,16 @@
         <item>Beauty</item>
         <item>Decor</item>
     </string-array>
+
+    <string name="dialog_message">Are you sure want to delete</string>
+    <string name="toolbar_eventplan">Event Planner</string>
+    <string name="toolbar_add_guest">Add Guests</string>
+    <string name="toolbar_edit_guest">Edit Guests</string>
+    <string name="toolbar_sum">Summary</string>
+    <string name="textView_guest">Guests Details</string>
+    <string name="textView_guest_contact">Contact Details</string>
+    <string name="textView_companion">No of Companions</string>
+    <string name="textView_taskguest">Tasks</string>
+    <string name="textView_guest_invi">Guests Invitations</string>
+    <string name="dialog_title">title</string>
 </resources>
