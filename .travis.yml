@@ -15,19 +15,17 @@ android:
   # Emulator env
   - sys-img-armeabi-v7a-android-22
   #gradlew exec-perm 
+  licenses:
+  - 'android-sdk-preview-license-52d11cd2'
+  - 'android-sdk-license-.+'
+  - 'google-gdk-license-.+'
+  
 before_install:
  - chmod +x gradlew
- - export ANDROID_HOME=~/android-sdk-linux
- - wget -q "https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip" -O android-sdk-tools.zip
- - unzip -q android-sdk-tools.zip -d ${ANDROID_HOME}
- - rm android-sdk-tools.zip
- - PATH=${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/platform-tools
- - mkdir -p ~/.android
- - touch ~/.android/repositories.cfg
- - echo yes | ./sdkmanager "platforms;android-22"
- - echo yes | ./sdkmanager "platforms;android-30"
- - echo yes | ./sdkmanager "build-tools;30.0.0"
- - echo yes | ./sdkmanager --licenses
+ - echo yes | sdkmanager --update
+ - echo yes | sdkmanager "platforms;android-22"
+ - echo yes | sdkmanager "platforms;android-30"
+ - echo yes | sdkmanager "build-tools;30.0.0"
 
 # Emulator Management: Create, Start and Wait
 before_script:
