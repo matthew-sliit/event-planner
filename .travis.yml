@@ -17,6 +17,13 @@ android:
   #gradlew exec-perm 
 before_install:
  - chmod +x gradlew
+ - export ANDROID_HOME=~/android-sdk-linux
+ - wget -q "https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip" -O android-sdk-tools.zip
+ - unzip -q android-sdk-tools.zip -d ${ANDROID_HOME}
+ - rm android-sdk-tools.zip
+ - PATH=${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/platform-tools
+ - mkdir -p ~/.android
+ - touch ~/.android/repositories.cfg
  - echo yes | ./sdkmanager "platforms;android-22"
  - echo yes | ./sdkmanager "platforms;android-30"
  - echo yes | ./sdkmanager "build-tools;30.0.0"
