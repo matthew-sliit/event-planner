@@ -15,12 +15,18 @@ android:
   # Emulator env
   - sys-img-armeabi-v7a-android-22
   #gradlew exec-perm 
+  licenses:
+  - 'android-sdk-preview-license-52d11cd2'
+  - 'android-sdk-license-.+'
+  - 'google-gdk-license-.+'
+  
 before_install:
  - chmod +x gradlew
+ - echo yes | sdkmanager --licenses || exit 0
+ - echo yes | sdkmanager --update || exit 0
  - echo yes | sdkmanager "platforms;android-22"
  - echo yes | sdkmanager "platforms;android-30"
  - echo yes | sdkmanager "build-tools;30.0.0"
- - echo yes | sdkmanager --licenses
 
 # Emulator Management: Create, Start and Wait
 before_script:
