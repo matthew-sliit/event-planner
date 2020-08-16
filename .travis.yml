@@ -17,10 +17,10 @@ android:
   #gradlew exec-perm 
 before_install:
  - chmod +x gradlew
- yes | ./sdkmanager "platforms;android-22"
- yes | ./sdkmanager "platforms;android-30"
- yes | ./sdkmanager "build-tools;30.0.0"
- yes | ./sdkmanager --licenses
+ - echo yes | ./sdkmanager "platforms;android-22"
+ - echo yes | ./sdkmanager "platforms;android-30"
+ - echo yes | ./sdkmanager "build-tools;30.0.0"
+ - echo yes | ./sdkmanager --licenses
 
 # Emulator Management: Create, Start and Wait
 before_script:
