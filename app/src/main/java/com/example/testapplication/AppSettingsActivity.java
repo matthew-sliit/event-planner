@@ -94,6 +94,9 @@ public class AppSettingsActivity extends AppCompatActivity {
             //after clicking on a Setting Option
             if(edit.equalsIgnoreCase(option_names[0])){
                 Log.d("SETTINGS GEN","Loading Number Standard");
+                Intent k = new Intent(getApplicationContext(), NumberStandardActivity.class);
+                startActivity(k);
+
             }else if(edit.equalsIgnoreCase(option_names[1])){
                 Log.d("SETTINGS GEN","Loading Categories");
                 option_names = getResources().getStringArray(R.array.default_categories);

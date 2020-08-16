@@ -29,7 +29,7 @@ public class ListBudgetsActivity extends AppCompatActivity {
             }
         });
         ((Button)findViewById(R.id.lb_btn)).setText("Julia");
-        ((TextView)findViewById(R.id.lb_desc)).setText("B:1000.00\nP:500.00");
+        ((TextView)findViewById(R.id.lb_desc)).setText("B:200000.00\nP:0.00");
         //((TextView)findViewById(R.id.lb_desc)).setVisibility(View.VISIBLE);
         ((TextView)findViewById(R.id.lb_desc)).setTextColor(getResources().getColor(R.color.black));
     }

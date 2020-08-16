@@ -11,6 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         tools:node="replace">
+        <activity android:name=".NumberStandardActivity"></activity>
         <activity android:name=".EditCategoryActivity" />
         <activity android:name=".AppSettingsActivity" />
         <activity android:name=".ListBudgetsActivity" />
