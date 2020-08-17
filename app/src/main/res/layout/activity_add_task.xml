@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".addTask">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="498dp"
+        android:layout_height="881dp"
+        android:foregroundTint="#231E1E"
+        tools:context=".MainActivity"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="-2dp">
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="156dp"
+            android:layout_height="53dp"
+            android:text="Description"
+            android:textColor="@color/colorPrimary"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.043"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.352" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="156dp"
+            android:layout_height="53dp"
+            android:text="Task status"
+            android:textColor="@color/colorPrimary"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.058"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.487" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="141dp"
+            android:layout_height="52dp"
+            android:text="Category"
+            android:textColor="@color/colorPrimary"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.056"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.246" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="82dp"
+            android:layout_height="57dp"
+            android:text="Name"
+            android:textColor="@color/design_default_color_primary"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.038"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.128" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/textInputEditText"
+            android:layout_width="348dp"
+            android:layout_height="42dp"
+            android:hint="Enter name of the task"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.286"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.193" />
+
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="242dp"
+            android:layout_height="78dp"
+            android:spinnerMode="dialog"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.164"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.286" />
+
+        <EditText
+            android:id="@+id/editTextDate"
+            android:layout_width="311dp"
+            android:layout_height="70dp"
+            android:ems="10"
+            android:inputType="date"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.224"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.697" />
+
+        <ToggleButton
+            android:id="@+id/toggleButton2"
+            android:layout_width="150dp"
+            android:layout_height="70dp"
+            android:backgroundTint="#BC25237E"
+            android:buttonTint="#3F51B5"
+            android:text="ToggleButton"
+            android:textColor="#FDFDFD"
+            android:textColorLink="#3F51B5"
+            android:textOff="Pending"
+            android:textOn="Completed"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.123"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.577" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="231dp"
+            android:layout_height="56dp"
+            android:text="Date"
+            android:textColor="@color/colorPrimary"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.059"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.663" />
+
+        <Button
+            android:id="@+id/button4"
+            android:layout_width="175dp"
+            android:layout_height="64dp"
+            android:backgroundTint="#3F91B6"
+            android:text="Save"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.643"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.8" />
+
+        <EditText
+            android:id="@+id/editTextTextMultiLine"
+            android:layout_width="367dp"
+            android:layout_height="61dp"
+            android:layout_marginEnd="11dp"
+            android:ems="10"
+            android:gravity="start|top"
+            android:inputType="textMultiLine"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.291"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.398" />
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="507dp"
+            android:layout_height="90dp"
+            android:background="#9C27B0"
+            android:minHeight="@android:dimen/thumbnail_width"
+            android:theme="?attr/actionBarTheme"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:navigationIcon="@drawable/abc_vector_test"
+            app:title="Add Task"
+            app:titleMargin="20dp"
+            app:titleTextColor="#FFFFFF" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
