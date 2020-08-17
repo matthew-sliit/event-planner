@@ -23,7 +23,7 @@ public class MainActivityEmu extends AppCompatActivity {
         setContentView(R.layout.activity_home_emu);
 
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.menu2);
+        Toolbar toolbar = findViewById(R.id.menu2);
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.menu_foreground);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -54,7 +54,6 @@ public class MainActivityEmu extends AppCompatActivity {
         if(item.getItemId()==R.id.action_settings){
             //About us page
         }
-
          */
         return super.onOptionsItemSelected(item);
     }
@@ -64,6 +63,5 @@ public class MainActivityEmu extends AppCompatActivity {
             Intent i = new Intent(getApplicationContext(),GraphActivity.class);
             startActivity(i);
         }
-
     }
 }
