@@ -18,7 +18,7 @@ public class ListBudgetsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_budgets);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.abb_menu);
+        Toolbar toolbar = findViewById(R.id.abb_menu);
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.back_btn);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -28,15 +28,25 @@ public class ListBudgetsActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
-
         ((Button)findViewById(R.id.lb_btn)).setText("Julia");
-        ((TextView)findViewById(R.id.lb_desc)).setText("B:1000.00\nP:500.00");
+        ((TextView)findViewById(R.id.lb_desc)).setText("B:200000.00\nP:0.00");
         //((TextView)findViewById(R.id.lb_desc)).setVisibility(View.VISIBLE);
         ((TextView)findViewById(R.id.lb_desc)).setTextColor(getResources().getColor(R.color.black));
     }
     public void handleOnClick(View v){
         if(v.getId()==R.id.lb_add_budget){
             Intent i = new Intent(getApplicationContext(),AddBudgetActivity.class);
+            startActivity(i);
+        }
+        if(v.getId()==R.id.lb_btn){
+            Intent i = new Intent(getApplicationContext(),AddBudgetActivity.class);
+            Bundle b = new Bundle();
+            b.putString("title","Edit Budget");
+            b.putString("name","Julia");
+            b.putString("amount","200000.00");
+            b.putString("balance","200000.00");
+            b.putString("paid","0.00");
+            i.putExtras(b);
             startActivity(i);
         }
     }

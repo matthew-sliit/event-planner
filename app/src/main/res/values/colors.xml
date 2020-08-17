@@ -6,4 +6,7 @@
     <color name="red">#ffff0000</color>
     <color name="green">#B200AE07</color>
     <color name="black">#000000</color>
+    <color name="medium_seaGreen">#3CB371</color>
+    <color name="yellow_green">#9ACD32</color>
+
 </resources>
