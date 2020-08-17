@@ -11,7 +11,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         tools:node="replace">
-        <activity android:name=".NumberStandardActivity"></activity>
+
+        <activity android:name=".ViewGuest"/>
+        <activity android:name=".Summary"/>
+        <activity android:name=".homepg"/>
+        <activity android:name=".EditGuest"/>
+        <activity android:name=".AddGuest"/>
+
+        <activity android:name=".NumberStandardActivity"/>
+
         <activity android:name=".EditCategoryActivity" />
         <activity android:name=".AppSettingsActivity" />
         <activity android:name=".ListBudgetsActivity" />
