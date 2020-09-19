@@ -73,6 +73,7 @@ public class AddBudgetActivity extends AppCompatActivity{
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId()==R.id.action_settings){
             //Settings btn
+            Log.d("ADD_BUDGET>>","Navigating to AppSettingsActivity!");
             Intent i = new Intent(getApplicationContext(),AppSettingsActivity.class);
             startActivity(i);
         }
