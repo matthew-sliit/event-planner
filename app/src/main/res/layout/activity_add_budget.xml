@@ -41,7 +41,7 @@
         android:text="Name"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/abud_cat"
-        app:layout_constraintStart_toStartOf="@+id/nameInput"
+        app:layout_constraintStart_toStartOf="@+id/editTxt_bud_name"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -65,7 +65,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/nameInput"
+        android:id="@+id/editTxt_bud_name"
         android:layout_width="0dp"
         android:layout_height="46dp"
         android:layout_marginStart="11dp"
@@ -92,7 +92,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/abud_amount"
         app:layout_constraintEnd_toStartOf="@+id/adbud_catp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nameInput" />
+        app:layout_constraintTop_toBottomOf="@+id/editTxt_bud_name" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/adbud_catp"
@@ -103,7 +103,7 @@
         android:clickable="true"
         app:backgroundTint="@color/menu_background"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nameInput"
+        app:layout_constraintTop_toBottomOf="@+id/editTxt_bud_name"
         app:srcCompat="@android:drawable/ic_input_add"
         android:onClick="handleClick"/>
 
@@ -208,12 +208,24 @@
         android:id="@+id/saveBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="19dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="28dp"
         android:onClick="handleClick"
         android:text="Save"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.907"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btn_adbud_del"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="28dp"
+        android:text="@string/delete"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.606"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

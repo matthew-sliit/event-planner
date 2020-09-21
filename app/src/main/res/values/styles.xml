@@ -12,5 +12,34 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
-
+    <style name="ImageViewNoDataCommon">
+        <item name="android:tint">@color/colorRipple</item>
+    </style>
+    <style name="TextViewTitleCommon">
+        <item name="android:textSize">16dp</item>
+        <item name="android:textColor">@color/textColorBold</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:layout_gravity">left|center_horizontal|clip_horizontal</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:fontFamily">@font/semibold</item>
+    </style>
+    <style name="TextViewDescCommon">
+        <item name="android:textSize">14dp</item>
+        <item name="android:textColor">@color/textColorRegular</item>
+        <item name="android:layout_gravity">left|center_horizontal|clip_horizontal</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/regular</item>
+    </style>
+    <style name="FloatingActionButtonCommon">
+        <item name="android:layout_gravity">top|left|right|center_vertical|center_horizontal|fill_horizontal|center</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">16dp</item>
+        <item name="android:src">@drawable/add_fab</item>
+        <item name="elevation">4dp</item>
+        <item name="fabSize">@null</item>
+    </style>
 </resources>

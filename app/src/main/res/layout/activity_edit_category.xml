@@ -42,18 +42,28 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="128dp"
+        android:onClick="handleClick"
         android:text="@string/save"
         app:layout_constraintStart_toEndOf="@+id/cate_del"
-        app:layout_constraintTop_toBottomOf="@+id/cate_name"
-        android:onClick="handleClick"/>
+        app:layout_constraintTop_toBottomOf="@+id/cate_name" />
 
     <Button
         android:id="@+id/cate_del"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="100dp"
+        android:onClick="handleClick"
         android:text="@string/delete"
         app:layout_constraintBaseline_toBaselineOf="@+id/cate_save"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/editcat_er_msg"
+        android:layout_width="351dp"
+        android:layout_height="25dp"
+        android:text=" "
+        app:layout_constraintBottom_toTopOf="@+id/cate_save"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:onClick="handleClick"/>
+        app:layout_constraintTop_toTopOf="@+id/cate_name" />
 </androidx.constraintlayout.widget.ConstraintLayout>

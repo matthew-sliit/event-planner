@@ -16,7 +16,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivityEmu extends AppCompatActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +46,7 @@ public class MainActivityEmu extends AppCompatActivity {
         if(item.getItemId()==R.id.action_settings){
             //Settings btn
             Log.d("BUTTON","Action Settings Pressed!");
+            //route.addNewRoute(this,new AppSettingsActivity(),null);
             Intent i = new Intent(getApplicationContext(),AppSettingsActivity.class);
             startActivity(i);
         }

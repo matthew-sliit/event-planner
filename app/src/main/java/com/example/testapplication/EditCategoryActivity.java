@@ -5,13 +5,19 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.testapplication.db.DBHandler;
 import com.example.testapplication.db.category.Category;
@@ -21,6 +27,7 @@ import org.w3c.dom.Text;
 
 public class EditCategoryActivity extends AppCompatActivity {
     private String pre_intent = "settingCAT", is_in_setting = "true",edit = "none", is_in_cat = "true", has_title = "none";
+    private int id = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,11 +41,12 @@ public class EditCategoryActivity extends AppCompatActivity {
             edit = b.getString("cat_edit","none");
             is_in_cat = b.getString("set_to_cat","true");
             has_title = b.getString("title","none");
+            id = b.getInt("id");
             Log.d("RELOAD","previous activity = " + pre_intent);
             Log.d("RELOAD","is_in_setting = " + is_in_setting);
             Log.d("RELOAD","is_in_cat = " + is_in_cat);
         }
-
+        ((TextView)findViewById(R.id.editcat_er_msg)).setTextColor(Color.parseColor("#FFFFFF"));
         Toolbar toolbar = (Toolbar) findViewById(R.id.editcat_menu);
         setSupportActionBar(toolbar);
         if(!has_title.equalsIgnoreCase("none")){
@@ -53,12 +61,17 @@ public class EditCategoryActivity extends AppCompatActivity {
                 b.putString("is_in_setting",is_in_setting);
                 b.putString("edit","Manage Category");
                 b.putString("set_to_cat","true");
-                b.putString("title","Manage Category");
+
+                Log.d("EditCatAct>>","getting id as " + id);
                 Intent j;
-                if(pre_intent.equalsIgnoreCase("addBudget")){
+                if(pre_intent.equalsIgnoreCase("add budget") || pre_intent.equalsIgnoreCase("edit budget")){
                     j = new Intent(getApplicationContext(), AddBudgetActivity.class);
+                    b.putString("title",pre_intent);
+                    b.putInt("id",id);
+                    Log.d("EditCatAct>>","putting id as " + id);
                 }else {
                     j = new Intent(getApplicationContext(), AppSettingsActivity.class);
+                    b.putString("title","Manage Category");
                 }
                 j.putExtras(b);
                 startActivity(j);
@@ -67,6 +80,43 @@ public class EditCategoryActivity extends AppCompatActivity {
         final TextView text = (TextView)findViewById(R.id.cate_name);
         text.setText(edit);
         final Context context = this; //context set
+        //for text box
+        ((EditText)findViewById(R.id.cate_name)).addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                Log.d("EditCategoryAct","EditText Before TextChanged!");
+                ((TextView)findViewById(R.id.editcat_er_msg)).setTextColor(Color.parseColor("#FFFFFF"));
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                Log.d("EditCategoryAct","EditText onTextChanged!");
+                ICategory category = new Category(context);//initiate
+                TextView inputCategory = (TextView) findViewById(R.id.cate_name);
+                if (category.hasCategory(inputCategory.getText().toString())) {
+                    ((TextView) findViewById(R.id.editcat_er_msg)).setText(R.string.category_error_txt);
+                    ((TextView) findViewById(R.id.editcat_er_msg)).setTextColor(Color.parseColor("#FF0000"));
+                }else{
+                    ((TextView)findViewById(R.id.editcat_er_msg)).setTextColor(Color.parseColor("#FFFFFF"));
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                Log.d("EditCategoryAct","EditText After TextChanged!");
+            }
+        });
+        /*
+        if (!b){
+                    Log.d("EditCategoryAct","EditText OnBlur!");
+                    if (category.hasCategory(inputCategory.getText().toString())) {
+                        ((TextView) findViewById(R.id.editcat_er_msg)).setText(R.string.category_error_txt);
+                        ((TextView) findViewById(R.id.editcat_er_msg)).setTextColor(Color.parseColor("#FF0000"));
+                    }else{
+                        ((TextView)findViewById(R.id.editcat_er_msg)).setTextColor(Color.parseColor("#FFFFFF"));
+                    }
+                }
+         */
         //save btn
         (findViewById(R.id.cate_save)).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,15 +124,23 @@ public class EditCategoryActivity extends AppCompatActivity {
                 ICategory category = new Category(context);//initiate
                 Log.d("BUTTON","Saving Category!");
                 TextView inputCategory = (TextView) findViewById(R.id.cate_name);
-                if(category.hasCategory(edit)){
+                if (category.hasCategory(edit)) {
+                    Log.d("EditCategoryAct", "Value Exists");
                     //value exists, proceed to update
-                    if(!inputCategory.getText().toString().equals(edit)){
+                    if (!inputCategory.getText().toString().equals(edit)) {
                         //value changed
-                        category.updateCategory(edit,inputCategory.getText().toString()); //update
+                        category.updateCategory(edit, inputCategory.getText().toString()); //update
                     }
-                }else {
-                    //new value
-                    String s = category.addCategory(inputCategory.getText().toString()); //save new
+                } else {
+
+                    //new value, check if there's already a value
+                    if (!category.hasCategory(inputCategory.getText().toString())) {
+                        //new value
+                        String s = category.addCategory(inputCategory.getText().toString()); //save new
+                    } else {
+                        ((TextView) findViewById(R.id.editcat_er_msg)).setText(R.string.category_error_txt);
+                        ((TextView) findViewById(R.id.editcat_er_msg)).setTextColor(Color.parseColor("#FF0000"));
+                    }
                 }
                 Bundle b = new Bundle();
                 b.putString("pre_activity",pre_intent);

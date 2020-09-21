@@ -14,8 +14,9 @@
     <string name="save">Save</string>
     <string name="delete">Delete</string>
     <string name="budget_name">Budget Name</string>
-    <string name="graph">Graph</string>
-    <string name="list">List</string>
+    <string name="graph">View Graph</string>
+    <string name="list">View List</string>
+    <string name="category_error_txt">A Category with the same name already exists!</string>
     <string name="graph_summary">Total Budget:\nTotal Paid:\nPayments Pending:\nCurrent Balance:</string>
     <string-array name="default_categories">
         <item>Ceremony</item>

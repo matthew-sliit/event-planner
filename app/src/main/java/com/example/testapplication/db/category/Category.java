@@ -12,12 +12,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Category implements ICategory {
-
+    public static final boolean debugger_mode = false;
     private static class CategoryTable{
         public static final String TABLE_NAME = "CATEGORIES";
         public static final String COL_NAME_CAT = "CATEGORY_NAME";
         public String getTableCreator(){
-            return "CREATE TABLE " + TABLE_NAME + " (" +
+            return "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (" +
                     "id" + " INTEGER PRIMARY KEY, " +
                     COL_NAME_CAT + " TEXT)";
         }
@@ -34,20 +34,20 @@ public class Category implements ICategory {
     }
     @Override
     public String addCategory(String name) {
-        Log.d("CATEGORY>>","Adding Category -> " + name);
+        debug("Adding Category -> " + name);
         ContentValues values =new ContentValues();
         values.put(CategoryTable.COL_NAME_CAT,name);
         db.insert(values, CategoryTable.TABLE_NAME);
         return null;
     }
     public List getAllCategory(){
-        Log.d("CATEGORY>>","Getting all Categories!");
+        debug("Getting all Categories!");
         Cursor c = db.readAllIgnoreArgs(ct.getCols(), CategoryTable.TABLE_NAME);
         List<String> cats = new ArrayList<>();
         while(c.moveToNext()){
             String cat = c.getString(c.getColumnIndexOrThrow(CategoryTable.COL_NAME_CAT));
             cats.add(cat);
-            Log.d("CATEGORY>>","Reading -> " + cat);
+            debug("Reading -> " + cat);
         }
         return cats;
     }
@@ -73,6 +73,11 @@ public class Category implements ICategory {
             }
         }
         return false;
+    }
+    private void debug(String msg){
+        if(debugger_mode) {
+            Log.d("Category>>", msg);
+        }
     }
 
 }
