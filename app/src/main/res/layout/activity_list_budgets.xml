@@ -78,6 +78,7 @@
         android:id="@+id/btn_lb_graph"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="handleOnClick"
         android:text="@string/graph"
         app:layout_constraintBaseline_toBaselineOf="@+id/button2"
         app:layout_constraintStart_toStartOf="parent" />

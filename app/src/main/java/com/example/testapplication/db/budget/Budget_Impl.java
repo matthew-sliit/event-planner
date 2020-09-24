@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.util.Log;
 
 import com.example.testapplication.db.DBHandler;
-import com.example.testapplication.db.category.Category;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,6 +79,7 @@ public class Budget_Impl implements Ibudget {
         this.id = id;
     }
     //Class variables
+    public int eid = 0;
     public int id = 0;
     public String name = null;
     public String cat = null;
@@ -132,6 +132,38 @@ public class Budget_Impl implements Ibudget {
                 Log.d("amt -> ",ib.amt);
                 Log.d("desc -> ",ib.desc);*/
                 b.add(ib);
+            }
+            return b;
+        }catch (NullPointerException np){
+            Log.d("Budget_Impl>>","NPE " + np.getMessage());
+            return null;
+        }
+    }
+
+    //get list using category
+    @Override
+    public List<Budget_Impl> getBudgetListByCategory(String category) {
+        String[] cols = {"id",table.NAME,table.CATEGORY,table.AMOUNT,table.DESC};
+        try {
+            Cursor c = db.readAllIgnoreArgs(cols, table.tableName);
+            List<Budget_Impl> b = new ArrayList<>();
+            Budget_Impl ib;
+            while(c.moveToNext()){
+                ib = new Budget_Impl(this.c);
+                ib.id = c.getInt(c.getColumnIndexOrThrow("id"));//int
+                ib.name = c.getString(c.getColumnIndexOrThrow("Name"));
+                ib.cat = c.getString(c.getColumnIndexOrThrow("Category"));
+                ib.amt = c.getString(c.getColumnIndexOrThrow("Amount"));
+                ib.desc = c.getString(c.getColumnIndexOrThrow("Desc"));
+                if(ib.cat.equalsIgnoreCase(category)){
+                    b.add(ib);
+                }
+                /*Log.d("Budget_Impl>>","================ Printing Read Values ================");
+                Log.d("id -> ",""+ib.id);
+                Log.d("name -> ",ib.name);
+                Log.d("cat -> ",ib.cat);
+                Log.d("amt -> ",ib.amt);
+                Log.d("desc -> ",ib.desc);*/
             }
             return b;
         }catch (NullPointerException np){

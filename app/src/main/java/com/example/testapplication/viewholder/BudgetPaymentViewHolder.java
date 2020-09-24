@@ -1,22 +1,19 @@
 package com.example.testapplication.viewholder;
 
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.testapplication.AddBudgetActivity;
 import com.example.testapplication.R;
-import com.example.testapplication.db.budget.Budget_Impl;
 import com.example.testapplication.db.budget.Budget_payments;
 
 public class BudgetPaymentViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
     private TextView bp_name, bp_date, bp_amt; //from layout
+    public ImageButton btn_paid, btn_delete;
     /*
      * ================== ViewHolder constructor ========================
      * @param itemView
@@ -29,6 +26,9 @@ public class BudgetPaymentViewHolder extends RecyclerView.ViewHolder implements 
         bp_name = (TextView) itemView.findViewById(R.id.sc_pay_name);
         bp_date = (TextView) itemView.findViewById(R.id.sc_pay_belowName);
         bp_amt = (TextView) itemView.findViewById(R.id.sc_pay_rightTop);
+        btn_paid = (ImageButton)itemView.findViewById(R.id.sc_image_btn_paid);
+        btn_delete = (ImageButton)itemView.findViewById(R.id.sc_image_btn_del);
+        itemView.setOnClickListener(this);
     }
     public Context currentAct;//passed from ActivityClass through Adapter
     public Budget_payments pay_model; //instance var
@@ -62,8 +62,9 @@ public class BudgetPaymentViewHolder extends RecyclerView.ViewHolder implements 
     public void onClick(View view) {
 
         Log.d("BudgetPayment>>","AddPayment Activity Required to continue!");
+
         /*
-        Intent i = new Intent(view.getContext(), AddBudgetActivity.class);
+        Intent i = new Intent(view.getContext(), EditPaymentActivity.class);
         Bundle b = new Bundle();
         //pass eventid, budgetid and payid
         b.putInt("eid",pay_model.event_id);

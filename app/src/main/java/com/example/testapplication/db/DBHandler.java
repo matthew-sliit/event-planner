@@ -71,6 +71,7 @@ public class DBHandler extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
     }
+
     public void insert(ContentValues values, String tableName){
         debug("Inserting into " + tableName);
         SQLiteDatabase db = this.getWritableDatabase();
@@ -80,6 +81,12 @@ public class DBHandler extends SQLiteOpenHelper {
         debug("Reading from " + tableName);
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.query(tableName,columns,null,null,null,null, null);
+        return cursor;
+    }
+    public Cursor readAllWitSelection(String[] columns, String tableName, String selection){
+        debug("Reading from " + tableName);
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.query(tableName,columns,selection,null,null,null, null);
         return cursor;
     }
     public Cursor readWithWhere(String[] columns, String tableName,String selectColumn, String whereColumnValue){
@@ -105,6 +112,11 @@ public class DBHandler extends SQLiteOpenHelper {
         String selectRecordUsingColumn = columnName + " LIKE ?";
         String[] record_id = {id};
         return db.update(tableName,cv,selectRecordUsingColumn,record_id);
+    }
+    public int update(ContentValues cv, String selection, String tableName){
+        debug("Updating " + tableName + " selection -> " + selection);
+        SQLiteDatabase db = getReadableDatabase();
+        return db.update(tableName,cv,selection,null);
     }
     private void debug(String msg){
         if(debugger_mode) {

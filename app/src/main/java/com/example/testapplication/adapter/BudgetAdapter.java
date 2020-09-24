@@ -68,8 +68,16 @@ public class BudgetAdapter extends RecyclerView.Adapter{
      *         The position in our collection of data
      */
     @Override
-    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
         ((BudgetViewHolder) holder).bindData(models.get(position)); //bind each obj from model
+        ((BudgetViewHolder) holder).btn_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                models.get(position).removeBudget(models.get(position).id);
+                models.remove(models.get(position));//remove from list
+                notifyItemRemoved(position);//notify adapter
+            }
+        });
     }
 
     /**

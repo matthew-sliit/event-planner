@@ -22,6 +22,12 @@ public class BudgetPaymentAdapter extends RecyclerView.Adapter {
     private List<Budget_payments> models = new ArrayList<Budget_payments>();
     /**
      * ================== Adapter constructor ========================
+     * @param eid
+     * Event id
+     * @param bid
+     * Budget id
+     * @param currentAct
+     * Activity context
      */
     private Context context;
     public BudgetPaymentAdapter(Context currentAct, int eid, int bid) {
@@ -73,11 +79,23 @@ public class BudgetPaymentAdapter extends RecyclerView.Adapter {
      * @param holder
      *         The ViewHolder
      * @param position
-     *         The position in our collection of data
+     *         The position in collection of data
      */
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
         ((BudgetPaymentViewHolder) holder).bindData(models.get(position)); //bind each obj from model
+        ((BudgetPaymentViewHolder) holder).btn_paid.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //payment tick
+            }
+        });
+        ((BudgetPaymentViewHolder) holder).btn_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //payment delete
+            }
+        });
     }
 
     /**

@@ -5,6 +5,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.util.Log;
 import android.os.Bundle;
 import android.view.Menu;
@@ -12,8 +13,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -22,7 +23,7 @@ import com.example.testapplication.db.budget.Ibudget;
 import com.example.testapplication.db.category.Category;
 import com.example.testapplication.db.category.ICategory;
 
-public class AddBudgetActivity extends AppCompatActivity{
+public class AddEditBudgetActivity extends AppCompatActivity{
     //MainActivity ma = new MainActivity();
     //Class cls = ma.getClass();
     private String has_title="Add Budget", name="null",desc="null",amt="0.00",paid="0.00",balance="0.00",category=null;
@@ -70,10 +71,14 @@ public class AddBudgetActivity extends AppCompatActivity{
         public String bDesc = "";
         public void loadValuesFromLayout(){
             this.bName = ((EditText)findViewById(R.id.editTxt_bud_name)).getText().toString();
-            String amt = ((EditText)findViewById(R.id.amountInput)).getText().toString();
-            this.bAmt = Double.parseDouble(amt); //input is always a number
-            this.bCat = ((Spinner)findViewById(R.id.ab_cat)).getSelectedItem().toString();
-            this.bDesc = ((EditText)findViewById(R.id.descInput)).getText().toString();
+            String amt = ((EditText)findViewById(R.id.editTxt_bud_amt)).getText().toString();
+            try {
+                this.bAmt = Double.parseDouble(amt); //input is always a number
+            }catch (NumberFormatException e){
+                this.bAmt = 0.00;
+            }
+            this.bCat = ((Spinner)findViewById(R.id.ab_cat_spin)).getSelectedItem().toString();
+            this.bDesc = ((EditText)findViewById(R.id.editTxt_bud_desc)).getText().toString();
         }
         public void setValuesToLayout(){
 
@@ -82,16 +87,18 @@ public class AddBudgetActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_budget);
+        setContentView(R.layout.activity_add_edit_budget);
         final Context context = this;
         Bundle b = getIntent().getExtras();
         if(b!=null){
             has_title=b.getString("title","Add Budget");
+            /*
             name=b.getString("name","Enter name");
             desc=b.getString("desc","Enter description");
             amt=b.getString("amount","0.00");
             category = b.getString("cat",null);
             balance=b.getString("balance","0.00");
+             */
             id = b.getInt("id");
             Log.d("AddBudgetAct>>","id -> " + id);
             if(has_title.equalsIgnoreCase("edit budget")){
@@ -123,12 +130,22 @@ public class AddBudgetActivity extends AppCompatActivity{
                 startActivity(i);
             }
         });
+        Log.d("AddEditBAct>>","name -> " + name);
 
-        ((EditText)findViewById(R.id.editTxt_bud_name)).setText(name, TextView.BufferType.EDITABLE);
-        ((EditText)findViewById(R.id.amountInput)).setText(amt, TextView.BufferType.EDITABLE);
-        ((TextView)findViewById(R.id.SelectedBudgetBalance)).setText(balance);
+        if(!name.equalsIgnoreCase("enter name") && !(name.equalsIgnoreCase("null")) && !TextUtils.isEmpty(name)) {
+            Log.d("AddEditBAct>>","Setting values to EditText!");
+            ((EditText) findViewById(R.id.editTxt_bud_name)).setText(name, TextView.BufferType.EDITABLE);
+            ((EditText) findViewById(R.id.editTxt_bud_amt)).setText(amt, TextView.BufferType.EDITABLE);
+            ((TextView) findViewById(R.id.textView_bud_balance)).setText(balance);
+        }else{
+            ((EditText) findViewById(R.id.editTxt_bud_name)).setText("");
+            ((EditText) findViewById(R.id.editTxt_bud_name)).setHint(R.string.hint_name);
+            ((EditText) findViewById(R.id.editTxt_bud_desc)).setText("");
+            ((EditText) findViewById(R.id.editTxt_bud_desc)).setHint(R.string.hint_description);
+            ((TextView) findViewById(R.id.textView_bud_balance)).setText("0.00");
+        }
 
-        findViewById(R.id.amountInput).setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        findViewById(R.id.editTxt_bud_amt).setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
                 if(!b){
@@ -152,7 +169,7 @@ public class AddBudgetActivity extends AppCompatActivity{
             }
         }
         final String[] defaultCat = defaultOrder;
-        Spinner cat = findViewById(R.id.ab_cat); //spinner
+        Spinner cat = findViewById(R.id.ab_cat_spin); //spinner
         ArrayAdapter<String> catAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,defaultCat);
         catAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         cat.setAdapter(catAdapter);
@@ -161,14 +178,14 @@ public class AddBudgetActivity extends AppCompatActivity{
         }
 
         if(desc != null){
-            ((EditText)findViewById(R.id.descInput)).setText(desc);
+            ((EditText)findViewById(R.id.editTxt_bud_desc)).setText(desc);
         }
         if(has_title.equals("Add Budget")){
-            ((Button)findViewById(R.id.btn_adbud_del)).setVisibility(View.INVISIBLE);
+            ((ImageButton)findViewById(R.id.btn_adbud_del)).setVisibility(View.INVISIBLE);
         }else{
             //if title is Edit Budget
-            ((Button)findViewById(R.id.btn_adbud_del)).setVisibility(View.VISIBLE);
-            ((Button)findViewById(R.id.btn_adbud_del)).setOnClickListener(new View.OnClickListener() {
+            ((ImageButton)findViewById(R.id.btn_adbud_del)).setVisibility(View.VISIBLE);
+            ((ImageButton)findViewById(R.id.btn_adbud_del)).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Ibudget budget = new Budget_Impl(context);
@@ -209,10 +226,10 @@ public class AddBudgetActivity extends AppCompatActivity{
     public void handleClick(View v){
         Ibudget budget = new Budget_Impl(this);
         BudgetLayoutClass budgetlayout = new BudgetLayoutClass();
-        if(v.getId() == R.id.addBBtn){
+        if(v.getId() == R.id.btn_add_budpay){
             Log.d("BUTTON","AddPayment Button Pressed!");
         }
-        if(v.getId() == R.id.saveBtn){
+        if(v.getId() == R.id.btn_adbud_save){
             Log.d("BUTTON","Save Button Pressed!");
             budgetlayout.loadValuesFromLayout();
             if(has_title.equals("Add Budget")) {
@@ -254,16 +271,22 @@ public class AddBudgetActivity extends AppCompatActivity{
     public void logInputs(){
         String name = ((EditText) findViewById(R.id.editTxt_bud_name)).getText().toString();
         Log.d("NAME","name: " + name);
-        String desc = ((EditText) findViewById(R.id.descInput)).getText().toString();
+        String desc = ((EditText) findViewById(R.id.editTxt_bud_desc)).getText().toString();
         Log.d("DESC","desc: " + desc);
 
         //((TextView) findViewById(R.id.SelectedBudgetBalance)).setVisibility(View.VISIBLE);
         //((TextView) findViewById(R.id.SelectedBudgetBalance)).setText("" + amount);
     }
     public void setBalance(){
-        double amount = Double.parseDouble(((EditText) findViewById(R.id.amountInput)).getText().toString()); //input is always a number
+        double amount = 0.00;
+        try {
+            String data = ((EditText) findViewById(R.id.editTxt_bud_amt)).getText().toString();
+            amount = Double.parseDouble(data); //input is always a number
+        }catch (NumberFormatException e){
+            amount = 0.00;
+        }
         Log.d("AMOUNT","amount: " + amount);
-        findViewById(R.id.SelectedBudgetBalance).setVisibility(View.VISIBLE);
-        ((TextView) findViewById(R.id.SelectedBudgetBalance)).setText("" + amount);
+        findViewById(R.id.editTxt_bud_desc).setVisibility(View.VISIBLE);
+        ((TextView) findViewById(R.id.textView_bud_balance)).setText("" + amount);
     }
 }

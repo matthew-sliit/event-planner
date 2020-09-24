@@ -67,6 +67,7 @@
         android:text="@string/best_format_question"
         android:textColor="#1E1919"
         android:textSize="18sp"
+        android:padding="5sp"
         app:layout_constraintBottom_toTopOf="@+id/set_eur"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

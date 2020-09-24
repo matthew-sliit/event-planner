@@ -44,23 +44,34 @@
         android:textSize="18sp" />
 
     <LinearLayout
-        android:layout_width="55dp"
+        android:layout_width="145dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/sc_pay_belowName"
         android:layout_alignParentRight="true"
         android:layout_marginTop="-21dp"
-        android:layout_marginRight="5dp"
+        android:layout_marginRight="7dp"
         android:gravity="right"
         android:orientation="horizontal">
 
         <ImageButton
-            android:id="@+id/image_btn_delete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/sc_image_btn_delete"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
             android:layout_gravity="right"
             android:background="@null"
             android:padding="3dp"
             android:src="@android:drawable/ic_delete" />
+
+        <ImageButton
+            android:id="@+id/sc_image_btn_paid"
+            android:layout_width="49dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="8dp"
+            android:layout_gravity="left"
+            android:background="@null"
+            android:padding="3dp"
+
+            android:src="@drawable/ic_checked" />
 
     </LinearLayout>
 </RelativeLayout>

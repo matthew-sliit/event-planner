@@ -28,7 +28,8 @@ public class Category implements ICategory {
     }
     private DBHandler db;
     private static CategoryTable ct = new CategoryTable();
-
+    public int id = 0;
+    public int eid = 0;
     public Category(Context context){
         db = new DBHandler(context, ct.getTableCreator());
     }

@@ -7,83 +7,132 @@
     tools:context=".GraphActivity">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/gmenu"
-        android:layout_width="413dp"
-        android:layout_height="61dp"
+        android:id="@+id/menu_bud"
+        android:layout_width="411dp"
+        android:layout_height="wrap_content"
 
-        android:layout_marginBottom="25dp"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
-        app:layout_constraintBottom_toTopOf="@+id/graphBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:title="@string/budget_role" />
 
+    <Button
+        android:id="@+id/btn_lb_list"
+        android:layout_width="411dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:onClick="handleClick"
+        android:text="@string/list"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/menu_bud" />
+
+    <ImageView
+        android:id="@+id/hr_ignore"
+        android:layout_width="388dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/black"
+        android:scaleType="fitXY"
+        android:src="@android:drawable/divider_horizontal_dark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/barchart" />
+
     <com.github.mikephil.charting.charts.HorizontalBarChart
         android:id="@+id/barchart"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="43dp"
-        android:layout_marginEnd="43dp"
-        android:layout_marginBottom="22dp"
-        app:layout_constraintBottom_toTopOf="@+id/addBBtn"
+        android:layout_width="375dp"
+        android:layout_height="381dp"
+        android:layout_marginTop="18dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/graphBtn" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_lb_list" />
 
-    <Button
-        android:id="@+id/graphBtn"
-        android:layout_width="83dp"
-        android:layout_height="42dp"
-        android:layout_marginStart="61dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="58dp"
-        android:onClick="handleClick"
-        android:state_pressed="true"
-        android:text="Graph"
-        android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/barchart"
-        app:layout_constraintEnd_toStartOf="@+id/listBtn"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/gmenu" />
-
-    <Button
-        android:id="@+id/listBtn"
-        android:layout_width="0dp"
-        android:layout_height="39dp"
-        android:layout_marginEnd="182dp"
-        android:onClick="handleClick"
-        android:text="List"
-        app:layout_constraintBaseline_toBaselineOf="@+id/graphBtn"
+    <TableRow
+        android:layout_width="273dp"
+        android:layout_height="23dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/graphBtn" />
+        app:layout_constraintHorizontal_bias="0.173"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tableRow2">
+
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="149dp"
+            android:layout_height="wrap_content"
+            android:text="@string/total_remaining" />
+
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="119dp"
+            android:layout_height="match_parent"
+            android:gravity="right"
+            android:text="3000.00" />
+    </TableRow>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/addBBtn"
+        android:id="@+id/btn_add_budpay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="141dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="32dp"
         android:clickable="true"
         android:onClick="handleClick"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/barchart"
-        app:layout_constraintStart_toEndOf="@+id/barchart"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/barchart"
         app:srcCompat="@android:drawable/ic_input_add" />
 
-    <TextView
-        android:id="@+id/graph_sum"
-        android:layout_width="184dp"
-        android:layout_height="73dp"
-        android:layout_marginTop="28dp"
-        android:text="@string/graph_summary"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <TableRow
+        android:id="@+id/tableRow"
+        android:layout_width="278dp"
+        android:layout_height="22dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.189"
+        app:layout_constraintHorizontal_bias="0.18"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/barchart"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/hr_ignore">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="149dp"
+            android:layout_height="wrap_content"
+            android:text="@string/total_budget" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="123dp"
+            android:layout_height="match_parent"
+            android:gravity="right"
+            android:text="100000.00" />
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/tableRow2"
+        android:layout_width="277dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.179"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tableRow">
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="@string/total_paid" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="122dp"
+            android:layout_height="match_parent"
+            android:gravity="right"
+            android:text="20000.00" />
+    </TableRow>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,7 +2,6 @@ package com.example.testapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -70,7 +69,11 @@ public class ListBudgetsActivity extends AppCompatActivity {
 
     public void handleOnClick(View v){
         if(v.getId()==R.id.lb_add_budget){
-            Intent i = new Intent(getApplicationContext(),AddBudgetActivity.class);
+            Intent i = new Intent(getApplicationContext(), AddEditBudgetActivity.class);
+            startActivity(i);
+        }
+        if(v.getId()==R.id.btn_lb_graph){
+            Intent i = new Intent(getApplicationContext(), GraphActivity.class);
             startActivity(i);
         }
         /*

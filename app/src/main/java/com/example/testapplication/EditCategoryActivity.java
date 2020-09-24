@@ -10,20 +10,14 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.testapplication.db.DBHandler;
 import com.example.testapplication.db.category.Category;
 import com.example.testapplication.db.category.ICategory;
-
-import org.w3c.dom.Text;
 
 public class EditCategoryActivity extends AppCompatActivity {
     private String pre_intent = "settingCAT", is_in_setting = "true",edit = "none", is_in_cat = "true", has_title = "none";
@@ -65,7 +59,7 @@ public class EditCategoryActivity extends AppCompatActivity {
                 Log.d("EditCatAct>>","getting id as " + id);
                 Intent j;
                 if(pre_intent.equalsIgnoreCase("add budget") || pre_intent.equalsIgnoreCase("edit budget")){
-                    j = new Intent(getApplicationContext(), AddBudgetActivity.class);
+                    j = new Intent(getApplicationContext(), AddEditBudgetActivity.class);
                     b.putString("title",pre_intent);
                     b.putInt("id",id);
                     Log.d("EditCatAct>>","putting id as " + id);

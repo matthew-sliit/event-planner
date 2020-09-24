@@ -3,18 +3,19 @@ package com.example.testapplication.viewholder;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.testapplication.AddBudgetActivity;
+import com.example.testapplication.AddEditBudgetActivity;
 import com.example.testapplication.R;
 import com.example.testapplication.db.budget.Budget_Impl;
 
 public class BudgetViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
     private TextView lb_name, lb_totamt, lb_paidamt, lb_cat; //from layout
+    public ImageButton btn_delete;
 
     /*
      * ================== ViewHolder constructor ========================
@@ -29,7 +30,14 @@ public class BudgetViewHolder extends RecyclerView.ViewHolder implements View.On
         lb_totamt = (TextView) itemView.findViewById(R.id.sc_rightTop);
         lb_paidamt = (TextView) itemView.findViewById(R.id.sc_rightBot);
         lb_cat = (TextView) itemView.findViewById(R.id.sc_belowName);
+        btn_delete = (ImageButton) itemView.findViewById(R.id.sc_image_btn_del);
         itemView.setOnClickListener(this);
+        ((ImageButton) itemView.findViewById(R.id.sc_image_btn_del)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
         this.currentAct = currentAct; //assigning context
     }
     public Context currentAct;//passed from ActivityClass through Adapter
@@ -67,7 +75,7 @@ public class BudgetViewHolder extends RecyclerView.ViewHolder implements View.On
     @Override
     public void onClick(View view) {
         //Log.d("BudgetViewHolder::", "OnClick>>layoutPos -> "+ getLayoutPosition());
-        Intent i = new Intent(view.getContext(), AddBudgetActivity.class);
+        Intent i = new Intent(view.getContext(), AddEditBudgetActivity.class);
         Bundle b = new Bundle();
         b.putInt("id",budget_model.id);//int pk
         b.putString("title","Edit Budget");
