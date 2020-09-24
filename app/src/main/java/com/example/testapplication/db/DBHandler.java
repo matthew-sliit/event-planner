@@ -95,6 +95,10 @@ public class DBHandler extends SQLiteOpenHelper {
         //String[] selectionArgs = {tupleValue};
         db.delete(tableName,selection,values);
     }
+    public void delete(String tableName, String whereClause, String whereArgs[]){
+        SQLiteDatabase db = getReadableDatabase();
+        db.delete(tableName,whereClause,whereArgs);
+    }
     public int update(ContentValues cv, String columnName, String id, String tableName){
         debug("Updating " + tableName + " using id=" + id + " colName=" + columnName);
         SQLiteDatabase db = getReadableDatabase();

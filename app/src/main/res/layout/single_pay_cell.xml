@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="5dp">
+
+    <TextView
+        android:id="@+id/sc_pay_name"
+        android:layout_width="157dp"
+        android:layout_height="wrap_content"
+        android:drawablePadding="5dp"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:padding="8dp"
+        android:singleLine="true"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/sc_pay_belowName"
+        android:layout_width="157dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/sc_pay_name"
+        android:drawablePadding="5dp"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:padding="8dp"
+        android:singleLine="true"
+        android:textSize="10sp" />
+
+    <TextView
+        android:id="@+id/sc_pay_rightTop"
+        android:layout_width="197dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/sc_pay_name"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="-33dp"
+        android:layout_marginRight="10dp"
+        android:drawablePadding="5dp"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:padding="8dp"
+        android:singleLine="true"
+        android:textSize="18sp" />
+
+    <LinearLayout
+        android:layout_width="55dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/sc_pay_belowName"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="-21dp"
+        android:layout_marginRight="5dp"
+        android:gravity="right"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/image_btn_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:background="@null"
+            android:padding="3dp"
+            android:src="@android:drawable/ic_delete" />
+
+    </LinearLayout>
+</RelativeLayout>

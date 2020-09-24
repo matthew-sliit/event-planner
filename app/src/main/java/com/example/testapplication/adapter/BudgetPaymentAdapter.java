@@ -10,33 +10,41 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.testapplication.R;
 import com.example.testapplication.db.budget.Budget_Impl;
+import com.example.testapplication.db.budget.Budget_payments;
 import com.example.testapplication.db.budget.Ibudget;
+import com.example.testapplication.viewholder.BudgetPaymentViewHolder;
 import com.example.testapplication.viewholder.BudgetViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class BudgetAdapter extends RecyclerView.Adapter{
-    private List<Budget_Impl> models = new ArrayList<Budget_Impl>();
+public class BudgetPaymentAdapter extends RecyclerView.Adapter {
+    private List<Budget_payments> models = new ArrayList<Budget_payments>();
     /**
      * ================== Adapter constructor ========================
      */
     private Context context;
-    public BudgetAdapter(Context currentAct) {
+    public BudgetPaymentAdapter(Context currentAct, int eid, int bid) {
+        /*
         if(currentAct == null){
             Log.d("BudgetAdapter>>","CurrentAct is null!");
         }else{
             Log.d("BudgetAdapter>>","CurrentAct is NOT null!");
         }
-        Ibudget budget = new Budget_Impl(currentAct);
-        List<Budget_Impl> lb = new ArrayList<Budget_Impl>();
-        lb = budget.getBudgetList(); //error
+
+         */
+        Budget_payments bp = new Budget_payments(currentAct);
+        List<Budget_payments> lb = new ArrayList<Budget_payments>();
+        lb = bp.getBudgetPaymentList(eid,bid); //pass event id and budget id
         if (lb != null) {
             this.models.addAll(lb);
-            for(Budget_Impl ib : lb){
-               // Log.d("BudgetAdapter>>","models.get("+i+").id -> "+models.get(i).id);
-               // Log.d("BudgetAdapter>>","List.get("+i+").id -> "+lb.get(i).id);
+            /*
+            for(Budget_payments ib : lb){
+                // Log.d("BudgetAdapter>>","models.get("+i+").id -> "+models.get(i).id);
+                // Log.d("BudgetAdapter>>","List.get("+i+").id -> "+lb.get(i).id);
             }
+
+             */
         }
         this.context = currentAct;
 
@@ -69,7 +77,7 @@ public class BudgetAdapter extends RecyclerView.Adapter{
      */
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
-        ((BudgetViewHolder) holder).bindData(models.get(position)); //bind each obj from model
+        ((BudgetPaymentViewHolder) holder).bindData(models.get(position)); //bind each obj from model
     }
 
     /**
@@ -92,7 +100,6 @@ public class BudgetAdapter extends RecyclerView.Adapter{
      */
     @Override
     public int getItemViewType(final int position) {
-        return R.layout.single_cell;
+        return R.layout.single_pay_cell; //payment carbview
     }
-
 }

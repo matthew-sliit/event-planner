@@ -7,12 +7,15 @@
     android:foregroundTint="?attr/colorPrimary"
     tools:context=".AddBudgetActivity">
 
-    <Button
+    <ImageButton
         android:id="@+id/addBBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="11dp"
-        android:layout_marginEnd="17dp"
+        android:layout_width="64dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="248dp"
+        android:background="@drawable/ic_launcher_background"
+        android:backgroundTint="#002A7E32"
+        android:foreground="@android:drawable/ic_input_add"
         android:onClick="handleClick"
         android:text="@string/add_payment"
         app:layout_constraintEnd_toEndOf="parent"
@@ -58,7 +61,7 @@
         android:id="@+id/abud_cat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="188dp"
+        android:layout_marginTop="184dp"
         android:text="Category"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="@+id/ab_cat"
@@ -208,24 +211,35 @@
         android:id="@+id/saveBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="28dp"
+        android:layout_marginBottom="192dp"
         android:onClick="handleClick"
         android:text="Save"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.907"
+        app:layout_constraintHorizontal_bias="0.965"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/btn_adbud_del"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="28dp"
+        android:layout_marginBottom="192dp"
         android:text="@string/delete"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.606"
+        app:layout_constraintHorizontal_bias="0.647"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/ab_pay_recycler"
+        android:layout_width="411dp"
+        android:layout_height="156dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView2"
+        app:layout_constraintVertical_bias="0.111" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

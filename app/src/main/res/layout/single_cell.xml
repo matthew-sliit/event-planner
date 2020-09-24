@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:foreground="?android:attr/selectableItemBackground"
+    card_view:cardCornerRadius="5dp">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/sc_name"
+            android:layout_width="188dp"
+            android:layout_height="wrap_content"
+            android:drawablePadding="5dp"
+            android:ellipsize="end"
+            android:gravity="left"
+            android:fontFamily="@font/semibold"
+            android:padding="8dp"
+            android:singleLine="true"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/sc_belowName"
+            android:layout_width="188dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/sc_name"
+            android:drawablePadding="5dp"
+            android:ellipsize="end"
+            android:gravity="left"
+            android:padding="8dp"
+            android:singleLine="true" />
+
+        <TextView
+            android:id="@+id/sc_rightTop"
+            android:layout_width="178dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="top|end"
+            android:drawablePadding="5dp"
+            android:ellipsize="end"
+            android:gravity="end"
+            android:padding="8dp"
+            android:singleLine="true" />
+
+        <TextView
+            android:id="@+id/sc_rightBot"
+            android:layout_width="178dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/sc_name"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="top|end"
+            android:drawablePadding="5dp"
+            android:ellipsize="end"
+            android:gravity="end"
+            android:padding="8dp"
+            android:singleLine="true" />
+
+        <LinearLayout
+            android:layout_width="397dp"
+            android:layout_height="20dp"
+            android:layout_below="@id/sc_belowName"
+            android:gravity="right"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/sc_image_btn_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="right"
+                android:layout_marginLeft="10dp"
+                android:background="@null"
+                android:padding="0dp"
+                android:src="@android:drawable/ic_delete" />
+        </LinearLayout>
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

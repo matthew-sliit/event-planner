@@ -14,7 +14,7 @@ import com.example.testapplication.R;
 import com.example.testapplication.db.budget.Budget_Impl;
 
 public class BudgetViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-    private TextView lb_name, lb_totamt, lb_paidamt; //from layout
+    private TextView lb_name, lb_totamt, lb_paidamt, lb_cat; //from layout
 
     /*
      * ================== ViewHolder constructor ========================
@@ -25,9 +25,10 @@ public class BudgetViewHolder extends RecyclerView.ViewHolder implements View.On
      */
     public BudgetViewHolder(final View itemView, Context currentAct) {
         super(itemView);
-        lb_name = (TextView) itemView.findViewById(R.id.textView_lb_name);
-        lb_totamt = (TextView) itemView.findViewById(R.id.textView_lb_totamt);
-        lb_paidamt = (TextView) itemView.findViewById(R.id.textView_lb_paidamt);
+        lb_name = (TextView) itemView.findViewById(R.id.sc_name);
+        lb_totamt = (TextView) itemView.findViewById(R.id.sc_rightTop);
+        lb_paidamt = (TextView) itemView.findViewById(R.id.sc_rightBot);
+        lb_cat = (TextView) itemView.findViewById(R.id.sc_belowName);
         itemView.setOnClickListener(this);
         this.currentAct = currentAct; //assigning context
     }
@@ -48,12 +49,14 @@ public class BudgetViewHolder extends RecyclerView.ViewHolder implements View.On
             lb_name.setText(budget_model.name);
             lb_totamt.setText(budget_model.amt);
             lb_paidamt.setText("Paid: 00.00");
+            lb_cat.setText(budget_model.cat);
         }else{
             //this only happens if null list is passed
             this.budget_model = new Budget_Impl(currentAct);
             lb_name.setText("");
             lb_totamt.setText("");
             lb_paidamt.setText("Paid: 00.00");
+            lb_cat.setText("");
         }
 
     }
@@ -63,7 +66,7 @@ public class BudgetViewHolder extends RecyclerView.ViewHolder implements View.On
      */
     @Override
     public void onClick(View view) {
-        Log.d("SimpleViewHolder::", "OnClick>>layoutPos -> "+ getLayoutPosition());
+        //Log.d("BudgetViewHolder::", "OnClick>>layoutPos -> "+ getLayoutPosition());
         Intent i = new Intent(view.getContext(), AddBudgetActivity.class);
         Bundle b = new Bundle();
         b.putInt("id",budget_model.id);//int pk
