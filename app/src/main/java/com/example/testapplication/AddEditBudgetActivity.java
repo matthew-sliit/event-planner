@@ -127,7 +127,9 @@ public class AddEditBudgetActivity extends AppCompatActivity{
             public void onClick(View v) {
                 //default previous intent
                 Intent i = new Intent(getApplicationContext(),ListBudgetsActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);//clear stack
                 startActivity(i);
+                finish();
             }
         });
         Log.d("AddEditBAct>>","name -> " + name);

@@ -207,7 +207,6 @@ public class AppSettingsActivity extends AppCompatActivity {
                 b.putString("title",selection);
                 j.putExtras(b);
                 startActivity(j);
-
             }
         });
     }
