@@ -79,7 +79,7 @@
         app:layout_constraintVertical_bias="0.152" />
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/textInputEditText"
+        android:id="@+id/et_tname"
         android:layout_width="348dp"
         android:layout_height="42dp"
         android:hint="Enter name of the task"
@@ -91,7 +91,7 @@
         app:layout_constraintVertical_bias="0.222" />
 
     <Spinner
-        android:id="@+id/spinner"
+        android:id="@+id/spinnerT"
         android:layout_width="242dp"
         android:layout_height="78dp"
         android:dropDownSelector="@android:drawable/arrow_down_float"
@@ -104,7 +104,7 @@
         app:layout_constraintVertical_bias="0.338" />
 
     <EditText
-        android:id="@+id/editTextDate"
+        android:id="@+id/et_tdate"
         android:layout_width="311dp"
         android:layout_height="70dp"
         android:ems="10"
@@ -150,7 +150,7 @@
         app:layout_constraintVertical_bias="0.739" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/tsave_btn"
         android:layout_width="175dp"
         android:layout_height="64dp"
         android:backgroundTint="#3F91B6"
@@ -165,7 +165,7 @@
         app:layout_constraintVertical_bias="0.913" />
 
     <EditText
-        android:id="@+id/editTextTextMultiLine"
+        android:id="@+id/et_tdesc"
         android:layout_width="367dp"
         android:layout_height="61dp"
         android:layout_marginEnd="11dp"

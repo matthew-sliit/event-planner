@@ -14,7 +14,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         final String[] defaultCat = {"Ceremony", "Decoration", "Reception", "Jewelry"};
-        Spinner cat = (Spinner) findViewById(R.id.spinner);
+        Spinner cat = (Spinner) findViewById(R.id.spinnerT);
         ArrayAdapter<String> catAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, defaultCat);
         catAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         cat.setAdapter(catAdapter);

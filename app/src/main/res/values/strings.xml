@@ -11,6 +11,10 @@
     <string name="save">Save</string>
     <string name="delete">Delete</string>
     <string name="budget_name">Budget Name</string>
+    <string name="pending">Pending</string>
+    <string name="completed">Completed</string>
+    <string name="update_t">Update</string>
+    <string name="task">Tasks</string>
 
     <string-array name="default_categories">
         <item>Ceremony</item>

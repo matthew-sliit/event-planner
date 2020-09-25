@@ -1,79 +1,80 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linMain"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".taskList">
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton2"
-        android:layout_width="105dp"
-        android:layout_height="54dp"
-        android:clickable="true"
-        android:tint="#FFFFFF"
-        app:backgroundTint="#FF5722"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.852"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.905"
-        app:srcCompat="@android:drawable/ic_input_add" />
-
-    <Button
-        android:id="@+id/button11"
-        android:layout_width="413dp"
-        android:layout_height="88dp"
-        android:text="Catering                          25/08/2020 "
-        android:textAlignment="viewStart"
-        android:textAllCaps="false"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.384" />
-
-    <Button
-        android:id="@+id/button10"
-        android:layout_width="413dp"
-        android:layout_height="88dp"
-        android:text="Decorating                      01/11/2020 "
-        android:textAlignment="viewStart"
-        android:textAllCaps="false"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.228" />
-
-    <SearchView
-        android:id="@+id/searchView"
-        android:layout_width="408dp"
-        android:layout_height="45dp"
-        android:background="#F1E9E9"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.134" />
+    android:orientation="vertical"
+    android:tag="layout/activity_eve_vendor_list_0">
+    <!--<include android:id="@+id/includedToolbar" layout="@layout/toolbar_binding"/>-->
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar6"
-        android:layout_width="413dp"
-        android:layout_height="77dp"
-        android:background="#9C27B0"
-        android:minHeight="@android:dimen/thumbnail_width"
+        android:id="@+id/toolbar_add_g"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_marginBottom="15dp"
+        android:background="@android:color/holo_purple"
+        android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
-        app:navigationIcon="@drawable/abc_vector_test"
-        app:subtitleTextColor="#FFFFFF"
-        app:title="Task List"
-        app:titleTextColor="#FFFFFF"
-        tools:layout_editor_absoluteX="3dp"
-        tools:layout_editor_absoluteY="-4dp" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        app:title="@string/task"
+        app:titleTextColor="#FFFFFF" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:id="@+id/linData"
+            android:layout_width="385dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:tag="binding_1"
+            android:layout_gravity="center">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_t"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_gravity="center"
+                android:layout_weight="1">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linNoData"
+            android:layout_width="384dp"
+            android:layout_height="236dp"
+            android:layout_gravity="bottom|center"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:tag="binding_2">
+
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/lg_add_task"
+                android:layout_width="103dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|right|end"
+                android:layout_marginEnd="33dp"
+                android:layout_marginBottom="145dp"
+                android:backgroundTint="@android:color/holo_purple"
+                android:clickable="true"
+                android:elevation="10dp"
+                android:onClick="handleOnClick"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:srcCompat="@drawable/ic_baseline_add_24" />
+        </LinearLayout>
+
+
+        <!--
+        <com.google.android.material.floatingactionbutton.FloatingActionButton android:id="@+id/fabAdd" style="@style/FloatingActionButtonCommon"/>
+        -->
+
+    </FrameLayout>
+</LinearLayout>
+

@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.testapplication">
+<application
 
-    <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="Budget"
@@ -11,7 +11,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         tools:node="replace">
-        <activity android:name=".taskList"></activity>
+
+        <activity android:name=".EditTask"/>
+
+        <activity android:name=".taskList" >
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+    </activity>
         <activity android:name=".MainActivity" />
         <activity android:name=".eventList" />
         <activity android:name=".editEvent" />
@@ -20,13 +29,7 @@
         <activity android:name=".EditCategoryActivity" />
         <activity android:name=".AppSettingsActivity" />
         <activity android:name=".ListBudgetsActivity" />
-        <activity android:name=".MainActivityEmu">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".MainActivityEmu"/>
         <activity android:name=".GraphActivity" /> <!-- android:theme="@style/AppTheme"> -->
         <activity android:name=".AddBudgetActivity" />
     </application>
