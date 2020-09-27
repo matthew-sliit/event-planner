@@ -4,6 +4,7 @@ package com.example.testapplication;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -24,7 +26,10 @@ import android.widget.TextView;
 import com.example.testapplication.db.task.ITask;
 import com.example.testapplication.db.task.Task_Impl;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Locale;
 
 public class addTask extends AppCompatActivity {
 
@@ -32,7 +37,7 @@ public class addTask extends AppCompatActivity {
     RadioGroup rdstatus;
     RadioButton rdPend,rdComplete;
     Spinner spinnerT;
-    String categoryType[]={"Ceremony", "Decoration", "Reception", "Jewelry"};
+    String[] categoryType ={"Ceremony", "Decoration", "Reception", "Jewelry"};
 
     String spinnerItem = null;
 
@@ -41,11 +46,11 @@ public class addTask extends AppCompatActivity {
 
     private class TaskLayoutClass{
 
-        String tname,status, category;
+        String tname,status ,category;
         public int id = 0;
         private Context c;
         public TaskLayoutClass(Context c) {
-            Task_Impl task_ =new Task_Impl(c);
+             task_ =new Task_Impl(c);
             this.c=c;
         }
         public Task_Impl task_;
@@ -54,6 +59,11 @@ public class addTask extends AppCompatActivity {
             rdPend=(RadioButton)findViewById(R.id.rdPend);
             rdComplete=(RadioButton)findViewById(R.id.rdComplete);
 
+        spinnerT = (Spinner)findViewById(R.id.spinnerT);
+
+        ArrayAdapter<String>adapter = new ArrayAdapter<String>(c,android.R.layout.simple_spinner_item,categoryType);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerT.setAdapter(adapter);
 
         }
 
@@ -104,10 +114,10 @@ public class addTask extends AppCompatActivity {
             });
 
             spinnerT.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                    spinnerItem=spinnerT.getSelectedItem().toString();
-                }
+                    @Override
+                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                        spinnerItem=spinnerT.getSelectedItem().toString();
+                    }
 
                 @Override
                 public void onNothingSelected(AdapterView<?> adapterView) {
@@ -144,6 +154,32 @@ public class addTask extends AppCompatActivity {
             }
         });
 
+        final Calendar calender = Calendar.getInstance();
+        final SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
+
+        final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                  int dayOfMonth) {
+                // TODO Auto-generated method stub
+                calender.set(Calendar.YEAR, year);
+                calender.set(Calendar.MONTH, monthOfYear);
+                calender.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                ((EditText)findViewById(R.id.et_tdate)).setText(df.format(calender.getTime()));
+            }
+        };
+
+        ((EditText)findViewById(R.id.et_tdate)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                new DatePickerDialog(view.getContext(), date, calender
+                        .get(Calendar.YEAR), calender.get(Calendar.MONTH),
+                        calender.get(Calendar.DAY_OF_MONTH)).show();
+
+            }
+        });
+
     }
 
     //menu layout
@@ -171,7 +207,7 @@ public class addTask extends AppCompatActivity {
     }
 
     public void handleClick(View v){
-        ITask guest = new Task_Impl(this);
+        ITask task = new Task_Impl(this);
         TaskLayoutClass guestlayout = tlayout;
 
         if(v.getId() == R.id.tsave_btn){

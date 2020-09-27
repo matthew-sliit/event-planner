@@ -8,22 +8,20 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/menu2"
-        android:layout_width="410dp"
-        android:layout_height="61dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
 
+        android:layout_marginBottom="250dp"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintBottom_toTopOf="@+id/budgetBtn"
+
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
         app:title="@string/app_name"
-        app:titleTextColor="#000000"
-
-        />
+        app:titleTextColor="#000000" />
 
     <Button
         android:id="@+id/budgetBtn"
@@ -34,7 +32,8 @@
         android:text="@string/budget_btn_label"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/menu2" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

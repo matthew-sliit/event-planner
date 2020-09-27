@@ -7,27 +7,11 @@
     tools:context=".editEvent">
 
     <Button
-        android:id="@+id/button7"
-        android:layout_width="376dp"
-        android:layout_height="58dp"
-        android:backgroundTint="#0B0A0A"
-        android:text=" Delete Event"
-        android:textAllCaps="false"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.378"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.925" />
-
-    <Button
-        android:id="@+id/button6"
+        android:id="@+id/discard"
         android:layout_width="152dp"
         android:layout_height="53dp"
         android:backgroundTint="#F81A1A"
-        android:text="Discard"
+        android:text="Delete"
         android:textAllCaps="false"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
@@ -78,9 +62,10 @@
         app:layout_constraintVertical_bias="0.372" />
 
     <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/editName"
         android:layout_width="306dp"
         android:layout_height="66dp"
-        android:hint="Enter event name"
+        android:hint="@string/eventName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.176"
@@ -89,7 +74,7 @@
         app:layout_constraintVertical_bias="0.253" />
 
     <EditText
-        android:id="@+id/editTextDate3"
+        android:id="@+id/editDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -102,7 +87,7 @@
         app:layout_constraintVertical_bias="0.47" />
 
     <EditText
-        android:id="@+id/editTextTime2"
+        android:id="@+id/editTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -115,11 +100,11 @@
         app:layout_constraintVertical_bias="0.654" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/updatebtn"
         android:layout_width="152dp"
         android:layout_height="53dp"
         android:backgroundTint="#2196F3"
-        android:text="Save"
+        android:text="Update"
         android:textAllCaps="false"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
@@ -131,10 +116,10 @@
         app:layout_constraintVertical_bias="0.811" />
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar2"
+        android:id="@+id/edittb"
         android:layout_width="467dp"
         android:layout_height="68dp"
-        android:background="#E91E63"
+        android:background="#9C27B0"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:navigationIcon="@drawable/abc_vector_test"

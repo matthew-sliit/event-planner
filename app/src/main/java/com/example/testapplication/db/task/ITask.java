@@ -1,7 +1,6 @@
 package com.example.testapplication.db.task;
 
 
-
 import java.util.Date;
 import java.util.List;
 

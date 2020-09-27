@@ -7,8 +7,8 @@
     tools:context=".addTask">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="498dp"
-        android:layout_height="881dp"
+        android:layout_width="516dp"
+        android:layout_height="870dp"
         android:foregroundTint="#231E1E"
         tools:context=".MainActivity"
         tools:layout_editor_absoluteX="1dp"
@@ -18,16 +18,16 @@
             android:id="@+id/tdelete_btn"
             android:layout_width="175dp"
             android:layout_height="64dp"
-            android:backgroundTint="#3F91B6"
+            android:backgroundTint="#EA0B0B"
             android:text="@string/delete"
             android:textColor="#FFFFFF"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.046"
+            app:layout_constraintHorizontal_bias="0.14"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.8" />
+            app:layout_constraintVertical_bias="0.801" />
 
         <TextView
             android:id="@+id/textView5"
@@ -138,7 +138,7 @@
 
 
         <Button
-            android:id="@+id/tsave_btn"
+            android:id="@+id/tupdate_btn"
             android:layout_width="175dp"
             android:layout_height="64dp"
             android:backgroundTint="#3F91B6"
@@ -147,10 +147,10 @@
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.665"
+            app:layout_constraintHorizontal_bias="0.68"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.8" />
+            app:layout_constraintVertical_bias="0.802" />
 
         <RadioGroup
             android:id="@+id/rdStatus"
@@ -216,8 +216,8 @@
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/addtb"
-            android:layout_width="507dp"
-            android:layout_height="90dp"
+            android:layout_width="415dp"
+            android:layout_height="96dp"
             android:background="#9C27B0"
             android:minHeight="@android:dimen/thumbnail_width"
             android:theme="?attr/actionBarTheme"
@@ -228,7 +228,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
             app:navigationIcon="@drawable/abc_vector_test"
-            app:title="Add Task"
+            app:title="Edit Task"
             app:titleMargin="20dp"
             app:titleTextColor="#FFFFFF" />
 

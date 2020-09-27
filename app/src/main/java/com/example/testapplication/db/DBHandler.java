@@ -60,6 +60,9 @@ public class DBHandler extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         debug("Running OnCreate!");
         //if(!(SQL_CREATE_ENTRIES == null)) {
+      //  EventsTable et = new EventsTable();
+        //db.execSQL(et.getIfNotExistsStatement());
+
         db.execSQL(SQL_CREATE_ENTRIES);
         //}
     }
@@ -76,10 +79,21 @@ public class DBHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         long newRowId = db.insert(tableName, null, values);
     }
+    public long insertGetId(ContentValues values, String tableName){
+        debug("Inserting into " + tableName);
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.insert(tableName, null, values);
+    }
     public Cursor readAllIgnoreArgs(String[] columns, String tableName){
         debug("Reading from " + tableName);
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.query(tableName,columns,null,null,null,null, null);
+        return cursor;
+    }
+    public Cursor readAllWitSelection(String[] columns, String tableName, String selection){
+        debug("Reading from " + tableName);
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.query(tableName,columns,selection,null,null,null, null);
         return cursor;
     }
     public Cursor readWithWhere(String[] columns, String tableName,String selectColumn, String whereColumnValue){
@@ -95,12 +109,21 @@ public class DBHandler extends SQLiteOpenHelper {
         //String[] selectionArgs = {tupleValue};
         db.delete(tableName,selection,values);
     }
+    public void delete(String tableName, String whereClause, String whereArgs[]){
+        SQLiteDatabase db = getReadableDatabase();
+        db.delete(tableName,whereClause,whereArgs);
+    }
     public int update(ContentValues cv, String columnName, String id, String tableName){
         debug("Updating " + tableName + " using id=" + id + " colName=" + columnName);
         SQLiteDatabase db = getReadableDatabase();
         String selectRecordUsingColumn = columnName + " LIKE ?";
         String[] record_id = {id};
         return db.update(tableName,cv,selectRecordUsingColumn,record_id);
+    }
+    public int update(ContentValues cv, String selection, String tableName){
+        debug("Updating " + tableName + " selection -> " + selection);
+        SQLiteDatabase db = getReadableDatabase();
+        return db.update(tableName,cv,selection,null);
     }
     private void debug(String msg){
         if(debugger_mode) {

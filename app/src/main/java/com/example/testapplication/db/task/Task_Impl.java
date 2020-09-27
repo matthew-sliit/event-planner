@@ -35,7 +35,7 @@ public class Task_Impl implements ITask {
 
         }
         public String getIfNotExistStatement(){
-            return "CREATE TABLE " + TABLE_TASK+ " (" +
+            return "CREATE TABLE if not exists " + TABLE_TASK+ " (" +
                     COLUMN_NAME_ID + " INTEGER PRIMARY KEY,"+
                     COLUMN_NAME_TASKNAME + " TEXT,"+
                     COLUMN_NAME_CAT+" TEXT,"+
@@ -224,7 +224,7 @@ public class Task_Impl implements ITask {
     public void updateTask(Task_Impl obj) {
 
         String[] cols = {"id",table.COLUMN_NAME_TASKNAME,table.COLUMN_NAME_CAT,table.COLUMN_NAME_DESC,table.COLUMN_NAME_STATUS,table.COLUMN_NAME_DATE};
-        String[] v = {obj.tname,obj.category,obj.description,obj.status,obj.tdate};
+        String[] v = {String.valueOf(obj.id),obj.tname,obj.category,obj.description,obj.status,obj.tdate};
         ContentValues cv = new ContentValues();
         for(int col=0;col<cols.length;col++){
             cv.put(cols[col],v[col]);

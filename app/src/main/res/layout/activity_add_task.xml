@@ -126,6 +126,7 @@
             android:layout_width="175dp"
             android:layout_height="64dp"
             android:backgroundTint="#3F91B6"
+            android:onClick="handleClick"
             android:text="Save"
             android:textColor="#FFFFFF"
             android:textSize="18sp"
