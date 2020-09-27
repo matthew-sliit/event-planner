@@ -9,9 +9,9 @@
         android:label="Budget"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         tools:node="replace">
+        <activity android:name=".BudgetPaymentsActivity"></activity>
         <activity android:name=".NumberStandardActivity" />
         <activity android:name=".EditCategoryActivity" />
         <activity android:name=".AppSettingsActivity" />
@@ -24,7 +24,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".GraphActivity" /> <!-- android:theme="@style/AppTheme"> -->
-        <activity android:name=".AddEditBudgetActivity" android:windowSoftInputMode="stateUnchanged|adjustResize"/>
+        <activity
+            android:name=".AddEditBudgetActivity"
+            android:windowSoftInputMode="stateUnchanged|adjustResize" />
     </application>
 
 </manifest>

@@ -27,7 +27,12 @@
     <string name="total_budget">Total Budget Amount:</string>
     <string name="total_paid">Total Amount Paid:</string>
     <string name="total_remaining">Total Amount Remain:</string>
-    <string name="pending">Payments Pending:</string>
+    <string name="paypending">Payments Pending:</string>
+    <string name="pending">Pending</string>
+    <string name="paid">Paid</string>
+    <string name="paid_">Paid: </string>
+    <string name="paymentStatus">Payment status</string>
+    <string name="paid_date">Paid Date</string>
     <string name="category_error_txt">A Category with the same name already exists!</string>
     <string name="graph_summary">Total Budget:\nTotal Paid:\nPayments Pending:\nCurrent Balance:</string>
     <string-array name="default_categories">

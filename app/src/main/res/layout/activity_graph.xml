@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:foregroundTint="#57FFFFFF"
+    android:background="@color/white"
     tools:context=".GraphActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -24,8 +26,10 @@
         android:layout_width="411dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
+        android:background="#907EC9 "
         android:onClick="handleClick"
         android:text="@string/list"
+        android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"

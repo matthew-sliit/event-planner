@@ -10,7 +10,7 @@ public class PaymentTable {
     public static final String AMOUNT = "Amount";
     public static final String STATUS = "Status";
 
-    public static final String RECEIVED_DATE = "Paid Date";
+    public static final String RECEIVED_DATE = "Paid_Date";
     //get from budget or vendor table
     public String REF_ID = "Rid";
     public String REF_TABLENAME = "Rname";
@@ -29,8 +29,8 @@ public class PaymentTable {
     public String getIfNotExistStatement() {
         return "CREATE TABLE IF NOT EXISTS " + tableName + " (" +
                 ID + " INTEGER PRIMARY KEY, " +
-                EVENT_TABLE_ID + " TEXT foreign key references "+EVENT_TABLENAME + " ON DELETE CASCADE ON UPDATE CASCADE,"+
-                REF_ID + " TEXT foreign key references "+REF_TABLENAME+ " ON DELETE CASCADE ON UPDATE CASCADE,"+
+                EVENT_TABLE_ID + " TEXT references "+EVENT_TABLENAME + " ON DELETE CASCADE ON UPDATE CASCADE,"+
+                REF_ID + " TEXT references "+REF_TABLENAME+ "(id) ON DELETE CASCADE ON UPDATE CASCADE,"+
                 NAME + " TEXT," +
                 AMOUNT + " DECIMAL," +
                 STATUS + " String," +

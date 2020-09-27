@@ -7,20 +7,27 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.example.testapplication.adapter.BudgetAdapter;
-import com.example.testapplication.db.budget.Budget_Impl;
+import com.example.testapplication.db.budget.Budget_Impl_updated;
 import com.example.testapplication.db.budget.Ibudget;
 
 public class ListBudgetsActivity extends AppCompatActivity {
 
+    private int eid = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_budgets);
+
+        Bundle b = getIntent().getExtras();
+        if(b!=null){
+            eid = b.getInt("eid",0);
+        }
 
         Toolbar toolbar = findViewById(R.id.abb_menu);
         setSupportActionBar(toolbar);
@@ -33,9 +40,9 @@ public class ListBudgetsActivity extends AppCompatActivity {
             }
         });
 
-        Ibudget budget = new Budget_Impl(this);//Budget Interface
+        Ibudget budget = new Budget_Impl_updated(this,eid);//Budget Interface
 
-        BudgetAdapter adapter = new BudgetAdapter(this); //Budget Adapter
+        BudgetAdapter adapter = new BudgetAdapter(this,eid); //Budget Adapter
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler);
         recyclerView.setHasFixedSize(true);
         //recyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL));//item to item decoration
@@ -70,6 +77,10 @@ public class ListBudgetsActivity extends AppCompatActivity {
     public void handleOnClick(View v){
         if(v.getId()==R.id.lb_add_budget){
             Intent i = new Intent(getApplicationContext(), AddEditBudgetActivity.class);
+            Bundle b = new Bundle();
+            b.putString("title","Add Budget");
+            Log.d("ListBudAct>>","Navigating to Add New Budget!");
+            i.putExtras(b);
             startActivity(i);
         }
         if(v.getId()==R.id.btn_lb_graph){

@@ -27,14 +27,15 @@ public class Budget_payments {
     public String name=null;
     public Double amt = 0.00;
     public String status=null;
-    public Date rdate=null;
-
+    //local date var
+    public Date rdate=new Date();
+    //date format for local date var
     SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
 
     //constructor
     public Budget_payments(Context c){
         currentAct = c;
-        tableColNames = new PaymentTable("Budget_Payments","Bid","Budget");
+        tableColNames = new PaymentTable("Budget_PaymentTest","Bid","Budget");
         db=new DBHandler(c,tableColNames.getIfNotExistStatement());
     }
     public void addPayment(int event_id, int budget_id){
@@ -45,24 +46,35 @@ public class Budget_payments {
         cv.put(PaymentTable.AMOUNT,amt);
         cv.put(PaymentTable.STATUS,status);
         //get current date
+        /*
         Date currentTime = Calendar.getInstance().getTime();
         SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
         String formattedDate = df.format(currentTime);
         Log.d("Budget_Payment>>","Setting Date as " + formattedDate);
-        cv.put(PaymentTable.RECEIVED_DATE,""+formattedDate);
+         */
+        cv.put(PaymentTable.RECEIVED_DATE, df.format(rdate));
         //insert
         db.insert(cv,tableColNames.tableName);
     }
     public void removePayment(int event_id, int budget_id, int payment_id){
-        db.delete(tableColNames.tableName,getWhereStatement(event_id,budget_id,payment_id),null);
+        db.delete(tableColNames.tableName,getWhereStatementWOWhere(event_id,budget_id,payment_id),null);
     }
 
     public void updatePayment(int event_id, int budget_id, int payment_id){
-
+        ContentValues cv= new ContentValues();
+        cv.put(tableColNames.REF_ID,budget_id); //Bid
+        cv.put(tableColNames.EVENT_TABLE_ID,event_id); //eid
+        cv.put(PaymentTable.NAME,name);
+        cv.put(PaymentTable.AMOUNT,amt);
+        cv.put(PaymentTable.STATUS,status);
+        Date currentTime = Calendar.getInstance().getTime();
+        cv.put(PaymentTable.RECEIVED_DATE, df.format(currentTime));
+        db.update(cv,getWhereStatementWOWhere(event_id,budget_id,payment_id),tableColNames.tableName);
     }
     public Budget_payments getPaymentById(int event_id, int budget_id, int payment_id){
         try{
-            Cursor c = db.readAllIgnoreArgs(tableColNames.getAllColumns(), tableColNames.tableName);
+            //Cursor c = db.readAllIgnoreArgs(tableColNames.getAllColumns(), tableColNames.tableName);
+            Cursor c = db.readAllWitSelection(tableColNames.getAllColumns(),tableColNames.tableName,getWhereStatementWOWhere(event_id,budget_id,payment_id));
             Budget_payments bp = new Budget_payments(currentAct);
             while(c.moveToNext()) {
                 bp = new Budget_payments(currentAct);
@@ -70,13 +82,14 @@ public class Budget_payments {
                 bp.event_id = c.getInt(c.getColumnIndexOrThrow(tableColNames.EVENT_TABLE_ID));//int
                 bp.budget_id = c.getInt(c.getColumnIndexOrThrow(tableColNames.REF_ID));//int
                 bp.amt = c.getDouble(c.getColumnIndexOrThrow(PaymentTable.AMOUNT));//int
+                bp.name = c.getString(c.getColumnIndexOrThrow(PaymentTable.NAME));
                 bp.status = c.getString(c.getColumnIndexOrThrow(PaymentTable.STATUS));
                 String date = c.getString(c.getColumnIndexOrThrow(PaymentTable.RECEIVED_DATE));
                 try {
                     bp.rdate = df.parse(date);
                 } catch (ParseException pe) {
                     rdate = null;
-                    Log.d("Budget_Payment>>", "Parsing Datetime Failed!");
+                    Log.d("Budget_Payment>>", "Parsing Datetime Failed FOR " + bp.rdate);
                 }
             }
             return bp;
@@ -88,13 +101,14 @@ public class Budget_payments {
     public List<Budget_payments> getBudgetPaymentList(int event_id, int budget_id){
         List<Budget_payments> bps = new ArrayList<>();
         try{
-            Cursor c = db.readAllIgnoreArgs(tableColNames.getAllColumns(), tableColNames.tableName);
+            Cursor c = db.readAllWitSelection(tableColNames.getAllColumns(),tableColNames.tableName,getWhereStatementWOWhere(event_id,budget_id));
             Budget_payments bp;
             while(c.moveToNext()){
                 bp = new Budget_payments(currentAct);
                 bp.payment_id = c.getInt(c.getColumnIndexOrThrow(PaymentTable.ID));//int
                 bp.event_id = c.getInt(c.getColumnIndexOrThrow(tableColNames.EVENT_TABLE_ID));//int
                 bp.budget_id = c.getInt(c.getColumnIndexOrThrow(tableColNames.REF_ID));//int
+                bp.name = c.getString(c.getColumnIndexOrThrow(PaymentTable.NAME));
                 bp.amt = c.getDouble(c.getColumnIndexOrThrow(PaymentTable.AMOUNT));//int
                 bp.status = c.getString(c.getColumnIndexOrThrow(PaymentTable.STATUS));
                 String date = c.getString(c.getColumnIndexOrThrow(PaymentTable.RECEIVED_DATE));
@@ -102,8 +116,10 @@ public class Budget_payments {
                     bp.rdate = df.parse(date);
                 }catch (ParseException pe){
                     rdate = null;
-                    Log.d("Budget_Payment>>","Parsing Datetime Failed!");
+                    Log.d("Budget_Payment>>", "Parsing Datetime Failed FOR " + date);
                 }
+                //Log.d("Budget_Payment>>","name -> " + bp.name);
+                //Log.d("Budget_Payment>>","status -> " + bp.status);
                 bps.add(bp);
             }
             return bps;
@@ -112,7 +128,7 @@ public class Budget_payments {
         }
     }
     public double getPaidTotalAmountForBudget(int event_id, int budget_id){
-        Budget_Impl budget = new Budget_Impl(currentAct);
+        Budget_Impl_updated budget = new Budget_Impl_updated(currentAct,event_id);
         List<Budget_payments> bp = new ArrayList<>(getBudgetPaymentList(event_id,budget_id));
         double sum=0.00;
         for(Budget_payments bps : bp){
@@ -125,5 +141,11 @@ public class Budget_payments {
     }
     private String getWhereStatement(int eid, int bid){
         return " WHERE " + tableColNames.EVENT_TABLE_ID + " = " + event_id + " AND " + tableColNames.REF_ID + " = " + budget_id;
+    }
+    private String getWhereStatementWOWhere(int eid, int bid, int pid){
+        return tableColNames.EVENT_TABLE_ID + " = " + eid + " AND " + tableColNames.REF_ID + " = " + bid + " AND " + PaymentTable.ID + " = " + pid;
+    }
+    private String getWhereStatementWOWhere(int eid, int bid){
+        return tableColNames.EVENT_TABLE_ID + " = " + eid + " AND " + tableColNames.REF_ID + " = " + bid;
     }
 }

@@ -9,11 +9,8 @@ import android.view.ViewGroup;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.testapplication.R;
-import com.example.testapplication.db.budget.Budget_Impl;
 import com.example.testapplication.db.budget.Budget_payments;
-import com.example.testapplication.db.budget.Ibudget;
 import com.example.testapplication.viewholder.BudgetPaymentViewHolder;
-import com.example.testapplication.viewholder.BudgetViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +27,7 @@ public class BudgetPaymentAdapter extends RecyclerView.Adapter {
      * Activity context
      */
     private Context context;
+    private int eid = 0, bid = 0;
     public BudgetPaymentAdapter(Context currentAct, int eid, int bid) {
         /*
         if(currentAct == null){
@@ -39,18 +37,26 @@ public class BudgetPaymentAdapter extends RecyclerView.Adapter {
         }
 
          */
+        this.eid = eid;
+        this.bid = bid;
+        Log.d("BudgetPayAdap>>","eid:" + eid + " & bid:" + bid);
         Budget_payments bp = new Budget_payments(currentAct);
         List<Budget_payments> lb = new ArrayList<Budget_payments>();
         lb = bp.getBudgetPaymentList(eid,bid); //pass event id and budget id
-        if (lb != null) {
+        if (!lb.isEmpty()) {
             this.models.addAll(lb);
+            Log.d("BudgetPayAdap>>","List Not Empty, Found("+lb.size()+")");
             /*
+            int i = 0;
             for(Budget_payments ib : lb){
-                // Log.d("BudgetAdapter>>","models.get("+i+").id -> "+models.get(i).id);
-                // Log.d("BudgetAdapter>>","List.get("+i+").id -> "+lb.get(i).id);
+                Log.d("BudgetAdapter>>","models.get("+i+").id -> "+models.get(i).name);
+                Log.d("BudgetAdapter>>","List.get("+i+").name -> "+lb.get(i).name);
+                i++;
             }
-
              */
+
+        }else{
+            Log.d("BudgetPayAdap>>","List is Empty!");
         }
         this.context = currentAct;
 
@@ -64,12 +70,12 @@ public class BudgetPaymentAdapter extends RecyclerView.Adapter {
      * @param viewType
      *         The view type of the new View.
      *
-     * @return new BudgetViewHolder(view,context);
+     * @return new BudgetPaymentViewHolder(view,context);
      */
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(final ViewGroup parent, final int viewType) {
         final View view = LayoutInflater.from(parent.getContext()).inflate(viewType, parent, false);
-        return new BudgetViewHolder(view,context);
+        return new BudgetPaymentViewHolder(view,context);
     }
 
     /**
@@ -82,20 +88,57 @@ public class BudgetPaymentAdapter extends RecyclerView.Adapter {
      *         The position in collection of data
      */
     @Override
-    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
+        //bind data
         ((BudgetPaymentViewHolder) holder).bindData(models.get(position)); //bind each obj from model
-        ((BudgetPaymentViewHolder) holder).btn_paid.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //payment tick
-            }
-        });
+        ((BudgetPaymentViewHolder) holder).btn_delete.setVisibility(View.INVISIBLE);
+        //check
+        if(models.get(position).status.equalsIgnoreCase("paid")){
+            ((BudgetPaymentViewHolder) holder).btn_paid.setVisibility(View.INVISIBLE);
+            ((BudgetPaymentViewHolder) holder).bp_show_paid.setText("Paid");
+            /*
+            //paid button changes to delete
+            ((BudgetPaymentViewHolder) holder).btn_paid.setBackgroundResource(R.drawable.ic_delete);
+            //((BudgetPaymentViewHolder) holder).btn_paid.setImageResource(R.drawable.ic_delete);
+            ((BudgetPaymentViewHolder) holder).btn_paid.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //payment delete
+                    models.get(position).removePayment(eid,bid,models.get(position).payment_id);
+                    //notifyItemChanged(position);
+                    notifyItemRemoved(position);
+                    notifyDataSetChanged();
+                }
+            });*/
+        }else {
+            //listen
+            ((BudgetPaymentViewHolder) holder).btn_paid.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //payment tick
+                    models.get(position).status = "Paid";
+                    //update
+                    models.get(position).updatePayment(eid, bid, models.get(position).payment_id);
+                    //tell adapter
+                    //notifyItemChanged(position);
+                    notifyDataSetChanged();
+
+                }
+            });
+        }
+        /*
+        //listen
         ((BudgetPaymentViewHolder) holder).btn_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //payment delete
+                models.get(position).removePayment(eid,bid,models.get(position).payment_id);
+                //notifyItemChanged(position);
+                notifyItemRemoved(position);
             }
         });
+
+         */
     }
 
     /**

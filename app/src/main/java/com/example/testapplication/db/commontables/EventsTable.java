@@ -1,7 +1,7 @@
 package com.example.testapplication.db.commontables;
 
 public class EventsTable {
-    public static final String TABLENAME= "Events";
+    public static final String TABLENAME= "EventTableTest";
     public static final String EVENT_ID = "EventID";
     public static final String NAME = "Event_Name";
     public static final String DUE_DATE = "Event_Due_Date";

@@ -2,10 +2,12 @@ package com.example.testapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
-import android.text.TextUtils;
 import android.util.Log;
 import android.os.Bundle;
 import android.view.Menu;
@@ -17,104 +19,132 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.example.testapplication.db.budget.Budget_Impl;
+import com.example.testapplication.adapter.BudgetPaymentAdapter;
+import com.example.testapplication.db.budget.Budget_Impl_updated;
+import com.example.testapplication.db.budget.Budget_payments;
 import com.example.testapplication.db.budget.Ibudget;
 import com.example.testapplication.db.category.Category;
 import com.example.testapplication.db.category.ICategory;
+
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AddEditBudgetActivity extends AppCompatActivity{
     //MainActivity ma = new MainActivity();
     //Class cls = ma.getClass();
     private String has_title="Add Budget", name="null",desc="null",amt="0.00",paid="0.00",balance="0.00",category=null;
-    private int id = 0;
+    private int id = 0, eid = 0;
 
     //for organizing layout data
     private class BudgetLayoutClass{
-        public BudgetLayoutClass(){
-        }
-        public String getbName() {
-            return bName;
-        }
+        EditText nameInput, amtInput,descInput;
+        Spinner catInput;
+        TextView showBalance;
+        Context c;
+        Budget_Impl_updated budget_model;
+        Budget_payments budget_payments;
 
-        public void setbName(String bName) {
-            this.bName = bName;
+        public BudgetLayoutClass(Context c){
+            this.c = c;
+            budget_model = new Budget_Impl_updated(c,eid);
+            budget_payments=  new Budget_payments(c);
+            initVar();
         }
-
-        public String getbCat() {
-            return bCat;
+        public void initVar(){
+            nameInput = ((EditText)findViewById(R.id.editTxt_bud_name));
+            amtInput = ((EditText)findViewById(R.id.editTxt_bud_amt));
+            catInput = ((Spinner)findViewById(R.id.ab_cat_spin));
+            descInput = ((EditText)findViewById(R.id.editTxt_bud_desc));
+            showBalance = ((TextView)findViewById(R.id.textView_bud_balance));
         }
-
-        public void setbCat(String bCat) {
-            this.bCat = bCat;
-        }
-
-        public String getbDesc() {
-            return bDesc;
-        }
-
-        public void setbDesc(String bDesc) {
-            this.bDesc = bDesc;
-        }
-        public String bName = "";
-        public String bCat = "";
-
-        public Double getbAmt() {
-            return bAmt;
-        }
-
-        public void setbAmt(Double bAmt) {
-            this.bAmt = bAmt;
-        }
-
-        public Double bAmt = 00.00;
-        public String bDesc = "";
         public void loadValuesFromLayout(){
-            this.bName = ((EditText)findViewById(R.id.editTxt_bud_name)).getText().toString();
-            String amt = ((EditText)findViewById(R.id.editTxt_bud_amt)).getText().toString();
-            try {
-                this.bAmt = Double.parseDouble(amt); //input is always a number
-            }catch (NumberFormatException e){
-                this.bAmt = 0.00;
-            }
-            this.bCat = ((Spinner)findViewById(R.id.ab_cat_spin)).getSelectedItem().toString();
-            this.bDesc = ((EditText)findViewById(R.id.editTxt_bud_desc)).getText().toString();
+            budget_model.name = nameInput.getText().toString();
+            budget_model.amt = (amtInput.getText().toString());
+            budget_model.cat = catInput.getSelectedItem().toString();
+            budget_model.desc = descInput.getText().toString();
+            showBalance.setText(amt);
         }
-        public void setValuesToLayout(){
-
+        public void setValuesToLayout(int eid, int bid){
+            budget_model = budget_model.getBudgetById(eid,bid);
+            nameInput.setText(budget_model.name);
+            amtInput.setText(budget_model.amt);
+            descInput.setText(budget_model.desc);
+            blayout.setShowBalance();
+        }
+        public void initValuesToLayout(){
+            nameInput.setText("");
+            nameInput.setHint(R.string.hint_name);
+            descInput.setText("");
+            descInput.setHint(R.string.hint_description);
+            showBalance.setText("0.00");
+        }
+        public void setShowBalance(){
+            List<Budget_payments> budget_paymentsList = new ArrayList<>(budget_payments.getBudgetPaymentList(eid,id));
+            double paidSum = 0;
+            //not empty list
+            if(!budget_paymentsList.isEmpty()) {
+                //foreach item in list
+                for (Budget_payments bp : budget_paymentsList) {
+                    //only if paid
+                    if(bp.status.equalsIgnoreCase("paid")) {
+                        //add to paidSum
+                        paidSum += bp.amt;
+                    }
+                }
+            }
+            try {
+                if (!(budget_model == null)) {
+                    //get budget
+                    double budgetAmount = Double.parseDouble(budget_model.amt);
+                    //balance = budget - paidSum
+                    double balance = budgetAmount - paidSum;
+                    DecimalFormat df = new DecimalFormat("####0.00");
+                    df.setRoundingMode(RoundingMode.HALF_UP);
+                    showBalance.setText(df.format(balance));//show
+                } else {
+                    showBalance.setText("0.00");//show
+                }
+            }catch (NullPointerException e){
+                showBalance.setText("0.00");//show
+            }
+        }
+        public void setShowBalanceWhenAddingBudget(){
+            showBalance.setText(amtInput.getText().toString());//show
         }
     }
+    BudgetLayoutClass blayout;
+    Ibudget budget;
+
+    /**
+     * ===================== OnCreate ==========================
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_edit_budget);
         final Context context = this;
+        blayout = new BudgetLayoutClass(this);
+        //budget = new Budget_Impl_updated(this,eid);
+        Ibudget ibudget = new Budget_Impl_updated(this,eid);
         Bundle b = getIntent().getExtras();
         if(b!=null){
             has_title=b.getString("title","Add Budget");
-            /*
-            name=b.getString("name","Enter name");
-            desc=b.getString("desc","Enter description");
-            amt=b.getString("amount","0.00");
-            category = b.getString("cat",null);
-            balance=b.getString("balance","0.00");
-             */
-            id = b.getInt("id");
+            id = b.getInt("id",0);
+            eid = b.getInt("eid",0);
             Log.d("AddBudgetAct>>","id -> " + id);
             if(has_title.equalsIgnoreCase("edit budget")){
-                Ibudget budget = new Budget_Impl(this);
-                Budget_Impl budget_model = new Budget_Impl(this);
-                budget_model=budget.getBudgetById(b.getInt("id"));
-                name = budget_model.name;
-                desc = budget_model.desc;
-                amt = budget_model.amt;
-                category = budget_model.cat;
+                blayout.budget_model = ibudget.getBudgetById(eid,id);
+                category = blayout.budget_model.cat;
+                blayout.setValuesToLayout(eid,id);
             }
-
         }else{
-            ((EditText)findViewById(R.id.editTxt_bud_name)).setHint("Budget Name");
-            //((EditText)findViewById(R.id.editTxt_bud_name)).setHint("Budget Name");
-
+            //blayout.budget_model = new Budget_Impl_updated(this,eid);
+            blayout.initValuesToLayout();
         }
         Toolbar toolbar = findViewById(R.id.abb_menu); //set toolbar
         setSupportActionBar(toolbar);
@@ -134,28 +164,18 @@ public class AddEditBudgetActivity extends AppCompatActivity{
         });
         Log.d("AddEditBAct>>","name -> " + name);
 
-        if(!name.equalsIgnoreCase("enter name") && !(name.equalsIgnoreCase("null")) && !TextUtils.isEmpty(name)) {
-            Log.d("AddEditBAct>>","Setting values to EditText!");
-            ((EditText) findViewById(R.id.editTxt_bud_name)).setText(name, TextView.BufferType.EDITABLE);
-            ((EditText) findViewById(R.id.editTxt_bud_amt)).setText(amt, TextView.BufferType.EDITABLE);
-            ((TextView) findViewById(R.id.textView_bud_balance)).setText(balance);
-        }else{
-            ((EditText) findViewById(R.id.editTxt_bud_name)).setText("");
-            ((EditText) findViewById(R.id.editTxt_bud_name)).setHint(R.string.hint_name);
-            ((EditText) findViewById(R.id.editTxt_bud_desc)).setText("");
-            ((EditText) findViewById(R.id.editTxt_bud_desc)).setHint(R.string.hint_description);
-            ((TextView) findViewById(R.id.textView_bud_balance)).setText("0.00");
-        }
-
         findViewById(R.id.editTxt_bud_amt).setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
                 if(!b){
-                    setBalance();
+                    if(has_title.equalsIgnoreCase("add budget")){
+                        blayout.setShowBalanceWhenAddingBudget();
+                    }else {
+                        blayout.setShowBalance();
+                    }
                 }
             }
         });
-
         ICategory categoryObj = new Category(this);
         //final String[] defaultCat = getResources().getStringArray(R.array.default_categories);
         //get category from db
@@ -179,18 +199,15 @@ public class AddEditBudgetActivity extends AppCompatActivity{
            //set category
         }
 
-        if(desc != null){
-            ((EditText)findViewById(R.id.editTxt_bud_desc)).setText(desc);
-        }
         if(has_title.equals("Add Budget")){
-            ((ImageButton)findViewById(R.id.btn_adbud_del)).setVisibility(View.INVISIBLE);
+            //((ImageButton)findViewById(R.id.btn_adbud_del)).setVisibility(View.INVISIBLE);
         }else{
             //if title is Edit Budget
             ((ImageButton)findViewById(R.id.btn_adbud_del)).setVisibility(View.VISIBLE);
             ((ImageButton)findViewById(R.id.btn_adbud_del)).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Ibudget budget = new Budget_Impl(context);
+                    Ibudget budget = new Budget_Impl_updated(context,eid);
                     budget.removeBudget(id);
 
                     //go back to list view
@@ -198,8 +215,13 @@ public class AddEditBudgetActivity extends AppCompatActivity{
                     startActivity(i);
                 }
             });
-
         }
+        BudgetPaymentAdapter adapter = new BudgetPaymentAdapter(this,eid,id); //Budget Adapter
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_bud);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL));//item to item decoration
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
     }
     //menu layout
     @Override
@@ -225,36 +247,77 @@ public class AddEditBudgetActivity extends AppCompatActivity{
         return super.onOptionsItemSelected(item);
     }
 
-    public void handleClick(View v){
-        Ibudget budget = new Budget_Impl(this);
-        BudgetLayoutClass budgetlayout = new BudgetLayoutClass();
-        if(v.getId() == R.id.btn_add_budpay){
-            Log.d("BUTTON","AddPayment Button Pressed!");
+    public boolean validated(){
+        EditText name = ((EditText) findViewById(R.id.editTxt_bud_name));
+        EditText amt = ((EditText)findViewById(R.id.editTxt_bud_amt));
+
+        if(name.getText().toString().isEmpty()){
+            //name empty
+            Toast.makeText(getApplicationContext(),"Please enter name", Toast.LENGTH_SHORT).show();
+            return false;
         }
+        if(amt.getText().toString().isEmpty()){
+            //amount empty
+            Toast.makeText(getApplicationContext(),"Please enter amount",Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * ===================== handleCLick ==============================
+     * btn_add_budpay -> Add Budget Payment
+     * @param v
+     */
+    public void handleClick(View v){
+        Ibudget budget = new Budget_Impl_updated(this,eid);
+        if(v.getId() == R.id.btn_add_budpay){
+            //adding pay before creating budget will cause problems
+            Log.d("BUTTON","AddPayment Button Pressed!");
+            if(validated()) {
+                Bundle b = new Bundle();
+                if(has_title.equalsIgnoreCase("add budget")){
+                    blayout.loadValuesFromLayout();
+                    int newId = blayout.budget_model.addBudgetGetId();
+                    b.putInt("bid",newId);
+                    b.putBoolean("bid_safeAdd",true);
+                }else{
+                    b.putInt("bid", id);
+                    b.putBoolean("bid_safeAdd",false);
+                }
+                Intent i = new Intent(getApplicationContext(), BudgetPaymentsActivity.class);
+                b.putString("title", "Add Payment");
+                b.putString("pre_title", "Edit Budget");
+                i.putExtras(b);
+                Log.d("BudPayAct>>","has_title -> " + "Add payment");
+                Log.d("BudPayAct>>","pre_title -> " + has_title);
+                startActivity(i);
+            }
+        }
+
         if(v.getId() == R.id.btn_adbud_save){
             Log.d("BUTTON","Save Button Pressed!");
-            budgetlayout.loadValuesFromLayout();
-            if(has_title.equals("Add Budget")) {
-                //save new
-                budget.addBudget(budgetlayout.bName, budgetlayout.bCat, budgetlayout.bAmt, budgetlayout.bDesc);
-            }else{
-                Log.d("Updating using ","id->"+this.id);
-                //condition for when user clicks on a listed Budget
-                //click for when save button is pressed
-                //hence update existing record using values from user inputs
-                Budget_Impl budget_model = new Budget_Impl(this);
-                budget_model.id = this.id;//from bundle, for mapping record
-                budget_model.name = budgetlayout.bName;
-                budget_model.cat = budgetlayout.bCat;
-                budget_model.amt = "" + budgetlayout.bAmt;
-                budget_model.desc = budgetlayout.bDesc;
-                //update
-                budget.updateBudget(budget_model);
+            blayout.loadValuesFromLayout();
+            if(validated()) {
+                if (has_title.equals("Add Budget")) {
+                    //save new
+                    blayout.loadValuesFromLayout();
+                    blayout.budget_model.addBudget();//adds using it's own values
+                } else {
+                    Log.d("Updating using ", "id->" + this.id);
+                    //condition for when user clicks on a listed Budget
+                    //click for when save button is pressed
+                    //hence update existing record using values from user inputs
+                    blayout.loadValuesFromLayout();
+                    blayout.budget_model.updateBudget(blayout.budget_model);
+                }
+                logInputs();
+                //default go back to list view
+                //Log.d("BudPayAct>>","has_title -> " + has_title);
+                //Log.d("BudPayAct>>","pre_title -> " + has_title);
+                Intent i = new Intent(getApplicationContext(), ListBudgetsActivity.class);
+                startActivity(i);
             }
-            logInputs();
-            //default go back to list view
-            Intent i = new Intent(getApplicationContext(),ListBudgetsActivity.class);
-            startActivity(i);
         }
         if(v.getId()==R.id.adbud_catp){
             Bundle b = new Bundle();
@@ -278,17 +341,5 @@ public class AddEditBudgetActivity extends AppCompatActivity{
 
         //((TextView) findViewById(R.id.SelectedBudgetBalance)).setVisibility(View.VISIBLE);
         //((TextView) findViewById(R.id.SelectedBudgetBalance)).setText("" + amount);
-    }
-    public void setBalance(){
-        double amount = 0.00;
-        try {
-            String data = ((EditText) findViewById(R.id.editTxt_bud_amt)).getText().toString();
-            amount = Double.parseDouble(data); //input is always a number
-        }catch (NumberFormatException e){
-            amount = 0.00;
-        }
-        Log.d("AMOUNT","amount: " + amount);
-        findViewById(R.id.editTxt_bud_desc).setVisibility(View.VISIBLE);
-        ((TextView) findViewById(R.id.textView_bud_balance)).setText("" + amount);
     }
 }

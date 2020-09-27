@@ -11,9 +11,10 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 
-import com.example.testapplication.db.budget.Budget_Impl;
+import com.example.testapplication.db.budget.Budget_Impl_updated;
 import com.example.testapplication.db.budget.Budget_payments;
 import com.example.testapplication.db.category.Category;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
@@ -28,20 +29,24 @@ import java.util.ArrayList;
 import java.util.List;
 public class GraphActivity extends AppCompatActivity {
 
-    private int pid = 0, eid = 0, bid = 0;
+    private int eid = 0;
+    private double totalBudget = 0.00, totalPaid = 0.00, totalRemaining = 0.00;
     private class BarChartHandler{
         private Context c;
-        private int bid = 0, eid = 0;
+        //private int bid = 0, eid = 0;
         public BarChartHandler(Context c){
             this.c = c;
             barChart = (HorizontalBarChart) findViewById(R.id.barchart);
+            totalBudget = 0.00;
+            totalPaid = 0.00;
+            totalRemaining = 0.00;
         }
         private HorizontalBarChart barChart;
         public void draw(){
-            Budget_Impl budget = new Budget_Impl(c);
+            Budget_Impl_updated budget = new Budget_Impl_updated(c,eid);
             //List<Budget_Impl> budgetList = new ArrayList<>(budget.getBudgetList());
             Budget_payments payments = new Budget_payments(c);
-            List<Budget_payments> paymentList = new ArrayList<>(payments.getBudgetPaymentList(eid,bid));
+            //List<Budget_payments> paymentList = new ArrayList<>(payments.getBudgetPaymentList(eid,bid));
             //double minBudget =Double.parseDouble(budgetList.get(0).amt), maxBudget=0;
             Category category = new Category(c);
             List<String> categories = new ArrayList<>(category.getAllCategory());
@@ -53,21 +58,34 @@ public class GraphActivity extends AppCompatActivity {
             int index = 0;//counter
             for(String c : categories){
                 //foreach category
+                Log.d("Graph>>","cat -> " + c);
                 double btot = 0.00, ptot = 0.00;
-                for(Budget_Impl b : budget.getBudgetListByCategory(c)){
-                    for(Budget_payments p : paymentList){
-                        ptot += p.amt;
+                //ignore if there aren't a budget for the category
+                if(budget.getBudgetListByCategory(c).size() > 0) {
+                    //for each budget
+                    for (Budget_Impl_updated b : budget.getBudgetListByCategory(c)) {
+                        //for each payment of budget
+                        Log.d("Graph>>","budget_name -> " + b.name);
+                        for (Budget_payments p : payments.getBudgetPaymentList(eid,b.id)) {
+                            //only if paid
+                            if(p.status.equalsIgnoreCase("paid")) {
+                                ptot += p.amt;
+                            }
+                        }
+                        try {
+                            //budget total per category
+                            btot += Double.parseDouble(b.amt);
+                        } catch (NumberFormatException e) {
+                            Log.d("GraphAct>>", "On exception-> " + e.getMessage());
+                        }
                     }
-                    try {
-                        btot += Double.parseDouble(b.amt);
-                    }catch (NumberFormatException e){
-                        Log.d("GraphAct>>","On exception-> " + e.getMessage());
-                    }
+                    totalAmt.add(new BarEntry(index, (int)btot));
+                    paidAmt.add(new BarEntry(index, (int)ptot));
+                    totalPaid += ptot;
+                    totalBudget += btot;
+                    labels.add(c);
+                    index++;
                 }
-                totalAmt.add(new BarEntry(index,Integer.parseInt(""+btot)));
-                paidAmt.add(new BarEntry(index,Integer.parseInt(""+ptot)));
-                labels.add(c);
-                index++;
             }
             BarDataSet totalBudgetAmountSets = new BarDataSet(totalAmt,"Category Total");
             totalBudgetAmountSets.setColors(ColorTemplate.rgb("ABEBC6"));//green
@@ -100,13 +118,24 @@ public class GraphActivity extends AppCompatActivity {
             //identify number of categories
             //int categoryCount = categories.size();
         }
+        public void setSummaryValues(){
+            ((TextView)findViewById(R.id.textView3)).setText(String.valueOf(totalBudget));
+            ((TextView)findViewById(R.id.textView8)).setText(String.valueOf(totalPaid));
+            totalRemaining = totalBudget - totalPaid;
+            ((TextView)findViewById(R.id.textView11)).setText(String.valueOf(totalRemaining));
+        }
     }
 
+    private BarChartHandler barChartHandler;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph);
 
+        Bundle b = getIntent().getExtras();
+        if(b!=null){
+            eid = b.getInt("eid",0);
+        }
         Toolbar toolbar = (Toolbar) findViewById(R.id.menu_bud);
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.back_btn);
@@ -118,6 +147,10 @@ public class GraphActivity extends AppCompatActivity {
             }
         });
 
+        barChartHandler = new BarChartHandler(this);
+        barChartHandler.draw();
+
+        /*
         HorizontalBarChart barChart = (HorizontalBarChart) findViewById(R.id.barchart);
         // create BarEntry for Bar Group 1
         ArrayList<BarEntry> totalAmt = new ArrayList<>();
@@ -166,6 +199,7 @@ public class GraphActivity extends AppCompatActivity {
         data.setBarWidth(0.6f);
         //BarData data = new BarData(labels, dataSets);
         barChart.setData(data);
+         */
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -196,6 +230,10 @@ public class GraphActivity extends AppCompatActivity {
         }
         if(v.getId()==R.id.btn_add_budpay){
             Intent i = new Intent(getApplicationContext(), AddEditBudgetActivity.class);
+            Bundle b = new Bundle();
+            b.putInt("eid",eid);
+            b.putString("pre_title","graph");
+            i.putExtras(b);
             startActivity(i);
         }
 

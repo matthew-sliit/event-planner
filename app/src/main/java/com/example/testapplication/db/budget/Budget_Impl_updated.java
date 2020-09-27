@@ -17,7 +17,7 @@ public class Budget_Impl_updated implements Ibudget {
     private class Budget_table{
 
         public Budget_table(){}
-        private static final String tableName = "Budget";
+        private static final String tableName = "BudgetTest";
         private static final String EID = EventsTable.EVENT_ID;
         public static final String ID = "id";
         public static final String NAME = "Name";
@@ -44,8 +44,18 @@ public class Budget_Impl_updated implements Ibudget {
     public int id = 0;
     public String name = null;
     public String cat = null;
+
+    public Double getAmt() {
+        return Double.parseDouble(amt);
+    }
+
+    public void setAmt(Double amt) {
+        this.amt = String.valueOf(amt);
+    }
+
     public String amt = null;
     public String desc = null;
+
     //instance var
     private DBHandler db;
     private Context c;
@@ -53,10 +63,12 @@ public class Budget_Impl_updated implements Ibudget {
     public Budget_Impl_updated(Context c, int eid){
         this.c = c;
         this.eid = eid;
+        db = new DBHandler(c,table.getIfNotExistStatement());
     }
     @Override
     public void addBudget(String budget_name, String catName, double amt, String desc) {
         ContentValues cv= new ContentValues();
+        //id auto increment
         cv.put(Budget_table.NAME,budget_name);
         cv.put(Budget_table.EID,eid);
         cv.put(Budget_table.CATEGORY,catName);
@@ -66,13 +78,38 @@ public class Budget_Impl_updated implements Ibudget {
     }
 
     @Override
-    public List<Budget_Impl> getBudgetList() {
+    public void addBudget() {
+        ContentValues cv= new ContentValues();
+        //id auto increment
+        cv.put(Budget_table.NAME,this.name);
+        cv.put(Budget_table.EID,this.eid);
+        cv.put(Budget_table.CATEGORY,this.cat);
+        cv.put(Budget_table.AMOUNT,this.amt);
+        cv.put(Budget_table.DESC,this.desc);
+        db.insert(cv,Budget_table.tableName);
+    }
+    @Override
+    public int addBudgetGetId() {
+        ContentValues cv= new ContentValues();
+        //id auto increment
+        cv.put(Budget_table.NAME,this.name);
+        cv.put(Budget_table.EID,this.eid);
+        cv.put(Budget_table.CATEGORY,this.cat);
+        cv.put(Budget_table.AMOUNT,this.amt);
+        cv.put(Budget_table.DESC,this.desc);
+        long key_id = db.insertGetId(cv,Budget_table.tableName);
+        return (int)key_id;
+    }
+
+
+    @Override
+    public List<Budget_Impl_updated> getBudgetList() {
         try {
             Cursor c = db.readAllWitSelection(table.getColumns(), Budget_table.tableName,getWhereEidStatement()); //where eid like..
-            List<Budget_Impl> b = new ArrayList<>();
-            Budget_Impl ib;
+            List<Budget_Impl_updated> b = new ArrayList<>();
+            Budget_Impl_updated ib;
             while(c.moveToNext()){
-                ib = new Budget_Impl(this.c);
+                ib = new Budget_Impl_updated(this.c,eid);
                 ib.eid = c.getInt(c.getColumnIndexOrThrow(Budget_table.EID));//int
                 ib.id = c.getInt(c.getColumnIndexOrThrow(Budget_table.ID));//int
                 ib.name = c.getString(c.getColumnIndexOrThrow(Budget_table.NAME));
@@ -89,26 +126,26 @@ public class Budget_Impl_updated implements Ibudget {
             }
             return b;
         }catch (NullPointerException np){
-            Log.d("Budget_Impl>>","NPE " + np.getMessage());
+            Log.d("Budget_Impl_updated>>","NPE " + np.getMessage());
             return null;
         }
     }
 
     @Override
-    public List<Budget_Impl> getBudgetListByCategory(String category) {
+    public List<Budget_Impl_updated> getBudgetListByCategory(String category) {
         try {
-            Cursor c = db.readAllWitSelection(table.getColumns(), Budget_table.tableName,getWhereEidStatement() + " AND " + Budget_table.CATEGORY + " LIKE " + category); //where eid like..
-            List<Budget_Impl> b = new ArrayList<>();
-            Budget_Impl ib;
+            Cursor c = db.readAllWitSelection(table.getColumns(), Budget_table.tableName,getWhereEidStatement() + " AND " + Budget_table.CATEGORY + " LIKE " + "'"+category+"'"); //where eid like..
+            List<Budget_Impl_updated> b = new ArrayList<>();
+            Budget_Impl_updated ib;
             while(c.moveToNext()){
-                ib = new Budget_Impl(this.c);
+                ib = new Budget_Impl_updated(this.c,eid);
                 ib.eid = c.getInt(c.getColumnIndexOrThrow(Budget_table.EID));//int
                 ib.id = c.getInt(c.getColumnIndexOrThrow(Budget_table.ID));//int
                 ib.name = c.getString(c.getColumnIndexOrThrow(Budget_table.NAME));
                 ib.cat = c.getString(c.getColumnIndexOrThrow(Budget_table.CATEGORY));
                 ib.amt = c.getString(c.getColumnIndexOrThrow(Budget_table.AMOUNT));
                 ib.desc = c.getString(c.getColumnIndexOrThrow(Budget_table.DESC));
-                /*Log.d("Budget_Impl>>","================ Printing Read Values ================");
+                /*Log.d("Budget_Impl_updated>>","================ Printing Read Values ================");
                 Log.d("id -> ",""+ib.id);
                 Log.d("name -> ",ib.name);
                 Log.d("cat -> ",ib.cat);
@@ -124,12 +161,12 @@ public class Budget_Impl_updated implements Ibudget {
     }
 
     @Override
-    public Budget_Impl getBudgetById(int bid) {
+    public Budget_Impl_updated getBudgetById(int eid, int bid) {
         try {
             Cursor c = db.readAllWitSelection(table.getColumns(), Budget_table.tableName,getWhereEidaBidStatement(bid)); //where eid and bid
-            Budget_Impl ib = new Budget_Impl(this.c);
+            Budget_Impl_updated ib = new Budget_Impl_updated(this.c,eid);
             while(c.moveToNext()){
-                ib = new Budget_Impl(this.c);
+                ib = new Budget_Impl_updated(this.c,eid);
                 ib.eid = c.getInt(c.getColumnIndexOrThrow(Budget_table.EID));//int
                 ib.id = c.getInt(c.getColumnIndexOrThrow(Budget_table.ID));//int
                 ib.name = c.getString(c.getColumnIndexOrThrow(Budget_table.NAME));
@@ -161,17 +198,7 @@ public class Budget_Impl_updated implements Ibudget {
     }
 
     @Override
-    public void updateBudget(Budget_Impl obj) {
-        //EID,ID,NAME,CATEGORY,AMOUNT,DESC
-        /*
-        String[] v = {""+obj.eid,""+obj.id,obj.cat,obj.amt,obj.desc};
-        ContentValues cv = new ContentValues();
-        for(int col=0;col<table.getColumns().length;col++){
-            cv.put(table.getColumns()[col],v[col]);
-            //Log.d("Budget_Impl>>","col->"+table.getColumns()[col] + " val->"+v[col]);
-        }
-
-         */
+    public void updateBudget(Budget_Impl_updated obj) {
         ContentValues cv = new ContentValues();
         cv.put(Budget_table.NAME,obj.name);
         cv.put(Budget_table.AMOUNT,obj.amt);
@@ -182,13 +209,13 @@ public class Budget_Impl_updated implements Ibudget {
         db.update(cv,getUpdateWhere(obj.eid,obj.id),Budget_table.tableName);
     }
     private String getWhereEidStatement(){
-        return " WHERE " + Budget_table.EID + " LIKE " + eid;
+        return Budget_table.EID + " LIKE " + eid;
     }
     private String getWhereEidaBidStatement(int bid){
-        return " WHERE " + Budget_table.EID + " LIKE " + eid + " AND " + Budget_table.ID + " LIKE " + bid;
+        return Budget_table.EID + " LIKE " + eid + " AND " + Budget_table.ID + " LIKE " + bid;
     }
     private String getUpdateWhere(int eid_, int bid_){
-        return " WHERE " + Budget_table.EID + " LIKE " + eid_ +
+        return Budget_table.EID + " LIKE " + eid_ +
                 " AND " + Budget_table.ID + " LIKE " + bid_;
     }
 }

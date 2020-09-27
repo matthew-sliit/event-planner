@@ -9,6 +9,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Environment;
 import android.util.Log;
 
+import com.example.testapplication.db.commontables.EventsTable;
+
 import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.Type;
@@ -60,6 +62,9 @@ public class DBHandler extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         debug("Running OnCreate!");
         //if(!(SQL_CREATE_ENTRIES == null)) {
+        EventsTable et = new EventsTable();
+        db.execSQL(et.getIfNotExistsStatement());
+
         db.execSQL(SQL_CREATE_ENTRIES);
         //}
     }
@@ -71,11 +76,15 @@ public class DBHandler extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
     }
-
     public void insert(ContentValues values, String tableName){
         debug("Inserting into " + tableName);
         SQLiteDatabase db = this.getWritableDatabase();
         long newRowId = db.insert(tableName, null, values);
+    }
+    public long insertGetId(ContentValues values, String tableName){
+        debug("Inserting into " + tableName);
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.insert(tableName, null, values);
     }
     public Cursor readAllIgnoreArgs(String[] columns, String tableName){
         debug("Reading from " + tableName);
