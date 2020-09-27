@@ -8,7 +8,7 @@ includes the management of:
 
 
 ## About Project
-The project is developed by a group of members aka *EagleEyes* for our SLIIT MAD module
+The project is developed by the group of members aka *EagleEyes* for our SLIIT MAD module
 
 | Role | Maintainers | Code Branch |
 | --- | --- | --- |
