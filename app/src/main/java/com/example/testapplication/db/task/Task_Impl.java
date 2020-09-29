@@ -47,7 +47,7 @@ public class Task_Impl implements ITask {
 
     //Class variables
     public String tname,status="Pending",description,category,tdate;
-    public int id = 0;
+    public int eid = 0 , id = 0;
     private DBHandler db;
     private Context c;
 

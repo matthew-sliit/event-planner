@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
@@ -26,6 +27,20 @@ public class EventViewHolder extends RecyclerView.ViewHolder implements View.OnC
         lg_ename = (TextView) itemView.findViewById(R.id.lg_ename);
 
         radioselectevent = (RadioButton) itemView.findViewById(R.id.radioeventselect);
+/*
+       radioselectevent.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
+               event_.selectEvent(models.get(position));
+                //notifyItemChanged(position);
+
+
+            }
+
+        });*/
+
+
 
         itemView.setOnClickListener(this);
         this.currentAct = currentAct; //assigning context

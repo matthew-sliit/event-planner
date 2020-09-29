@@ -128,6 +128,7 @@ public class EditTask extends AppCompatActivity {
         AlertDialog.Builder builder;
         TaskLayoutClass tlayout;
 
+        private int eid=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -151,7 +152,7 @@ public class EditTask extends AppCompatActivity {
         if(b!=null){
 
             id=b.getInt("id",0);
-
+            eid=b.getInt("eid",0);
             tlayout.setValuesToLayout(id);
         }
         closeButton = (Button) findViewById(R.id.tdelete_btn);

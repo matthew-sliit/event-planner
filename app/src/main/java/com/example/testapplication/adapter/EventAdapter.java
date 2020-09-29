@@ -1,6 +1,8 @@
 package com.example.testapplication.adapter;
 
+import android.app.usage.UsageEvents;
 import android.content.Context;
+import android.util.EventLog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.Lifecycle;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.testapplication.R;
@@ -20,6 +23,7 @@ import com.example.testapplication.viewholder.TaskViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Handler;
 
 public class EventAdapter  extends  RecyclerView.Adapter{
 
@@ -51,16 +55,22 @@ public class EventAdapter  extends  RecyclerView.Adapter{
             return new EventViewHolder(view,context);
         }
 
+
         @Override
         public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, final int position) {
+           //final Lifecycle.Event event = models.get(position);
             ((EventViewHolder) holder).bindData(models.get(position)); //bind each obj from model
 
             ((EventViewHolder) holder).radioselectevent.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
+               @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    ((EventViewHolder) holder).event_.selectEvent(models.get(position));
-                    notifyItemChanged(position);
+
+                   models.get(position).selectEvent(models.get(position));
+                  //  notifyItemChanged(position);
+//               notifyDataSetChanged();
+
                 }
+
             });
         }
 

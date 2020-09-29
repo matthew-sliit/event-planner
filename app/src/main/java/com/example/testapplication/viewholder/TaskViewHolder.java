@@ -55,8 +55,9 @@ public class TaskViewHolder extends RecyclerView.ViewHolder implements View.OnCl
         Log.d("SimpleViewHolder::", "OnClick>>layoutPos -> "+ getLayoutPosition());
         Intent i = new Intent(view.getContext(), EditTask.class);
         Bundle b = new Bundle();
+        b.putInt("eid",task_.eid);
         b.putInt("id",task_.id);//int pk
-        b.putString("title","Edit Guest");
+        //b.putString("title","Edit Task");
 
         i.putExtras(b);
         view.getContext().startActivity(i);

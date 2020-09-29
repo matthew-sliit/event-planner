@@ -58,7 +58,7 @@
                         android:button="@null"
                         android:drawableRight="@android:drawable/btn_radio"
                         android:text=""
-                        android:layout_marginRight="10sp"
+                        android:layout_marginRight="25sp"
 
                         />
                 </LinearLayout>
