@@ -41,4 +41,14 @@
         <item>Beauty</item>
         <item>Decor</item>
     </string-array>
+    <string name="edate">Edate</string>
+    <string name="time">Time</string>
+    <string name="ename">ename</string>
+    <string name="enames">Enter the Event name</string>
+    <string name="etime">time</string>
+    <string name="edittime">editTime</string>
+    <string name="editdate">editDate</string>
+    <string name="eventName">Enter event name</string>
+    <string name="event">Event List</string>
+    <string name="taskk">Task List</string>
 </resources>

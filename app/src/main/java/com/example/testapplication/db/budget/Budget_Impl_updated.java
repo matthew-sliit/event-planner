@@ -40,8 +40,8 @@ public class Budget_Impl_updated implements Ibudget {
     }
     Budget_table table = new Budget_table();
     //var
-    public int eid = 0;
-    public int id = 0;
+    public int eid = 0;//event id
+    public int id = 0;//budget id
     public String name = null;
     public String cat = null;
 

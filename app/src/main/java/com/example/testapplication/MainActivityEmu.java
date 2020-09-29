@@ -10,12 +10,16 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivityEmu extends AppCompatActivity {
+    String[] events = {"Birthday E0","Convocation E1"};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +37,11 @@ public class MainActivityEmu extends AppCompatActivity {
             }
         });
 
+        //spinner
+        Spinner event = ((Spinner)findViewById(R.id.spinner_h_emu));
+        ArrayAdapter<String> eveAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,events);
+        eveAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        event.setAdapter(eveAdapter);
 
     }
     @Override
@@ -47,6 +56,13 @@ public class MainActivityEmu extends AppCompatActivity {
             //Settings btn
             Log.d("BUTTON","Action Settings Pressed!");
             //route.addNewRoute(this,new AppSettingsActivity(),null);
+
+            Bundle b = new Bundle();
+
+            //spinner getText
+            String getEvent = ((Spinner)findViewById(R.id.spinner_h_emu)).getSelectedItem().toString();
+
+
             Intent i = new Intent(getApplicationContext(),AppSettingsActivity.class);
             startActivity(i);
         }

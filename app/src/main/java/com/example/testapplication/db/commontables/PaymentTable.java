@@ -22,8 +22,8 @@ public class PaymentTable {
         this.tableName = setTableName;
         this.REF_ID = setTablePK;
         EventsTable et = new EventsTable();
-        this.EVENT_TABLE_ID = et.EVENT_ID;
-        this.EVENT_TABLENAME = et.TABLENAME;
+        this.EVENT_TABLE_ID = EventsTable.EVENT_ID;
+        this.EVENT_TABLENAME = EventsTable.TABLENAME;
         this.REF_TABLENAME = setRefTableName;
     }
     public String getIfNotExistStatement() {

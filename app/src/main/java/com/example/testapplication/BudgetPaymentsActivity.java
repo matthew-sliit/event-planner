@@ -206,6 +206,7 @@ public class BudgetPaymentsActivity extends AppCompatActivity {
             }
 
         };
+
         final Context c = this;
         paylayout.dateInput.setOnClickListener(new View.OnClickListener() {
             @Override

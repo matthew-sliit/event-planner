@@ -1,0 +1,80 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/linMain"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:tag="layout/activity_eve_vendor_list_0">
+    <!--<include android:id="@+id/includedToolbar" layout="@layout/toolbar_binding"/>-->
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_add_event"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_marginBottom="15dp"
+        android:background="@android:color/holo_purple"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:title="@string/event"
+        app:titleTextColor="#FFFFFF" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:id="@+id/linData"
+            android:layout_width="385dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:tag="binding_1"
+            android:layout_gravity="center">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_e"
+                android:layout_width="match_parent"
+                android:layout_height="513dp"
+                android:layout_gravity="center"
+                android:layout_weight="1">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/lg_add_event"
+                android:layout_width="67dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|right|end"
+                android:layout_marginEnd="33dp"
+                android:layout_marginBottom="145dp"
+                android:backgroundTint="@android:color/holo_purple"
+                android:clickable="true"
+                android:elevation="10dp"
+                android:onClick="handleOnClick"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:srcCompat="@drawable/ic_baseline_add_24" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linNoData"
+            android:layout_width="384dp"
+            android:layout_height="236dp"
+            android:layout_gravity="bottom|center"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:tag="binding_2">
+
+
+        </LinearLayout>
+
+
+        <!--
+        <com.google.android.material.floatingactionbutton.FloatingActionButton android:id="@+id/fabAdd" style="@style/FloatingActionButtonCommon"/>
+        -->
+
+    </FrameLayout>
+</LinearLayout>

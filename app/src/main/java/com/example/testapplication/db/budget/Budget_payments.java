@@ -40,6 +40,7 @@ public class Budget_payments {
     }
     public void addPayment(int event_id, int budget_id){
         ContentValues cv= new ContentValues();
+        //
         cv.put(tableColNames.REF_ID,budget_id); //Bid
         cv.put(tableColNames.EVENT_TABLE_ID,event_id); //eid
         cv.put(PaymentTable.NAME,name);

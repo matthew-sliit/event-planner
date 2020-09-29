@@ -27,6 +27,15 @@
         <activity
             android:name=".AddEditBudgetActivity"
             android:windowSoftInputMode="stateUnchanged|adjustResize" />
+        <activity android:name=".eventList" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".editEvent" />
+        <activity android:name=".AddEvent" />
     </application>
 
 </manifest>
