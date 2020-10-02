@@ -18,8 +18,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.testapplication.db.budget.Budget_Impl;
-import com.example.testapplication.db.budget.Ibudget;
+import com.example.testapplication.constants.ConstantBundleKeys;
 import com.example.testapplication.db.category.Category;
 import com.example.testapplication.db.category.ICategory;
 import com.example.testapplication.db.vendor.Vendor_impl;
@@ -29,30 +28,16 @@ public class Addvendor extends AppCompatActivity {
 
     public void sendMessage(View view)
     {
-
         setContentView(R.layout.activity_addpayment);
     }
 
     private String has_title="Add Vendor";// name="null",desc="null",amt="0.00",paid="0.00",balance="0.00",category=null;
     private int id = 0,eid=0;
 
-
-   /* @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        final String[] defaultCat={"Beauty","Decor"};
-        Spinner cat=(Spinner)findViewById(R.id.category);
-        ArrayAdapter<String> catAdapter=new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,defaultCat);
-        catAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        cat.setAdapter(catAdapter);
-    }*/
-
     private class VendorLayoutClass{
         private Context c;
-        public VendorLayoutClass(Context c){
-            vendor=new Vendor_impl(c);
+        public VendorLayoutClass(Context c,int eid){
+            vendor=new Vendor_impl(c,eid);
             this.c=c;
         }
         public Vendor_impl vendor;
@@ -107,10 +92,6 @@ public class Addvendor extends AppCompatActivity {
             ArrayAdapter<String> catAdapter = new ArrayAdapter<String>(c,android.R.layout.simple_spinner_item,defaultCat);
             catAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             cat.setAdapter(catAdapter);
-            if(category!=null){
-                //set category
-            }
-
         }
     }
     VendorLayoutClass vlayout;
@@ -123,31 +104,13 @@ public class Addvendor extends AppCompatActivity {
         Bundle b = getIntent().getExtras();
         if(b!=null) {
             has_title = b.getString("title", "Add Budget");
-            /*name=b.getString("name","Enter name");
-            desc=b.getString("desc","Enter description");
-            amt=b.getString("amount","0.00");
-            category = b.getString("cat",null);
-            balance=b.getString("balance","0.00");*/
             id = b.getInt("id");
-            eid = b.getInt("eid",0);
+            eid = b.getInt(ConstantBundleKeys.EVENT_ID,0);
             Log.d("AddBudgetAct>>", "id -> " + id);
-           /* if(has_title.equalsIgnoreCase("edit budget")){
-                Ibudget budget = new Budget_Impl(this);
-                Budget_Impl budget_model = new Budget_Impl(this);
-                budget_model=budget.getBudgetById(b.getInt("id"));
-                name = budget_model.name;
-                desc = budget_model.desc;
-                amt = budget_model.amt;
-                category = budget_model.cat;
-            }*/
         }
-        vlayout=new VendorLayoutClass(this);
+        vlayout=new VendorLayoutClass(this,eid);
         vlayout.setCategoryAdapter();
-        /*}else{
-            ((EditText)findViewById(R.id.toolbar)).setHint("Budget Name");
-            //((EditText)findViewById(R.id.editTxt_bud_name)).setHint("Budget Name");
 
-        }*/
         Toolbar toolbar = findViewById(R.id.toolbar_add_v); //set toolbar
         setSupportActionBar(toolbar);
         //set toolbar title
@@ -158,16 +121,11 @@ public class Addvendor extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //default previous intent
-                Intent i = new Intent(getApplicationContext(),Vendorview.class);
-                startActivity(i);
+                //Intent i = new Intent(getApplicationContext(),Vendorview.class);
+                //startActivity(i);
+                finish();
             }
         });
-        //added newly
-            Ibudget budget = new Budget_Impl(this);//Budget Interface
-
-
-
-
     }
     //menu layout
     @Override
@@ -194,8 +152,7 @@ public class Addvendor extends AppCompatActivity {
     }
 
     public void handleClick(View v){
-        Ibudget budget = new Budget_Impl(this);
-        VendorLayoutClass vendorlayout = new VendorLayoutClass(this);
+        VendorLayoutClass vendorlayout = new VendorLayoutClass(this,eid);
         if(v.getId() == R.id.imageButton_add_v){
             if (TextUtils.isEmpty(((EditText)findViewById(R.id.name1)).getText().toString())){
                 Toast.makeText(getApplicationContext(), "Please enter vendor name", Toast.LENGTH_SHORT).show();}
@@ -206,8 +163,8 @@ public class Addvendor extends AppCompatActivity {
                 vendorlayout.loadValuesFromLayout();
                 int newid = vendorlayout.vendor.addVendorGetid();
                 Bundle b = new Bundle();
-                b.putInt("eid",eid);//int pk
-                b.putInt("vid", newid);//int pk
+                b.putInt(ConstantBundleKeys.EVENT_ID,eid);//int pk
+                b.putInt("id", newid);//int pk
                 Intent i = new Intent(getApplicationContext(), Addpayment.class);
                 i.putExtras(b);
                 startActivity(i);
@@ -227,7 +184,7 @@ public class Addvendor extends AppCompatActivity {
             //default go back to list view
             Intent i = new Intent(getApplicationContext(),Vendorview.class);
                 Bundle b = new Bundle();
-                b.putInt("eid",eid);//int pk
+                b.putInt(ConstantBundleKeys.EVENT_ID,eid);//int pk
                 i.putExtras(b);
             startActivity(i);
             }
@@ -246,20 +203,12 @@ public class Addvendor extends AppCompatActivity {
             startActivity(i);
         }
     }
-  /*  public void logInputs(){
-        String name = ((EditText) findViewById(R.id.editTxt_bud_name)).getText().toString();
-        Log.d("NAME","name: " + name);
-        String desc = ((EditText) findViewById(R.id.descInput)).getText().toString();
-        Log.d("DESC","desc: " + desc);
-
-        //((TextView) findViewById(R.id.SelectedBudgetBalance)).setVisibility(View.VISIBLE);
-        //((TextView) findViewById(R.id.SelectedBudgetBalance)).setText("" + amount);
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        //refresh activity
+        finish();
+        startActivity(getIntent());
     }
-    public void setBalance(){
-        double amount = Double.parseDouble(((EditText) findViewById(R.id.amountInput)).getText().toString()); //input is always a number
-        Log.d("AMOUNT","amount: " + amount);
-        findViewById(R.id.SelectedBudgetBalance).setVisibility(View.VISIBLE);
-        ((TextView) findViewById(R.id.SelectedBudgetBalance)).setText("" + amount);
-    }*/
 }
 

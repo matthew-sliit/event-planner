@@ -1,8 +1,10 @@
 package com.example.testapplication.db.commontables;
 
+import com.example.testapplication.constants.TableNames;
+
 public class SelectEvent {
 
-    public static final String TABLE_NAME="eventsSelect";
+    public static final String TABLE_NAME= TableNames.SelectEventTable;
     public static final String COLUMN_NAME_EID=EventsTable.EVENT_ID;
     public static final String COLUMN_NAME_ID="id";
     public static final String Event_Tablename=EventsTable.TABLENAME;

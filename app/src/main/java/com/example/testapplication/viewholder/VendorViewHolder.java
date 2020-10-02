@@ -11,10 +11,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.testapplication.Editvendor;
 import com.example.testapplication.R;
+import com.example.testapplication.constants.ConstantBundleKeys;
 import com.example.testapplication.db.vendor.Vendor_impl;
 
 public class VendorViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
     private TextView lb_name, lb_totamt, lb_paidamt; //from layout
+    private int eid = 0;
 
     /*
      * ================== ViewHolder constructor ========================
@@ -23,13 +25,14 @@ public class VendorViewHolder extends RecyclerView.ViewHolder implements View.On
      * @param currentAct
      *         The context of the activity
      */
-    public VendorViewHolder(final View itemView, Context currentAct) {
+    public VendorViewHolder(final View itemView, Context currentAct, int eid) {
         super(itemView);
         lb_name = (TextView) itemView.findViewById(R.id.textView_lb_name);
         lb_totamt = (TextView) itemView.findViewById(R.id.textView_lb_totamt);
         lb_paidamt = (TextView) itemView.findViewById(R.id.textView_lb_paidamt);
         itemView.setOnClickListener(this);
         this.currentAct = currentAct; //assigning context
+        this.eid=eid;
     }
     public Context currentAct;//passed from ActivityClass through Adapter
 
@@ -49,7 +52,7 @@ public class VendorViewHolder extends RecyclerView.ViewHolder implements View.On
             lb_totamt.setText(""+vendor_model.amount);
         }else{
             //this only happens if null list is passed
-            this.vendor_model = new Vendor_impl(currentAct);
+            this.vendor_model = new Vendor_impl(currentAct,eid);
             lb_name.setText("");
             lb_totamt.setText("");
         }
@@ -61,10 +64,10 @@ public class VendorViewHolder extends RecyclerView.ViewHolder implements View.On
      */
     @Override
     public void onClick(View view) {
-        Log.d("VendorViewHolder::", "OnClick>>navigating to edit payment -> "+ getLayoutPosition());
+        //Log.d("VendorViewHolder::", "OnClick>>navigating to edit payment -> "+ getLayoutPosition());
         Intent i = new Intent(view.getContext(), Editvendor.class);
         Bundle b = new Bundle();
-        b.putInt("eid",vendor_model.eid);
+        b.putInt(ConstantBundleKeys.EVENT_ID,vendor_model.eid);
         b.putInt("id",vendor_model.id);//int pk
       //  b.putString("title","Edit Budget");
         /*

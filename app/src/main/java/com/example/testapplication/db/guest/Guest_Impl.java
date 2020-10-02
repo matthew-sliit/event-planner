@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.util.Log;
 
 import com.example.testapplication.db.DBHandler;
+import com.example.testapplication.db.budget.Budget_Impl_updated;
 
 
 import java.util.ArrayList;
@@ -15,10 +16,9 @@ public class Guest_Impl  implements IGuest {
 
     //Class variables
     public String guestname,gender="male",age="adult",invitation="invitation sent",phone,email,address;
-    public int id = 0;
+    public int id = 0, eid = 0;
     private DBHandler db;
     private Context c;
-
 
     /*
     Getters and Setters for class variables
@@ -89,20 +89,24 @@ public class Guest_Impl  implements IGuest {
     }
 
     private Guest_table table = new Guest_table();
-    public Guest_Impl(Context c) {
+    public Guest_Impl(Context c, int eid) {
+        /*
         if(c == null){
             Log.d("Guest_Impl>>","context is null!");
         }else{
             Log.d("Guest_Impl>>","context is NOT null!");
         }
+         */
         db = new DBHandler(c,table.getIfNotExistStatement());
         this.c = c;
+        this.eid = eid;
     }
 
     @Override
-        public void addGuest(String guestname, String gender, String age, String invitation, String phone, String email, String address) {
+        public void addGuest(String guestname, String gender, String age, String invitation, String phone, String email, String address, int eid) {
 
         ContentValues cv= new ContentValues();
+            cv.put(Guest_table.COLUMN_NAME_EID, eid);
             cv.put(table.COLUMN_NAME_GUESTNAME, guestname);
             cv.put(table.COLUMN_NAME_GENDER, gender);
             cv.put(table.COLUMN_NAME_AGE, age);
@@ -116,6 +120,7 @@ public class Guest_Impl  implements IGuest {
     @Override
     public void addGuest() {
         ContentValues cv= new ContentValues();
+        cv.put(Guest_table.COLUMN_NAME_EID, eid);
         cv.put(table.COLUMN_NAME_GUESTNAME, guestname);
         cv.put(table.COLUMN_NAME_GENDER, gender);
         cv.put(table.COLUMN_NAME_AGE, age);
@@ -128,15 +133,16 @@ public class Guest_Impl  implements IGuest {
 
     @Override
         public List<Guest_Impl> getGuestList() {
-            String[] cols = {"id",table.COLUMN_NAME_GUESTNAME,table.COLUMN_NAME_GENDER,table.COLUMN_NAME_AGE,table.COLUMN_NAME_INVITATION,table.COLUMN_NAME_PHONE
+            String[] cols = {Guest_table.COLUMN_NAME_ID,Guest_table.COLUMN_NAME_EID,table.COLUMN_NAME_GUESTNAME,table.COLUMN_NAME_GENDER,table.COLUMN_NAME_AGE,table.COLUMN_NAME_INVITATION,table.COLUMN_NAME_PHONE
             ,table.COLUMN_NAME_EMAIL,table.COLUMN_NAME_ADDRESS};
             try {
-                Cursor c = db.readAllIgnoreArgs(cols, table.TABLE_GUESTS);
+                Cursor c = db.readAllWitSelection(cols, table.TABLE_GUESTS,getWhereEidStatement());
                 List<Guest_Impl> b = new ArrayList<>();
                 Guest_Impl ib;
                 while(c.moveToNext()){
-                    ib = new Guest_Impl(this.c);
+                    ib = new Guest_Impl(this.c,eid);
                     ib.id = c.getInt(c.getColumnIndexOrThrow("id"));//int
+                    ib.eid = c.getInt(c.getColumnIndexOrThrow(Guest_table.COLUMN_NAME_EID));//int
                     ib.guestname = c.getString(c.getColumnIndexOrThrow("guestname"));
                     ib.gender = c.getString(c.getColumnIndexOrThrow("gender"));
                     ib.age = c.getString(c.getColumnIndexOrThrow("age"));
@@ -158,14 +164,15 @@ public class Guest_Impl  implements IGuest {
 
         @Override
         public Guest_Impl getGuestById(int id) {
-            String[] cols = {"id",table.COLUMN_NAME_GUESTNAME,table.COLUMN_NAME_GENDER,table.COLUMN_NAME_AGE,table.COLUMN_NAME_INVITATION,table.COLUMN_NAME_PHONE
+            String[] cols = {Guest_table.COLUMN_NAME_ID,Guest_table.COLUMN_NAME_EID,table.COLUMN_NAME_GUESTNAME,table.COLUMN_NAME_GENDER,table.COLUMN_NAME_AGE,table.COLUMN_NAME_INVITATION,table.COLUMN_NAME_PHONE
                     ,table.COLUMN_NAME_EMAIL,table.COLUMN_NAME_ADDRESS};
             try {
-                Cursor c = db.readWithWhere(cols,table.TABLE_GUESTS,"id","" + id);
+                Cursor c = db.readAllWitSelection(cols,table.TABLE_GUESTS,getWhereEidaBidStatement(eid,id));
                 List<Guest_Impl> b = new ArrayList<>();
-                Guest_Impl ib = new Guest_Impl(this.c);
+                Guest_Impl ib = new Guest_Impl(this.c,eid);
                 while(c.moveToNext()){
                     ib.id = c.getInt(c.getColumnIndexOrThrow("id"));//int
+                    ib.eid = c.getInt(c.getColumnIndexOrThrow(Guest_table.COLUMN_NAME_EID));//int
                     ib.guestname = c.getString(c.getColumnIndexOrThrow("guestname"));
                     ib.gender = c.getString(c.getColumnIndexOrThrow("gender"));
                     ib.age = c.getString(c.getColumnIndexOrThrow("age"));
@@ -190,9 +197,7 @@ public class Guest_Impl  implements IGuest {
 
         @Override
         public void removeGuest(int guestID) {
-            String[] idValue = {"" + guestID};
-            db.delete("id",idValue,table.TABLE_GUESTS);
-            Log.d("Delete>>","del= "+guestID);
+            db.delete(table.TABLE_GUESTS,getWhereEidaBidStatement(guestID),null);
 
         }
 
@@ -217,8 +222,9 @@ public class Guest_Impl  implements IGuest {
                 cv.put(cols[col],v[col]);
                 Log.d("Guest_Impl>>","col->"+cols[col] + " val->"+v[col]);
             }
-            String id2Str = "" + obj.id;
-            db.update(cv,"id",id2Str,table.TABLE_GUESTS);//update using id
+            //String id2Str = "" + obj.id;
+           // db.update(cv,"id",id2Str,table.TABLE_GUESTS);//update using id
+            db.update(cv,getUpdateWhere(obj.eid,obj.id), Guest_table.TABLE_GUESTS);
 
         }
 
@@ -235,5 +241,19 @@ public class Guest_Impl  implements IGuest {
             Log.d("Guest_Impl>>","desc -> " + b.address);
         }
     }
+    private String getWhereEidStatement(){
+        return Guest_table.COLUMN_NAME_EID + " LIKE " + eid;
     }
+    private String getWhereEidaBidStatement(int gid){
+        return Guest_table.COLUMN_NAME_EID + " LIKE " + eid + " AND " + Guest_table.COLUMN_NAME_ID + " LIKE " + gid;
+    }
+    private String getWhereEidaBidStatement(int eid, int gid){
+        return Guest_table.COLUMN_NAME_EID + " LIKE " + eid + " AND " + Guest_table.COLUMN_NAME_ID + " LIKE " + gid;
+    }
+
+    private String getUpdateWhere(int eid_, int gid_){
+        return Guest_table.COLUMN_NAME_EID + " LIKE " + eid_ +
+                " AND " + Guest_table.COLUMN_NAME_ID + " LIKE " + gid_;
+    }
+}
 

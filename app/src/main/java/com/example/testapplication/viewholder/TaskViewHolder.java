@@ -18,13 +18,14 @@ import com.example.testapplication.db.task.Task_Impl;
 public class TaskViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     TextView lg_tname, lg_status;
-
-    public TaskViewHolder(final View itemView, Context currentAct) {
+    private int eid = 0;
+    public TaskViewHolder(final View itemView, Context currentAct, int eid) {
         super(itemView);
         lg_tname = (TextView) itemView.findViewById(R.id.lg_tname);
         lg_status = (TextView) itemView.findViewById(R.id.lg_status);
         itemView.setOnClickListener(this);
         this.currentAct = currentAct; //assigning context
+        this.eid = eid;
     }
 
     public Task_Impl task_;
@@ -34,7 +35,6 @@ public class TaskViewHolder extends RecyclerView.ViewHolder implements View.OnCl
             this.task_ = task_;
             lg_tname.setText(task_.tname);
             if(task_.status.equals("completed")) {
-
                 lg_status.setText(task_.status);
                 lg_status.setTextColor(Color.GREEN);
             }else if(task_.status.equals("pending")) {
@@ -43,7 +43,7 @@ public class TaskViewHolder extends RecyclerView.ViewHolder implements View.OnCl
             }
         }else{
             //this only happens if null list is passed
-            this.task_ = new Task_Impl(currentAct);
+            this.task_ = new Task_Impl(currentAct,eid);
             lg_tname.setText("");
             lg_status.setText("");
         }

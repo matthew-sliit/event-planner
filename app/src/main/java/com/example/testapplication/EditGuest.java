@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.testapplication.adapter.CompanionAdapter;
+import com.example.testapplication.constants.ConstantBundleKeys;
 import com.example.testapplication.db.guest.Guest_Impl;
 
 public class EditGuest extends AppCompatActivity {
@@ -34,12 +35,13 @@ public class EditGuest extends AppCompatActivity {
     private class GuestLayoutClass {
 
         String guestname, gender, age, invitation, phone, email, address;
-        public int id = 0,eid=0;
+        public int id = 0,eid_g=0;
         private Context c;
 
-        public GuestLayoutClass(Context c) {
-            guest_ = new Guest_Impl(c);
+        public GuestLayoutClass(Context c,int eid) {
+            guest_ = new Guest_Impl(c,eid);
             this.c = c;
+            this.eid_g=eid;
         }
 
         public Guest_Impl guest_;
@@ -164,11 +166,19 @@ public class EditGuest extends AppCompatActivity {
     Button closeButton;
     AlertDialog.Builder builder;
     GuestLayoutClass glayout;
-
+    /*
+    ====================== OnCreate =========================
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_guest);
+
+        Bundle b = getIntent().getExtras();
+        if(b!=null) {
+            eid = b.getInt(ConstantBundleKeys.EVENT_ID, 0);
+            id = b.getInt("id");
+        }
 
         Toolbar toolbar = findViewById(R.id.tb_editguest);
         setSupportActionBar(toolbar);
@@ -176,20 +186,17 @@ public class EditGuest extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), ViewGuest.class);
-                startActivity(i);
+               // Intent i = new Intent(getApplicationContext(), ViewGuest.class);
+                //startActivity(i);
+                finish();
             }
         });
 
-        glayout = new GuestLayoutClass(this);
+        glayout = new GuestLayoutClass(this,eid);
         glayout.InitVariables();
         glayout.setRadioEvents();
-        Bundle b = getIntent().getExtras();
         if (b != null) {
-            id = b.getInt("id");
-            Log.d("RELOAD", "id = " + id);
             glayout.setValuesToLayout(id);
-
         }
         closeButton = (Button) findViewById(R.id.deleteguestbutton);
         builder = new AlertDialog.Builder(this);
@@ -207,7 +214,9 @@ public class EditGuest extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int id) {
                                 glayout.guest_.removeGuest(glayout.guest_.id);
                                 Intent i = new Intent(getApplicationContext(), ViewGuest.class);
-
+                                Bundle b = new Bundle();
+                                b.putInt(ConstantBundleKeys.EVENT_ID,eid);
+                                i.putExtras(b);
                                 Toast.makeText(getApplicationContext(), "you deleted",
                                         Toast.LENGTH_SHORT).show();
                                 startActivity(i);
@@ -237,7 +246,11 @@ public class EditGuest extends AppCompatActivity {
                 glayout.loadValuesFromLayout();
                 glayout.guest_.updateGuest(glayout.guest_);
                 Intent i = new Intent(getApplicationContext(), ViewGuest.class);
+                Bundle b = new Bundle();
+                b.putInt(ConstantBundleKeys.EVENT_ID,eid);
+                i.putExtras(b);
                 startActivity(i);
+                //finish();
             }
         });
         CompanionAdapter adapter = new CompanionAdapter(this,id,eid); //Budget Adapter
@@ -255,6 +268,7 @@ public class EditGuest extends AppCompatActivity {
             Bundle b = new Bundle();
             // b.putInt("vid");//int pk
             b.putInt("gid",glayout.guest_.id);//int pk
+            b.putInt(ConstantBundleKeys.EVENT_ID,eid);//int pk
             i.putExtras(b);
             startActivity(i);
         }

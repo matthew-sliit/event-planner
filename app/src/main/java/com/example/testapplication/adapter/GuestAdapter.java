@@ -23,13 +23,16 @@ public class GuestAdapter extends RecyclerView.Adapter {
      * ================== Adapter constructor ========================
      */
     private Context context;
-    public GuestAdapter(Context currentAct) {
+    private int eid = 0;
+    public GuestAdapter(Context currentAct, int eid) {
         if(currentAct == null){
             Log.d("GuestAdapter>>","CurrentAct is null!");
         }else{
             Log.d("GuestAdapter>>","CurrentAct is NOT null!");
         }
-        IGuest guest = new Guest_Impl(currentAct);
+        this.eid = eid;
+        this.context = currentAct;
+        IGuest guest = new Guest_Impl(currentAct,eid);
         List<Guest_Impl> lb = new ArrayList<Guest_Impl>();
         lb = guest.getGuestList(); //error
         if (lb != null) {
@@ -38,15 +41,13 @@ public class GuestAdapter extends RecyclerView.Adapter {
 
             }
         }
-        this.context = currentAct;
-
     }
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         final View view = LayoutInflater.from(parent.getContext()).inflate(viewType, parent, false);
-        return new GuestViewHolder(view,context);
+        return new GuestViewHolder(view,context,eid);
     }
 
     @Override

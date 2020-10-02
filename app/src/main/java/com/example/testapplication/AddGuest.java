@@ -24,6 +24,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.testapplication.constants.ConstantBundleKeys;
 import com.example.testapplication.db.guest.Guest_Impl;
 import com.example.testapplication.db.guest.IGuest;
 
@@ -35,16 +36,17 @@ public class AddGuest extends AppCompatActivity {
 
 
     private String has_title="Add Guest";//,guestname="null",gender,age,invitation,phone,email,address;
-    private int id = 0;
+    private int id = 0,eid=0;
 
     private class GuestLayoutClass{
 
         String guestname,gender,age,invitation,phone,email,address;
-        public int id = 0;
+        public int id = 0,eid_g=0;
         private Context c;
-        public GuestLayoutClass(Context c) {
-             guest_=new Guest_Impl(c);
+        public GuestLayoutClass(Context c, int eid) {
+             guest_=new Guest_Impl(c,eid);
              this.c=c;
+             this.eid_g=eid;
         }
        public Guest_Impl guest_;
         public void InitVariables(){
@@ -131,17 +133,25 @@ public class AddGuest extends AppCompatActivity {
     }
 
      GuestLayoutClass glayout;
+    /*
+    ================= OnCreate =======================
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_guest);
-    glayout= new GuestLayoutClass(this);
-        final Context context = this;
+
         Bundle b = getIntent().getExtras();
+        if(b!=null) {
+            eid = b.getInt(ConstantBundleKeys.EVENT_ID, 0);
+        }
+
+    glayout= new GuestLayoutClass(this,eid);
+        final Context context = this;
         glayout.InitVariables();
         glayout.setRadioEvents();
 
-       /* Toolbar toolbar = findViewById(R.id.tbAddguest); //set toolbar
+       Toolbar toolbar = findViewById(R.id.tbAddGuest); //set toolbar
         setSupportActionBar(toolbar);
         //set toolbar title
         toolbar.setTitle("Add Guest");//either default or from bundle
@@ -151,10 +161,11 @@ public class AddGuest extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //default previous intent
-                Intent i = new Intent(getApplicationContext(),ViewGuest.class);
-                startActivity(i);
+                //Intent i = new Intent(getApplicationContext(),ViewGuest.class);
+                //startActivity(i);
+                finish();
             }
-        });*/
+        });
 
     }
 
@@ -183,7 +194,7 @@ public class AddGuest extends AppCompatActivity {
     }
 
     public void handleClick(View v){
-        IGuest guest = new Guest_Impl(this);
+        IGuest guest = new Guest_Impl(this,eid);
         GuestLayoutClass guestlayout = glayout;
 
         if(v.getId() == R.id.addguestbutton){
@@ -195,6 +206,9 @@ public class AddGuest extends AppCompatActivity {
             //default go back to list view
 
             Intent i = new Intent(getApplicationContext(),ViewGuest.class);
+            Bundle b = new Bundle();
+            b.putInt(ConstantBundleKeys.EVENT_ID,eid);
+            i.putExtras(b);
             startActivity(i);
         }
 
@@ -202,6 +216,9 @@ public class AddGuest extends AppCompatActivity {
     public void openCompanion(View v){
 
             Intent i = new Intent(getApplicationContext(),AddCompanions.class);
+        Bundle b = new Bundle();
+        b.putInt(ConstantBundleKeys.EVENT_ID,eid);
+            i.putExtras(b);
             startActivity(i);
         }
 
@@ -209,6 +226,9 @@ public class AddGuest extends AppCompatActivity {
     public void BackToViewGuest(View v){
 
         Intent i = new Intent(getApplicationContext(),ViewGuest.class);
+        Bundle b = new Bundle();
+        b.putInt(ConstantBundleKeys.EVENT_ID,eid);
+        i.putExtras(b);
         startActivity(i);
     }
 

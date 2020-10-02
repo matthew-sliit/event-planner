@@ -21,6 +21,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.testapplication.constants.ConstantBundleKeys;
 import com.example.testapplication.db.task.Task_Impl;
 
 import java.text.SimpleDateFormat;
@@ -43,12 +44,12 @@ public class EditTask extends AppCompatActivity {
     private class TaskLayoutClass {
 
         String tname, status, category;
-        public int id = 0;
+        public int id = 0, eid__ = 0;
         private Context c;
-
-        public TaskLayoutClass(Context c) {
-            task_ = new Task_Impl(c);
+        public TaskLayoutClass(Context c, int eid_) {
+            task_ = new Task_Impl(c, eid_);
             this.c = c;
+            this.eid__ = eid_;
         }
 
         public Task_Impl task_;
@@ -91,7 +92,8 @@ public class EditTask extends AppCompatActivity {
         public void setValuesToLayout(int id) {
             this.InitVariables();
 
-            this.task_ = task_.getTaskById(id);
+            this.task_ = task_.getTaskById(id, eid__);
+            Log.d("EditTask>>","id = " + id + " eid=" + eid__);
             ((EditText) findViewById(R.id.et_tname)).setText(this.task_.tname, TextView.BufferType.EDITABLE);
             ((EditText) findViewById(R.id.et_tdesc)).setText(this.task_.description, TextView.BufferType.EDITABLE);
             ((EditText) findViewById(R.id.et_tdate)).setText(this.task_.tdate, TextView.BufferType.EDITABLE);
@@ -134,25 +136,26 @@ public class EditTask extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_task);
 
+        Bundle b = getIntent().getExtras();
+        if(b!=null) {
+            id=b.getInt("id",0);
+            eid = b.getInt(ConstantBundleKeys.EVENT_ID, 0);
+        }
+
         Toolbar toolbar = findViewById(R.id.addtb);
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.back_btn);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(),taskList.class);
-                startActivity(i);
+                finish();
             }
         });
 
-        tlayout=new TaskLayoutClass(this);
+        tlayout=new TaskLayoutClass(this,eid);
         tlayout.InitVariables();
         tlayout.setRadioEvents();
-        Bundle b = getIntent().getExtras();
         if(b!=null){
-
-            id=b.getInt("id",0);
-            eid=b.getInt("eid",0);
             tlayout.setValuesToLayout(id);
         }
         closeButton = (Button) findViewById(R.id.tdelete_btn);
@@ -171,7 +174,9 @@ public class EditTask extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int id) {
                                 tlayout.task_.removeTask(tlayout.task_.id);
                                 Intent i = new Intent(getApplicationContext(),taskList.class);
-
+                                Bundle b = new Bundle();
+                                b.putInt(ConstantBundleKeys.EVENT_ID,eid);
+                                i.putExtras(b);
                                 Toast.makeText(getApplicationContext(),"Task Deleted",
                                         Toast.LENGTH_SHORT).show();
                                 startActivity(i);
@@ -200,8 +205,11 @@ public class EditTask extends AppCompatActivity {
             public void onClick(View view) {
                 tlayout.loadValuesFromLayout();
                 tlayout.task_.updateTask(tlayout.task_);
+                /*
                 Intent i = new Intent(getApplicationContext(),taskList.class);
                 startActivity(i);
+                 */
+                finish();
             }
         });
 
@@ -232,6 +240,11 @@ public class EditTask extends AppCompatActivity {
         });
 
     }
-
-
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        //refresh activity
+        finish();
+        startActivity(getIntent());
+    }
 }

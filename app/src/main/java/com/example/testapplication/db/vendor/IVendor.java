@@ -12,7 +12,7 @@ public interface IVendor {
 
     void updateVendor(Vendor_impl obj);
 
-    List getVendor();
+    List<Vendor_impl> getVendor();
 
     Vendor_impl getVendorbyid(int id);
 

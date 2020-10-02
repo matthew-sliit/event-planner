@@ -132,9 +132,8 @@ public class AddEvent extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //default previous intent
-                //Intent i = new Intent(getApplicationContext(),taskList.class);
-                //startActivity(i);
+                Intent i = new Intent(getApplicationContext(),eventList.class);
+                startActivity(i);
             }
         });
 

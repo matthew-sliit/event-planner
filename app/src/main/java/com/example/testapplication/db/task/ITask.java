@@ -9,7 +9,7 @@ public interface ITask {
     void addTask(String tname, String category, String desc, String status, String date);
     void addTask();
     List<Task_Impl> getTaskList();
-    Task_Impl getTaskById(int id);
+    Task_Impl getTaskById(int eid, int id);
     //pass id since name can be duplicated
     void removeTask(int taskID);
     void updateTask(String[] colNamesToUpdate, String[] values);

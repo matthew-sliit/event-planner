@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
 
+import com.example.testapplication.constants.TableNames;
 import com.example.testapplication.db.DBHandler;
 import com.example.testapplication.db.commontables.PaymentTable;
 
@@ -35,7 +36,7 @@ public class Budget_payments {
     //constructor
     public Budget_payments(Context c){
         currentAct = c;
-        tableColNames = new PaymentTable("Budget_PaymentTest","Bid","Budget");
+        tableColNames = new PaymentTable(TableNames.Budget_payment,"Bid","Budget");
         db=new DBHandler(c,tableColNames.getIfNotExistStatement());
     }
     public void addPayment(int event_id, int budget_id){

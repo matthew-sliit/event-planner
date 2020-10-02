@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.testapplication.constants.ConstantBundleKeys;
 import com.example.testapplication.db.category.Category;
 import com.example.testapplication.db.category.ICategory;
 
@@ -30,12 +31,12 @@ public class EditCategoryActivity extends AppCompatActivity {
         Log.d("EditCategoryAct"," has started! ");
         Bundle b = getIntent().getExtras();
         if(b!=null){
-            pre_intent = b.getString("pre_activity","settingCAT");
-            is_in_setting = b.getString("is_in_setting","true");
-            edit = b.getString("cat_edit","none");
-            is_in_cat = b.getString("set_to_cat","true");
-            has_title = b.getString("title","none");
-            id = b.getInt("id");
+            pre_intent = b.getString(ConstantBundleKeys.PRE_ACTIVITY,"settingCAT");
+            is_in_setting = b.getString(ConstantBundleKeys.IS_IN_SETTING,"true");
+            edit = b.getString(ConstantBundleKeys.EDIT_CATEGORY_MODE,"none");
+            is_in_cat = b.getString(ConstantBundleKeys.SET_TO_CATEGORY,"true");
+            has_title = b.getString(ConstantBundleKeys.TITLE,"none");
+            id = b.getInt(ConstantBundleKeys.ID);
             Log.d("RELOAD","previous activity = " + pre_intent);
             Log.d("RELOAD","is_in_setting = " + is_in_setting);
             Log.d("RELOAD","is_in_cat = " + is_in_cat);
@@ -43,36 +44,46 @@ public class EditCategoryActivity extends AppCompatActivity {
         ((TextView)findViewById(R.id.editcat_er_msg)).setTextColor(Color.parseColor("#FFFFFF"));
         Toolbar toolbar = (Toolbar) findViewById(R.id.editcat_menu);
         setSupportActionBar(toolbar);
+        Log.d("EditCat>>","has_title -> " + has_title);
         if(!has_title.equalsIgnoreCase("none")){
+
             toolbar.setTitle(has_title);
         }
         toolbar.setNavigationIcon(R.drawable.back_btn);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                /*
                 Bundle b = new Bundle();
-                b.putString("pre_activity",pre_intent);
-                b.putString("is_in_setting",is_in_setting);
+                b.putString(ConstantBundleKeys.PRE_ACTIVITY,pre_intent);
+                b.putString(ConstantBundleKeys.IS_IN_SETTING,is_in_setting);
                 b.putString("edit","Manage Category");
-                b.putString("set_to_cat","true");
+                b.putString(ConstantBundleKeys.SET_TO_CATEGORY,"true");
 
                 Log.d("EditCatAct>>","getting id as " + id);
                 Intent j;
                 if(pre_intent.equalsIgnoreCase("add budget") || pre_intent.equalsIgnoreCase("edit budget")){
                     j = new Intent(getApplicationContext(), AddEditBudgetActivity.class);
-                    b.putString("title",pre_intent);
-                    b.putInt("id",id);
+                    b.putString(ConstantBundleKeys.TITLE,pre_intent);
+                    b.putInt(ConstantBundleKeys.ID,id);
                     Log.d("EditCatAct>>","putting id as " + id);
                 }else {
                     j = new Intent(getApplicationContext(), AppSettingsActivity.class);
-                    b.putString("title","Manage Category");
+                    b.putString(ConstantBundleKeys.TITLE,"Manage Category");
                 }
                 j.putExtras(b);
                 startActivity(j);
+                 */
+                finish();
             }
         });
         final TextView text = (TextView)findViewById(R.id.cate_name);
-        text.setText(edit);
+        if(edit.equalsIgnoreCase("add name")){
+            text.setText("");
+            text.setHint("Enter category name");
+        }else{
+            text.setText(edit);
+        }
         final Context context = this; //context set
         //for text box
         ((EditText)findViewById(R.id.cate_name)).addTextChangedListener(new TextWatcher() {
@@ -100,18 +111,6 @@ public class EditCategoryActivity extends AppCompatActivity {
                 Log.d("EditCategoryAct","EditText After TextChanged!");
             }
         });
-        /*
-        if (!b){
-                    Log.d("EditCategoryAct","EditText OnBlur!");
-                    if (category.hasCategory(inputCategory.getText().toString())) {
-                        ((TextView) findViewById(R.id.editcat_er_msg)).setText(R.string.category_error_txt);
-                        ((TextView) findViewById(R.id.editcat_er_msg)).setTextColor(Color.parseColor("#FF0000"));
-                    }else{
-                        ((TextView)findViewById(R.id.editcat_er_msg)).setTextColor(Color.parseColor("#FFFFFF"));
-                    }
-                }
-         */
-        //save btn
         (findViewById(R.id.cate_save)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -136,15 +135,18 @@ public class EditCategoryActivity extends AppCompatActivity {
                         ((TextView) findViewById(R.id.editcat_er_msg)).setTextColor(Color.parseColor("#FF0000"));
                     }
                 }
+                /*
                 Bundle b = new Bundle();
-                b.putString("pre_activity",pre_intent);
-                b.putString("is_in_setting",is_in_setting);
+                b.putString(ConstantBundleKeys.PRE_ACTIVITY,pre_intent);
+                b.putString(ConstantBundleKeys.IS_IN_SETTING,is_in_setting);
                 b.putString("edit","Manage Category");
-                b.putString("title","Manage Category");
-                b.putString("set_to_cat","true");
+                b.putString(ConstantBundleKeys.TITLE,"Manage Category");
+                b.putString(ConstantBundleKeys.SET_TO_CATEGORY,"true");
                 Intent j = new Intent(getApplicationContext(),AppSettingsActivity.class);
                 j.putExtras(b);
                 startActivity(j);
+                 */
+                finish();
             }
         });
         //delete btn
@@ -157,11 +159,11 @@ public class EditCategoryActivity extends AppCompatActivity {
                 category.deleteCategory(text.getText().toString());
 
                 Bundle b = new Bundle();
-                b.putString("pre_activity",pre_intent);
-                b.putString("is_in_setting",is_in_setting);
+                b.putString(ConstantBundleKeys.PRE_ACTIVITY,pre_intent);
+                b.putString(ConstantBundleKeys.IS_IN_SETTING,is_in_setting);
                 b.putString("edit","Manage Category");
-                b.putString("title","Manage Category");
-                b.putString("set_to_cat","true");
+                b.putString(ConstantBundleKeys.TITLE,"Manage Category");
+                b.putString(ConstantBundleKeys.SET_TO_CATEGORY,"true");
                 Intent j = new Intent(getApplicationContext(),AppSettingsActivity.class);
                 j.putExtras(b);
                 startActivity(j);
@@ -176,8 +178,6 @@ public class EditCategoryActivity extends AppCompatActivity {
             TextView inputCategory = (TextView) findViewById(R.id.cate_name);
             String s = category.addCategory(inputCategory.getText().toString());
         }
-
-
         Bundle b = new Bundle();
         b.putString("pre_activity",pre_intent);
         b.putString("is_in_setting",is_in_setting);

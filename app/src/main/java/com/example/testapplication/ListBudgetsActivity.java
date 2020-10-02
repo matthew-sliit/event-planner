@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.example.testapplication.adapter.BudgetAdapter;
+import com.example.testapplication.constants.ConstantBundleKeys;
 import com.example.testapplication.db.budget.Budget_Impl_updated;
 import com.example.testapplication.db.budget.Ibudget;
 
@@ -26,16 +27,21 @@ public class ListBudgetsActivity extends AppCompatActivity {
 
         Bundle b = getIntent().getExtras();
         if(b!=null){
-            eid = b.getInt("eid",0);
+            eid = b.getInt(ConstantBundleKeys.EVENT_ID,0);
         }
+        Log.d("BudgetList>>","received eid -> " + eid);
 
         Toolbar toolbar = findViewById(R.id.abb_menu);
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.back_btn);
+
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(),GraphActivity.class);
+                Bundle bs = new Bundle();
+                bs.putInt(ConstantBundleKeys.EVENT_ID,eid);
+                i.putExtras(bs);
                 startActivity(i);
             }
         });
@@ -66,45 +72,23 @@ public class ListBudgetsActivity extends AppCompatActivity {
     }
     */
 
-        /*
-        ((Button)findViewById(R.id.lb_btn)).setText("Julia");
-        ((TextView)findViewById(R.id.lb_desc)).setText("B:200000.00\nP:0.00");
-        //((TextView)findViewById(R.id.lb_desc)).setVisibility(View.VISIBLE);
-        ((TextView)findViewById(R.id.lb_desc)).setTextColor(getResources().getColor(R.color.black));
-
-         */
-
     public void handleOnClick(View v){
         if(v.getId()==R.id.lb_add_budget){
             Intent i = new Intent(getApplicationContext(), AddEditBudgetActivity.class);
             Bundle b = new Bundle();
-            b.putString("title","Add Budget");
+            b.putInt(ConstantBundleKeys.EVENT_ID,eid);
+            b.putString(ConstantBundleKeys.TITLE,"Add Budget");
             Log.d("ListBudAct>>","Navigating to Add New Budget!");
             i.putExtras(b);
             startActivity(i);
         }
         if(v.getId()==R.id.btn_lb_graph){
             Intent i = new Intent(getApplicationContext(), GraphActivity.class);
-            startActivity(i);
-        }
-        /*
-        if(v.getId()==R.id.lb_add_budget){
-            Intent i = new Intent(getApplicationContext(),AddBudgetActivity.class);
-            startActivity(i);
-        }
-        if(v.getId()==R.id.lb_btn){
-            Intent i = new Intent(getApplicationContext(),AddBudgetActivity.class);
             Bundle b = new Bundle();
-            b.putString("title","Edit Budget");
-            b.putString("name","Julia");
-            b.putString("amount","200000.00");
-            b.putString("balance","200000.00");
-            b.putString("paid","0.00");
+            b.putInt(ConstantBundleKeys.EVENT_ID,eid);
             i.putExtras(b);
             startActivity(i);
         }
-
-         */
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -119,7 +103,7 @@ public class ListBudgetsActivity extends AppCompatActivity {
             //Settings btn
             Intent i = new Intent(getApplicationContext(),AppSettingsActivity.class);
             Bundle b = new Bundle();
-            b.putString("pre_activity","listBudget");
+            b.putString(ConstantBundleKeys.PRE_ACTIVITY,"listBudget");
             i.putExtras(b);
             startActivity(i);
             //finish();//check

@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface IGuest {
 
-    void addGuest(String guestname, String gender, String age, String invitation, String phone, String email, String address);
+    void addGuest(String guestname, String gender, String age, String invitation, String phone, String email, String address, int eid);
     void addGuest();
     List<Guest_Impl> getGuestList();
     Guest_Impl getGuestById(int id);

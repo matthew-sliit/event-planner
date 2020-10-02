@@ -22,13 +22,15 @@ public class VendorAdapter extends RecyclerView.Adapter{
      * ================== Adapter constructor ========================
      */
     private Context context;
-    public VendorAdapter(Context currentAct) {
+    private int eid = 0;
+    public VendorAdapter(Context currentAct, int eid) {
         if(currentAct == null){
             Log.d("BudgetAdapter>>","CurrentAct is null!");
         }else{
             Log.d("BudgetAdapter>>","CurrentAct is NOT null!");
         }
-        IVendor budget = new Vendor_impl(currentAct);
+        this.eid = eid;
+        IVendor budget = new Vendor_impl(currentAct,eid);
         List<Vendor_impl> lb = new ArrayList<Vendor_impl>();
         lb = budget.getVendor(); //error
         if (lb != null) {
@@ -55,7 +57,7 @@ public class VendorAdapter extends RecyclerView.Adapter{
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(final ViewGroup parent, final int viewType) {
         final View view = LayoutInflater.from(parent.getContext()).inflate(viewType, parent, false);
-        return new VendorViewHolder(view,context);
+        return new VendorViewHolder(view,context,eid);
     }
 
     /**

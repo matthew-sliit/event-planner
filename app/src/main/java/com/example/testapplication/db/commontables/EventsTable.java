@@ -1,7 +1,9 @@
 package com.example.testapplication.db.commontables;
 
+import com.example.testapplication.constants.TableNames;
+
 public class EventsTable {
-    public static final String TABLENAME= "EventTableTest1";
+    public static final String TABLENAME= TableNames.EventTable;
     public static final String EVENT_ID = "EventID";
     public static final String COLUMN_NAME_EVENTNAME = "Event_Name";
     public static final String COLUMN_NAME_DATE = "Event_Date";

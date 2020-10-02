@@ -92,22 +92,30 @@ public class Event_Impl implements IEvent{
     public void selectEvent(Event_Impl obj) {
         String[] cols = {SelectEvent.COLUMN_NAME_EID,SelectEvent.COLUMN_NAME_ID};
         Cursor c = selectdb.readAllIgnoreArgs(cols,SelectEvent.TABLE_NAME);
-        int eid = 0, sid = 0;
+        int eid = -1, sid = -1;
         try {
             while (c.moveToNext()) {
                 eid = c.getInt(c.getColumnIndexOrThrow(SelectEvent.COLUMN_NAME_EID));
                 sid = c.getInt(c.getColumnIndexOrThrow(SelectEvent.COLUMN_NAME_ID));
                 //String sName = c.getString(c.getColumnIndexOrThrow(SelectEvent.COLUMN_NAME_EVENTNAME));
             }
-            //Log.d("EventImpl>>","setSelectEvent reads eid -> " + eid);
-            if (eid != obj.id) {
-                //Log.d("EventImpl>>","setSelectEvent resets eid -> " + obj.id);
+            Log.d("EventImpl>>", "setSelectEvent reads eid from db -> " + eid);
+            if(eid==-1){
+                //no record
                 ContentValues cv = new ContentValues();
                 cv.put(SelectEvent.COLUMN_NAME_EID, obj.id);
                 cv.put(SelectEvent.COLUMN_NAME_EVENTNAME, obj.ename);
-                selectdb.update(cv, SelectEvent.COLUMN_NAME_ID, String.valueOf(sid), SelectEvent.TABLE_NAME);
-            }else{
-                //don't update, pointless
+                selectdb.insert(cv,SelectEvent.TABLE_NAME);
+            }else {
+                if (eid != obj.id) {
+                    Log.d("EventImpl>>", "setSelectEvent resets eid in db -> " + obj.id);
+                    ContentValues cv = new ContentValues();
+                    cv.put(SelectEvent.COLUMN_NAME_EID, obj.id);
+                    cv.put(SelectEvent.COLUMN_NAME_EVENTNAME, obj.ename);
+                    selectdb.update(cv, SelectEvent.COLUMN_NAME_ID, String.valueOf(sid), SelectEvent.TABLE_NAME);
+                } else {
+                    //don't update, pointless
+                }
             }
         }catch (CursorIndexOutOfBoundsException e){
             Log.d("Event_impl>>","Cursor Error in selectEvent!");
@@ -126,7 +134,7 @@ public class Event_Impl implements IEvent{
             while (c.moveToNext()) {
                 sid = c.getInt(c.getColumnIndexOrThrow(SelectEvent.COLUMN_NAME_EID));
             }
-            //Log.d("EventImpl>>","getSelectEvent eid-> "  + sid);
+            Log.d("EventImpl>>","getSelectEvent eid-> "  + sid);
             return sid;
         }catch (CursorIndexOutOfBoundsException e){
             return -1;
@@ -147,7 +155,6 @@ public class Event_Impl implements IEvent{
                 ib.ename = c.getString(c.getColumnIndexOrThrow(EventsTable.COLUMN_NAME_EVENTNAME));
                 ib.edate = c.getString(c.getColumnIndexOrThrow(EventsTable.COLUMN_NAME_DATE));
                 ib.etime = c.getString(c.getColumnIndexOrThrow(EventsTable.COLUMN_NAME_TIME));
-
                 b.add(ib);
             }
             return b;

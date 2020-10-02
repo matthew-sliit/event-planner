@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 
 import com.example.testapplication.adapter.EventAdapter;
@@ -25,6 +26,13 @@ public class eventList extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar_add_event);
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.back_btn);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Intent i = new Intent(getApplicationContext(),homepg.class);
+                //startActivity(i);
+            }
+        });
 
 
         IEvent event = new Event_Impl(this);
@@ -44,6 +52,13 @@ public class eventList extends AppCompatActivity {
             startActivity(i);
         }
 
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK ) {
+           finish();
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
 

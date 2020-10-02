@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.testapplication.adapter.BudgetPaymentAdapter;
+import com.example.testapplication.constants.ConstantBundleKeys;
 import com.example.testapplication.db.budget.Budget_Impl_updated;
 import com.example.testapplication.db.budget.Budget_payments;
 import com.example.testapplication.db.budget.Ibudget;
@@ -49,9 +50,11 @@ public class AddEditBudgetActivity extends AppCompatActivity{
         Budget_payments budget_payments;
 
         public BudgetLayoutClass(Context c){
+            Log.d("Blayout>>","Init using eid -> " + eid);
             this.c = c;
             budget_model = new Budget_Impl_updated(c,eid);
             budget_payments=  new Budget_payments(c);
+            budget_model.eid = eid;
             initVar();
         }
         public void initVar(){
@@ -128,16 +131,18 @@ public class AddEditBudgetActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_edit_budget);
         final Context context = this;
-        blayout = new BudgetLayoutClass(this);
         //budget = new Budget_Impl_updated(this,eid);
-        Ibudget ibudget = new Budget_Impl_updated(this,eid);
+        Ibudget ibudget;
         Bundle b = getIntent().getExtras();
+        blayout = new BudgetLayoutClass(this);
         if(b!=null){
             has_title=b.getString("title","Add Budget");
-            id = b.getInt("id",0);
-            eid = b.getInt("eid",0);
+            id = b.getInt(ConstantBundleKeys.ID,0);
+            eid = b.getInt(ConstantBundleKeys.EVENT_ID,0);
             Log.d("AddBudgetAct>>","id -> " + id);
+            blayout = new BudgetLayoutClass(this);//re initialize
             if(has_title.equalsIgnoreCase("edit budget")){
+                ibudget = new Budget_Impl_updated(this,eid);
                 blayout.budget_model = ibudget.getBudgetById(eid,id);
                 category = blayout.budget_model.cat;
                 blayout.setValuesToLayout(eid,id);
@@ -146,6 +151,7 @@ public class AddEditBudgetActivity extends AppCompatActivity{
             //blayout.budget_model = new Budget_Impl_updated(this,eid);
             blayout.initValuesToLayout();
         }
+        Log.d("BudgetAddEdit>>","received eid -> " + eid);
         Toolbar toolbar = findViewById(R.id.abb_menu); //set toolbar
         setSupportActionBar(toolbar);
         //set toolbar title
@@ -158,6 +164,9 @@ public class AddEditBudgetActivity extends AppCompatActivity{
                 //default previous intent
                 Intent i = new Intent(getApplicationContext(),ListBudgetsActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);//clear stack
+                Bundle b = new Bundle();
+                b.putInt(ConstantBundleKeys.EVENT_ID,eid);
+                i.putExtras(b);
                 startActivity(i);
                 finish();
             }
@@ -271,23 +280,24 @@ public class AddEditBudgetActivity extends AppCompatActivity{
      */
     public void handleClick(View v){
         Ibudget budget = new Budget_Impl_updated(this,eid);
+        Bundle b = new Bundle();
+        b.putInt(ConstantBundleKeys.EVENT_ID,eid);
         if(v.getId() == R.id.btn_add_budpay){
             //adding pay before creating budget will cause problems
             Log.d("BUTTON","AddPayment Button Pressed!");
             if(validated()) {
-                Bundle b = new Bundle();
                 if(has_title.equalsIgnoreCase("add budget")){
                     blayout.loadValuesFromLayout();
                     int newId = blayout.budget_model.addBudgetGetId();
-                    b.putInt("bid",newId);
+                    b.putInt(ConstantBundleKeys.BUDGET_ID,newId);
                     b.putBoolean("bid_safeAdd",true);
                 }else{
-                    b.putInt("bid", id);
+                    b.putInt(ConstantBundleKeys.BUDGET_ID, id);
                     b.putBoolean("bid_safeAdd",false);
                 }
                 Intent i = new Intent(getApplicationContext(), BudgetPaymentsActivity.class);
-                b.putString("title", "Add Payment");
-                b.putString("pre_title", "Edit Budget");
+                b.putString(ConstantBundleKeys.TITLE, "Add Payment");
+                b.putString(ConstantBundleKeys.PRE_TITLE, "Edit Budget");
                 i.putExtras(b);
                 Log.d("BudPayAct>>","has_title -> " + "Add payment");
                 Log.d("BudPayAct>>","pre_title -> " + has_title);
@@ -301,6 +311,7 @@ public class AddEditBudgetActivity extends AppCompatActivity{
             if(validated()) {
                 if (has_title.equals("Add Budget")) {
                     //save new
+                    Log.d("AddEditB>>","Adding using eid -> " + blayout.budget_model.eid);
                     blayout.loadValuesFromLayout();
                     blayout.budget_model.addBudget();//adds using it's own values
                 } else {
@@ -316,22 +327,31 @@ public class AddEditBudgetActivity extends AppCompatActivity{
                 //Log.d("BudPayAct>>","has_title -> " + has_title);
                 //Log.d("BudPayAct>>","pre_title -> " + has_title);
                 Intent i = new Intent(getApplicationContext(), ListBudgetsActivity.class);
+                i.putExtras(b);
                 startActivity(i);
             }
         }
         if(v.getId()==R.id.adbud_catp){
-            Bundle b = new Bundle();
+            //Bundle b = new Bundle();
             Intent i = new Intent(getApplicationContext(),EditCategoryActivity.class);
-            b.putString("cat_edit","Add name"); //placeholder
-            b.putString("is_in_setting","false");
-            b.putString("pre_activity",has_title);
-            b.putInt("id",id);
+            b.putString(ConstantBundleKeys.EDIT_CATEGORY_MODE,"Add name"); //placeholder
+            b.putString(ConstantBundleKeys.IS_IN_SETTING,"false");
+            b.putString(ConstantBundleKeys.PRE_ACTIVITY,has_title);
+            b.putInt(ConstantBundleKeys.ID,id);
             Log.d("BudgetAct>>","putting id as " + id);
-            b.putString("set_to_cat","false");
-            b.putString("title","Add Category");
+            b.putString(ConstantBundleKeys.SET_TO_CATEGORY,"false");
+            b.putString(ConstantBundleKeys.TITLE,"Add Category");
+
             i.putExtras(b);
             startActivity(i);
         }
+    }
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        //refresh activity
+        finish();
+        startActivity(getIntent());
     }
     public void logInputs(){
         String name = ((EditText) findViewById(R.id.editTxt_bud_name)).getText().toString();

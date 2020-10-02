@@ -7,6 +7,21 @@
     android:layout_height="match_parent">
 
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/lv_add_vendor2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="145dp"
+        android:clickable="true"
+        android:elevation="10dp"
+        android:onClick="handleOnClick"
+        app:backgroundTint="@color/purple"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:rippleColor="@color/white"
+        app:srcCompat="@drawable/add_fab" />
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/abbb_menu"
         android:layout_width="420dp"

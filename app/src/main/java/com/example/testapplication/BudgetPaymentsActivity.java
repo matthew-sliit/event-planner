@@ -8,6 +8,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -16,6 +19,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.example.testapplication.constants.ConstantBundleKeys;
 import com.example.testapplication.db.budget.Budget_payments;
 
 import java.nio.file.Files;
@@ -36,6 +40,7 @@ public class BudgetPaymentsActivity extends AppCompatActivity {
         public LayoutHandler(Context c){
             this.c = c;
             payment_model = new Budget_payments(c);
+            payment_model.event_id = event_id;
             initVariables(); //uses paymodel instance
         }
 
@@ -116,18 +121,20 @@ public class BudgetPaymentsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_budget_payments);
-        paylayout = new LayoutHandler(this);
 
         final Bundle b = getIntent().getExtras();
-        if(b!=null){
+        if(b!=null) {
             //passed from BudgetPaymentViewHolder when editing else default values
-            has_title=b.getString("title","Add Payment");
-            pre_title=b.getString("pre_title","Add Budget");
-            event_id = b.getInt("eid",0);
-            budget_id = b.getInt("bid",0);
-            pid = b.getInt("pid",0);
+            has_title = b.getString(ConstantBundleKeys.TITLE, "Add Payment");
+            pre_title = b.getString(ConstantBundleKeys.PRE_TITLE, "Add Budget");
+            event_id = b.getInt(ConstantBundleKeys.EVENT_ID, 0);
+            budget_id = b.getInt(ConstantBundleKeys.BUDGET_ID, 0);
+            pid = b.getInt(ConstantBundleKeys.BUDGET_PAY_ID, 0);
             //true when passed from add budget
             //bid_safeAdd = b.getBoolean("bid_safeAdd",false);
+        }
+        paylayout = new LayoutHandler(this);
+        if(b!=null){
             if(has_title.equalsIgnoreCase("add payment")){
                 editor = false;//means to Edit Payment
             }else{
@@ -155,9 +162,9 @@ public class BudgetPaymentsActivity extends AppCompatActivity {
                 //default previous intent
                 Intent i = new Intent(getApplicationContext(),AddEditBudgetActivity.class);
                 Bundle bp = new Bundle();
-                bp.putInt("eid",event_id);
-                bp.putInt("id",budget_id);
-                bp.putString("title",pre_title);
+                bp.putInt(ConstantBundleKeys.EVENT_ID,event_id);
+                bp.putInt(ConstantBundleKeys.ID,budget_id);
+                bp.putString(ConstantBundleKeys.TITLE,pre_title);
                 i.putExtras(bp);
                 //i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);//clear stack
                 startActivity(i);
@@ -170,9 +177,9 @@ public class BudgetPaymentsActivity extends AppCompatActivity {
                 paylayout.payment_model.removePayment(event_id,budget_id,pid);
                 Intent i = new Intent(getApplicationContext(), AddEditBudgetActivity.class);
                 Bundle bp = new Bundle();
-                bp.putInt("eid",event_id);
-                bp.putInt("id",budget_id);
-                bp.putString("title",pre_title);
+                bp.putInt(ConstantBundleKeys.EVENT_ID,event_id);
+                bp.putInt(ConstantBundleKeys.ID,budget_id);
+                bp.putString(ConstantBundleKeys.TITLE,pre_title);
                 i.putExtras(bp);
                 startActivity(i);
             }
@@ -184,9 +191,9 @@ public class BudgetPaymentsActivity extends AppCompatActivity {
                 paylayout.payment_model.addPayment(event_id,budget_id);//added
                 Intent i = new Intent(getApplicationContext(), AddEditBudgetActivity.class);
                 Bundle bp = new Bundle();
-                bp.putInt("eid",event_id);
-                bp.putInt("id",budget_id);
-                bp.putString("title",pre_title);
+                bp.putInt(ConstantBundleKeys.EVENT_ID,event_id);
+                bp.putInt(ConstantBundleKeys.ID,budget_id);
+                bp.putString(ConstantBundleKeys.TITLE,pre_title);
                 i.putExtras(bp);
                 startActivity(i);
             }
@@ -216,5 +223,28 @@ public class BudgetPaymentsActivity extends AppCompatActivity {
                         calender.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
+    }
+    //menu layout
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return true;
+    }
+    //menu right corner buttons
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId()==R.id.action_settings){
+            //Settings btn
+            Log.d("ADD_BUDGET>>","Navigating to AppSettingsActivity!");
+            Intent i = new Intent(getApplicationContext(),AppSettingsActivity.class);
+            startActivity(i);
+        }
+        /*
+        if(item.getItemId()==R.id.action_settings){
+            //About us page
+        }
+         */
+        return super.onOptionsItemSelected(item);
     }
 }

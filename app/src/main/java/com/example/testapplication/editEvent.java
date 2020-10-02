@@ -38,7 +38,6 @@ public class editEvent extends AppCompatActivity {
             event_ = new Event_Impl(c);
             this.c = c;
         }
-
         public Event_Impl event_;
 
         public void loadValuesFromLayout() {
@@ -46,8 +45,6 @@ public class editEvent extends AppCompatActivity {
             this.event_.ename = ((EditText) findViewById(R.id.editName)).getText().toString();
             this.event_.edate = ((EditText) findViewById(R.id.editDate)).getText().toString();
             this.event_.etime = ((EditText) findViewById(R.id.editTime)).getText().toString();
-
-
         }
 
         public void setValuesToLayout(int id) {
@@ -57,8 +54,6 @@ public class editEvent extends AppCompatActivity {
             ((EditText) findViewById(R.id.editName)).setText(this.event_.ename, TextView.BufferType.EDITABLE);
             ((EditText) findViewById(R.id.editDate)).setText(this.event_.edate, TextView.BufferType.EDITABLE);
             ((EditText) findViewById(R.id.editTime)).setText(this.event_.etime, TextView.BufferType.EDITABLE);
-
-
         }
 
     }

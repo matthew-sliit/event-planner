@@ -5,7 +5,10 @@ import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
 
+import com.example.testapplication.constants.TableNames;
 import com.example.testapplication.db.DBHandler;
+import com.example.testapplication.db.budget.Budget_Impl_updated;
+import com.example.testapplication.db.commontables.EventsTable;
 
 
 import java.util.ArrayList;
@@ -15,28 +18,19 @@ import java.util.List;
 public class Task_Impl implements ITask {
     private class Task_table {
         public Task_table(){}
-        public static final String TABLE_TASK="taskTable";
+        public static final String TABLE_TASK="taskTableTest";
         public static final String COLUMN_NAME_ID="id";
+        public static final String COLUMN_NAME_EID= EventsTable.EVENT_ID;
         public static final String COLUMN_NAME_TASKNAME="tname";
         public static final String COLUMN_NAME_CAT="category";
         public static final String COLUMN_NAME_DESC="description";
         public static final String COLUMN_NAME_STATUS="status";
         public static final String COLUMN_NAME_DATE="tdate";
 
-
-        public String getTableCreator(){
-            return "CREATE TABLE " + TABLE_TASK+ " (" +
-                    COLUMN_NAME_ID + " INTEGER PRIMARY KEY,"+
-                    COLUMN_NAME_TASKNAME + " TEXT,"+
-                    COLUMN_NAME_CAT+" TEXT,"+
-                    COLUMN_NAME_DESC+" TEXT,"+
-                    COLUMN_NAME_STATUS+" TEXT,"+
-                    COLUMN_NAME_DATE+" TEXT )";
-
-        }
         public String getIfNotExistStatement(){
             return "CREATE TABLE if not exists " + TABLE_TASK+ " (" +
                     COLUMN_NAME_ID + " INTEGER PRIMARY KEY,"+
+                    COLUMN_NAME_EID + " INTEGER REFERENCES " + EventsTable.TABLENAME + " ON DELETE CASCADE ON UPDATE CASCADE," +
                     COLUMN_NAME_TASKNAME + " TEXT,"+
                     COLUMN_NAME_CAT+" TEXT,"+
                     COLUMN_NAME_DESC+" TEXT,"+
@@ -99,8 +93,8 @@ public class Task_Impl implements ITask {
         this.id = id;
     }
 
-    private Task_Impl.Task_table table = new Task_Impl.Task_table();
-    public Task_Impl(Context c) {
+    private Task_table table = new Task_table();
+    public Task_Impl(Context c, int eid) {
         if(c == null){
             Log.d("Task_Impl>>","context is null!");
         }else{
@@ -108,54 +102,50 @@ public class Task_Impl implements ITask {
         }
         db = new DBHandler(c,table.getIfNotExistStatement());
         this.c = c;
+        this.eid = eid;
     }
-
-
-
     @Override
     public void addTask(String tname, String category, String description, String status, String date) {
-
         ContentValues cv= new ContentValues();
-        cv.put(table.COLUMN_NAME_TASKNAME, tname);
-        cv.put(table.COLUMN_NAME_CAT, category);
-        cv.put(table.COLUMN_NAME_DESC, description);
-        cv.put(table.COLUMN_NAME_STATUS, status);
-        cv.put(table.COLUMN_NAME_DATE, date);
-        db.insert(cv,table.TABLE_TASK);
+        cv.put(Task_table.COLUMN_NAME_EID, eid);
+        cv.put(Task_table.COLUMN_NAME_TASKNAME, tname);
+        cv.put(Task_table.COLUMN_NAME_CAT, category);
+        cv.put(Task_table.COLUMN_NAME_DESC, description);
+        cv.put(Task_table.COLUMN_NAME_STATUS, status);
+        cv.put(Task_table.COLUMN_NAME_DATE, date);
+        db.insert(cv,Task_table.TABLE_TASK);
     }
-
-
-
 
     @Override
     public void addTask() {
-
+        Log.d("TaskImpl>>","eid -> " + eid);
         ContentValues cv= new ContentValues();
-        cv.put(table.COLUMN_NAME_TASKNAME, tname);
-        cv.put(table.COLUMN_NAME_CAT, category);
-        cv.put(table.COLUMN_NAME_DESC, description);
-        cv.put(table.COLUMN_NAME_STATUS, status);
-        cv.put(table.COLUMN_NAME_DATE, tdate);
-        db.insert(cv,table.TABLE_TASK);
-
+        cv.put(Task_table.COLUMN_NAME_EID, eid);
+        cv.put(Task_table.COLUMN_NAME_TASKNAME, tname);
+        cv.put(Task_table.COLUMN_NAME_CAT, category);
+        cv.put(Task_table.COLUMN_NAME_DESC, description);
+        cv.put(Task_table.COLUMN_NAME_STATUS, status);
+        cv.put(Task_table.COLUMN_NAME_DATE, tdate);
+        db.insert(cv,Task_table.TABLE_TASK);
     }
 
     @Override
     public List<Task_Impl> getTaskList() {
 
-        String[] cols = {"id",table.COLUMN_NAME_TASKNAME,table.COLUMN_NAME_CAT,table.COLUMN_NAME_DESC,table.COLUMN_NAME_STATUS,table.COLUMN_NAME_DATE};
+        String[] cols = {Task_table.COLUMN_NAME_ID,Task_table.COLUMN_NAME_EID,table.COLUMN_NAME_TASKNAME,table.COLUMN_NAME_CAT,table.COLUMN_NAME_DESC,table.COLUMN_NAME_STATUS,table.COLUMN_NAME_DATE};
         try {
-            Cursor c = db.readAllIgnoreArgs(cols, table.TABLE_TASK);
+            Cursor c = db.readAllWitSelection(cols, table.TABLE_TASK,getWhereEidStatement());
             List<Task_Impl> b = new ArrayList<>();
             Task_Impl ib;
             while(c.moveToNext()){
-                ib = new Task_Impl(this.c);
-                ib.id = c.getInt(c.getColumnIndexOrThrow("id"));//int
-                ib.tname = c.getString(c.getColumnIndexOrThrow("tname"));
-                ib.category = c.getString(c.getColumnIndexOrThrow("category"));
-                ib.description = c.getString(c.getColumnIndexOrThrow("description"));
-                ib.status = c.getString(c.getColumnIndexOrThrow("status"));
-                ib.tdate = c.getString(c.getColumnIndexOrThrow("tdate"));
+                ib = new Task_Impl(this.c, eid);
+                ib.id = c.getInt(c.getColumnIndexOrThrow(Task_table.COLUMN_NAME_ID));//int
+                ib.eid = c.getInt(c.getColumnIndexOrThrow(Task_table.COLUMN_NAME_EID));//int
+                ib.tname = c.getString(c.getColumnIndexOrThrow(Task_table.COLUMN_NAME_TASKNAME));
+                ib.category = c.getString(c.getColumnIndexOrThrow(Task_table.COLUMN_NAME_CAT));
+                ib.description = c.getString(c.getColumnIndexOrThrow(Task_table.COLUMN_NAME_DESC));
+                ib.status = c.getString(c.getColumnIndexOrThrow(Task_table.COLUMN_NAME_STATUS));
+                ib.tdate = c.getString(c.getColumnIndexOrThrow(Task_table.COLUMN_NAME_DATE));
                 b.add(ib);
             }
             return b;
@@ -166,24 +156,20 @@ public class Task_Impl implements ITask {
     }
 
     @Override
-    public Task_Impl getTaskById(int id) {
-        String[] cols = {"id",table.COLUMN_NAME_TASKNAME,table.COLUMN_NAME_CAT,table.COLUMN_NAME_DESC,table.COLUMN_NAME_STATUS,table.COLUMN_NAME_DATE};
-
+    public Task_Impl getTaskById(int eid, int id) {
+        String[] cols = {Task_table.COLUMN_NAME_ID,Task_table.COLUMN_NAME_EID,table.COLUMN_NAME_TASKNAME,Task_table.COLUMN_NAME_EID,table.COLUMN_NAME_CAT,table.COLUMN_NAME_DESC,table.COLUMN_NAME_STATUS,table.COLUMN_NAME_DATE};
         try {
-            Cursor c = db.readWithWhere(cols,table.TABLE_TASK,"id","" + id);
+            Cursor c = db.readAllWitSelection(cols,table.TABLE_TASK,getWhereEidaBidStatement(eid,id));
             List<Task_Impl> b = new ArrayList<>();
-            Task_Impl ib = new Task_Impl(this.c);
+            Task_Impl ib = new Task_Impl(this.c, eid);
             while(c.moveToNext()){
-
-                ib.id = c.getInt(c.getColumnIndexOrThrow("id"));//int
-                ib.tname = c.getString(c.getColumnIndexOrThrow("tname"));
-                ib.category = c.getString(c.getColumnIndexOrThrow("category"));
-                ib.description = c.getString(c.getColumnIndexOrThrow("description"));
-                ib.status = c.getString(c.getColumnIndexOrThrow("status"));
-                ib.tdate = c.getString(c.getColumnIndexOrThrow("tdate"));
-
-
-
+                ib.id = c.getInt(c.getColumnIndexOrThrow(Task_table.COLUMN_NAME_ID));//int
+                ib.eid = c.getInt(c.getColumnIndexOrThrow(Task_table.COLUMN_NAME_EID));//int
+                ib.tname = c.getString(c.getColumnIndexOrThrow(Task_table.COLUMN_NAME_TASKNAME));
+                ib.category = c.getString(c.getColumnIndexOrThrow(Task_table.COLUMN_NAME_CAT));
+                ib.description = c.getString(c.getColumnIndexOrThrow(Task_table.COLUMN_NAME_DESC));
+                ib.status = c.getString(c.getColumnIndexOrThrow(Task_table.COLUMN_NAME_STATUS));
+                ib.tdate = c.getString(c.getColumnIndexOrThrow(Task_table.COLUMN_NAME_DATE));
                 /*Log.d("Budget_Impl>>","================ Printing Read Values ================");
                 Log.d("id -> ",""+ib.id);
                 Log.d("name -> ",ib.name);
@@ -201,10 +187,8 @@ public class Task_Impl implements ITask {
 
     @Override
     public void removeTask(int taskID) {
-        String[] idValue = {"" + taskID};
-        db.delete("id",idValue,table.TABLE_TASK);
+        db.delete(table.TABLE_TASK,getWhereEidaBidStatement(taskID),null);
         Log.d("Delete>>","del= "+taskID);
-
     }
 
     @Override
@@ -216,22 +200,35 @@ public class Task_Impl implements ITask {
 
         }
         String id2Str = "" + this.id;
-        db.update(cv,"id",id2Str,table.TABLE_TASK);
+        db.update(cv,Task_table.COLUMN_NAME_ID,id2Str,table.TABLE_TASK);
 
     }
 
     @Override
     public void updateTask(Task_Impl obj) {
 
-        String[] cols = {"id",table.COLUMN_NAME_TASKNAME,table.COLUMN_NAME_CAT,table.COLUMN_NAME_DESC,table.COLUMN_NAME_STATUS,table.COLUMN_NAME_DATE};
+        String[] cols = {Task_table.COLUMN_NAME_ID,table.COLUMN_NAME_TASKNAME,table.COLUMN_NAME_CAT,table.COLUMN_NAME_DESC,table.COLUMN_NAME_STATUS,table.COLUMN_NAME_DATE};
         String[] v = {String.valueOf(obj.id),obj.tname,obj.category,obj.description,obj.status,obj.tdate};
         ContentValues cv = new ContentValues();
         for(int col=0;col<cols.length;col++){
             cv.put(cols[col],v[col]);
             Log.d("Guest_Impl>>","col->"+cols[col] + " val->"+v[col]);
         }
-        String id2Str = "" + obj.id;
-        db.update(cv,"id",id2Str,table.TABLE_TASK);//update using id
+        db.update(cv,getUpdateWhere(obj.eid,obj.id),table.TABLE_TASK);//update using id
 
+    }
+    private String getWhereEidStatement(){
+        return Task_table.COLUMN_NAME_EID + " LIKE " + eid;
+    }
+    private String getWhereEidaBidStatement(int bid){
+        return Task_table.COLUMN_NAME_EID + " LIKE " + eid + " AND " + Task_table.COLUMN_NAME_ID + " LIKE " + bid;
+    }
+    private String getWhereEidaBidStatement(int eid, int tid){
+        return Task_table.COLUMN_NAME_EID + " LIKE " + eid + " AND " + Task_table.COLUMN_NAME_ID + " LIKE " + tid;
+    }
+
+    private String getUpdateWhere(int eid_, int tid_){
+        return Task_table.COLUMN_NAME_EID + " LIKE " + eid_ +
+                " AND " + Task_table.COLUMN_NAME_ID + " LIKE " + tid_;
     }
 }

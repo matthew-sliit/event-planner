@@ -13,10 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.example.testapplication.adapter.VendorAdapter;
-
-
-import com.example.testapplication.db.budget.Budget_Impl;
-import com.example.testapplication.db.budget.Ibudget;
+import com.example.testapplication.constants.ConstantBundleKeys;
 
 public class Vendorview extends AppCompatActivity {
     private int eid=0;
@@ -26,7 +23,7 @@ public class Vendorview extends AppCompatActivity {
         setContentView(R.layout.activity_vendorview);
         Bundle b=getIntent().getExtras();
         if(b != null){
-            eid=b.getInt("eid",0);
+            eid=b.getInt(ConstantBundleKeys.EVENT_ID,0);
         }
 
         Toolbar toolbar = findViewById(R.id.abb_menu);
@@ -37,12 +34,11 @@ public class Vendorview extends AppCompatActivity {
             public void onClick(View v) {
             //    Intent i = new Intent(getApplicationContext(),GraphActivity.class);
               //  startActivity(i);
+                finish();
             }
         });
 
-        Ibudget budget = new Budget_Impl(this);//Budget Interface
-
-        VendorAdapter adapter = new VendorAdapter(this); //Budget Adapter
+        VendorAdapter adapter = new VendorAdapter(this,eid); //Budget Adapter
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_v);
         recyclerView.setHasFixedSize(true);
         recyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL));//item to item decoration
@@ -56,7 +52,8 @@ public class Vendorview extends AppCompatActivity {
         if(v.getId()==R.id.lv_add_vendor){
             Intent i = new Intent(getApplicationContext(),Addvendor.class);
             Bundle b=new Bundle();
-            b.putInt("eid",eid);
+            b.putInt(ConstantBundleKeys.EVENT_ID,eid);
+            i.putExtras(b);
             startActivity(i);
         }
 
@@ -81,6 +78,13 @@ public class Vendorview extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        //refresh activity
+        finish();
+        startActivity(getIntent());
     }
 
 

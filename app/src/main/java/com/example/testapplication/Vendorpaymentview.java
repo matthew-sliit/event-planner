@@ -4,6 +4,7 @@ import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,15 +15,21 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.testapplication.adapter.VendorPaymentAdapter;
-import com.example.testapplication.db.budget.Budget_Impl;
-import com.example.testapplication.db.budget.Ibudget;
+import com.example.testapplication.constants.ConstantBundleKeys;
 
 public class Vendorpaymentview extends AppCompatActivity {
+    private int eid = 0, id = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vendorpayview);
 
+        Bundle b = getIntent().getExtras();
+        if(b!=null){
+            eid = b.getInt(ConstantBundleKeys.EVENT_ID,0);
+            id=b.getInt("id",0);
+        }
+        Log.d("VendorPayView>>","Receiving eid -> " + eid);
         Toolbar toolbar = findViewById(R.id.abbb_menu);
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.back_btn);
@@ -31,13 +38,9 @@ public class Vendorpaymentview extends AppCompatActivity {
             public void onClick(View v) {
                 //    Intent i = new Intent(getApplicationContext(),GraphActivity.class);
                 //  startActivity(i);
+                finish();
             }
         });
-        Bundle b=getIntent().getExtras();
-        int id=b.getInt("id",0);
-        int eid=b.getInt("eid",0);
-        Ibudget budget = new Budget_Impl(this);//Budget Interface
-
         VendorPaymentAdapter adapter = new VendorPaymentAdapter(this,id,eid); //Budget Adapter
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_ev);
         recyclerView.setHasFixedSize(true);
@@ -61,38 +64,15 @@ public class Vendorpaymentview extends AppCompatActivity {
     return simpleViewModelList;
     }
      */
-
-        /*
-        ((Button)findViewById(R.id.lb_btn)).setText("Julia");
-        ((TextView)findViewById(R.id.lb_desc)).setText("B:200000.00\nP:0.00");
-        //((TextView)findViewById(R.id.lb_desc)).setVisibility(View.VISIBLE);
-        ((TextView)findViewById(R.id.lb_desc)).setTextColor(getResources().getColor(R.color.black));
-
-         */
-
     public void handleOnClick(View v){
-        if(v.getId()==R.id.lv_add_vendor){
-            Intent i = new Intent(getApplicationContext(),Addvendor.class);
-            startActivity(i);
-        }
-        /*
-        if(v.getId()==R.id.lb_add_budget){
-            Intent i = new Intent(getApplicationContext(),AddBudgetActivity.class);
-            startActivity(i);
-        }
-        if(v.getId()==R.id.lb_btn){
-            Intent i = new Intent(getApplicationContext(),AddBudgetActivity.class);
+        if(v.getId()==R.id.lv_add_vendor2){
+            Intent i = new Intent(getApplicationContext(),Addpayment.class);
             Bundle b = new Bundle();
-            b.putString("title","Edit Budget");
-            b.putString("name","Julia");
-            b.putString("amount","200000.00");
-            b.putString("balance","200000.00");
-            b.putString("paid","0.00");
+            b.putInt(ConstantBundleKeys.EVENT_ID,eid);
+            b.putInt("id",id);
             i.putExtras(b);
             startActivity(i);
         }
-
-         */
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -120,7 +100,12 @@ public class Vendorpaymentview extends AppCompatActivity {
          */
         return super.onOptionsItemSelected(item);
     }
-
-
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        //refresh activity
+        finish();
+        startActivity(getIntent());
+    }
 }
 

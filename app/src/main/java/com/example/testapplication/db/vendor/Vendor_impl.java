@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.util.Log;
 
 import com.example.testapplication.db.DBHandler;
+import com.example.testapplication.db.budget.Budget_Impl_updated;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,12 +15,6 @@ public class Vendor_impl implements IVendor {
 
     private Context c;
     private DBHandler db;
-
-
-    public Vendor_impl(Context c) {
-        this.c = c;
-        db=new DBHandler(c,table.getTableCreator());
-    }
 
     public int getId() {
         return id;
@@ -77,38 +72,6 @@ public class Vendor_impl implements IVendor {
         this.email = email;
     }
 
-
-  /*  private class Vendor_table{
-        public static final String TABLENAME="VendorTable";
-        public static final String NAME="Name";
-        public static final String CATEGORY="Category";
-        public static final String AMOUNT="Amount";
-        public static final String NUMBER="Number";
-        public static final String ADDRESS="Address";
-        public static final String EMAIL="Email";
-
-
-
-        public Vendor_table() {
-        }
-
-        public String getTableCreator(){
-
-            return "CREATE TABLE if not exists " + TABLENAME + " (" +
-                    "id integer primary key,"+
-                    NAME+" TEXT,"+
-                    CATEGORY+" TEXT,"+
-                    AMOUNT+" DOUBLE,"+
-                    NUMBER+" TEXT,"+
-                    ADDRESS+" TEXT,"+
-                    EMAIL+" TEXT)";
-
-
-        }
-
-
-    }*/
-
     private Vendor_table table=new Vendor_table();
    // private Vendor_pay_table table1=new Vendor_pay_table();
 
@@ -121,9 +84,16 @@ public class Vendor_impl implements IVendor {
     public String address=null;
     public String email=null;
 
+    public Vendor_impl(Context c, int eid) {
+        this.c = c;
+        this.eid = eid;
+        db=new DBHandler(c,table.getTableCreator());
+    }
+
     @Override
     public void addVendor(String name, String category, double amount, String number, String address, String email) {
         ContentValues cv= new ContentValues();
+        cv.put(Vendor_table.EID,eid);
         cv.put(table.NAME,name);
         cv.put(table.CATEGORY,category);
         cv.put(table.AMOUNT,amount);
@@ -134,16 +104,11 @@ public class Vendor_impl implements IVendor {
 
     }
 
-   /* @Override
-    public void addPayment(String name_pay, String pay_amonut, String note) {
-
-    }*/
-
-
     @Override
     public void addVendor() {
         ContentValues cv= new ContentValues();
         cv.put(table.NAME,name);
+        cv.put(Vendor_table.EID,eid);
         cv.put(table.CATEGORY,category);
         cv.put(table.AMOUNT,amount);
         cv.put(table.NUMBER,number);
@@ -155,6 +120,7 @@ public class Vendor_impl implements IVendor {
     @Override
     public int addVendorGetid() {
         ContentValues cv= new ContentValues();
+        cv.put(Vendor_table.EID,eid);
         cv.put(table.NAME,name);
         cv.put(table.CATEGORY,category);
         cv.put(table.AMOUNT,amount);
@@ -165,16 +131,24 @@ public class Vendor_impl implements IVendor {
 
     }
 
-
-
     @Override
     public void removeVendor(int id) {
-        String[] idValue = {"" + id};
-        db.delete("id",idValue,table.TABLENAME);
+        db.delete(Vendor_table.TABLENAME,getWhereEidaBidStatement(id),null);
     }
 
     @Override
     public void updateVendor(Vendor_impl obj) {
+        ContentValues cv = new ContentValues();
+        cv.put(Vendor_table.NAME,obj.name);
+        cv.put(Vendor_table.AMOUNT,obj.amount);
+        cv.put(Vendor_table.CATEGORY,obj.category);
+        cv.put(Vendor_table.NUMBER,obj.number);
+        cv.put(Vendor_table.ADDRESS,obj.address);
+        cv.put(Vendor_table.EMAIL,obj.email);
+        //String id2Str = "" + obj.id;
+        //db.update(cv,"id",id2Str,table.tableName);//update using id
+        /*
+        db.update(cv,getUpdateWhere(obj.eid,obj.id), Budget_Impl_updated.Budget_table.tableName);
 
         String[] cols = {table.NAME,table.CATEGORY,table.AMOUNT,table.NUMBER,table.ADDRESS,table.EMAIL};
         String[] v = {obj.name,obj.category,""+obj.amount,obj.number,obj.address,obj.email};
@@ -185,17 +159,20 @@ public class Vendor_impl implements IVendor {
         }
         String id2Str = "" + obj.id;
         db.update(cv,"id",id2Str,table.TABLENAME);//update using id
+         */
+        db.update(cv,getUpdateWhere(obj.eid,obj.id), Vendor_table.TABLENAME);
     }
     @Override
-    public List getVendor() {
-        String[] cols = {"id",table.NAME,table.CATEGORY,table.AMOUNT,table.NUMBER,table.ADDRESS,table.EMAIL};
+    public List<Vendor_impl> getVendor() {
+        String[] cols = {"id",Vendor_table.EID,table.NAME,table.CATEGORY,table.AMOUNT,table.NUMBER,table.ADDRESS,table.EMAIL};
         List<Vendor_impl> b = new ArrayList<>();
         try {
-            Cursor c = db.readAllIgnoreArgs(cols, table.TABLENAME);
+            Cursor c = db.readAllWitSelection(cols, table.TABLENAME,getWhereEidStatement());
             Vendor_impl ib;
             while(c.moveToNext()){
-                ib = new Vendor_impl(this.c);
+                ib = new Vendor_impl(this.c,eid);
                 ib.id = c.getInt(c.getColumnIndexOrThrow("id"));//int
+                ib.eid = c.getInt(c.getColumnIndexOrThrow(Vendor_table.EID));//int
                 ib.name = c.getString(c.getColumnIndexOrThrow("Name"));
                 ib.category = c.getString(c.getColumnIndexOrThrow("Category"));
                 ib.amount = Double.parseDouble(c.getString(c.getColumnIndexOrThrow("Amount")));
@@ -224,15 +201,16 @@ public class Vendor_impl implements IVendor {
 
     @Override
     public Vendor_impl getVendorbyid(int id) {
-        String[] cols = {"id",table.NAME,table.CATEGORY,table.AMOUNT,table.NUMBER,table.ADDRESS,table.EMAIL};
+        String[] cols = {"id",Vendor_table.EID,table.NAME,table.CATEGORY,table.AMOUNT,table.NUMBER,table.ADDRESS,table.EMAIL};
         //Log.d("BudgetImpl>>","id -> " + id);
         try {
-            Cursor c = db.readWithWhere(cols,table.TABLENAME,"id","" + id);
+            Cursor c = db.readAllWitSelection(cols,table.TABLENAME,getWhereEidaBidStatement(eid,id));
             List<Vendor_impl> b = new ArrayList<>();
-            Vendor_impl ib = new Vendor_impl(this.c);
+            Vendor_impl ib = new Vendor_impl(this.c,eid);
             while(c.moveToNext()){
-                ib = new Vendor_impl(this.c);
+                ib = new Vendor_impl(this.c,eid);
                 ib.id = c.getInt(c.getColumnIndexOrThrow("id"));//int
+                ib.eid = c.getInt(c.getColumnIndexOrThrow(Vendor_table.EID));//int
                 ib.name = c.getString(c.getColumnIndexOrThrow("Name"));
                 ib.category = c.getString(c.getColumnIndexOrThrow("Category"));
                 ib.amount = Double.parseDouble(c.getString(c.getColumnIndexOrThrow("Amount")));
@@ -257,5 +235,19 @@ public class Vendor_impl implements IVendor {
     @Override
     public boolean hasVendor(String name, String email) {
         return false;
+    }
+    private String getWhereEidStatement(){
+        return Vendor_table.EID + " LIKE " + eid;
+    }
+    private String getWhereEidaBidStatement(int vid){
+        return Vendor_table.EID+ " LIKE " + eid + " AND " + Vendor_table.ID + " LIKE " + vid;
+    }
+    private String getWhereEidaBidStatement(int eid, int vid){
+        return Vendor_table.EID + " LIKE " + eid + " AND " + Vendor_table.ID + " LIKE " + vid;
+    }
+
+    private String getUpdateWhere(int eid_, int vid_){
+        return Vendor_table.EID + " LIKE " + eid_ +
+                " AND " + Vendor_table.ID + " LIKE " + vid_;
     }
 }

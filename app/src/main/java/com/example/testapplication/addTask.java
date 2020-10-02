@@ -23,6 +23,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 
+import com.example.testapplication.constants.ConstantBundleKeys;
+import com.example.testapplication.db.category.Category;
+import com.example.testapplication.db.category.ICategory;
 import com.example.testapplication.db.task.ITask;
 import com.example.testapplication.db.task.Task_Impl;
 
@@ -41,17 +44,19 @@ public class addTask extends AppCompatActivity {
 
     String spinnerItem = null;
 
-    private String has_title="Add Task", category ;//,guestname="null",String,age,invitation,phone,email,address;
-    private int id = 0;
+    private String has_title="Add Task";//,guestname="null",String,age,invitation,phone,email,address;
+    private int id = 0,eid = 0;
 
     private class TaskLayoutClass{
-
-        String tname,status ,category;
-        public int id = 0;
+        ICategory category;
+        String tname,status ,categoryTemp;
+        public int id = 0, eid_t = 0;
         private Context c;
-        public TaskLayoutClass(Context c) {
-             task_ =new Task_Impl(c);
+        public TaskLayoutClass(Context c, int eid_) {
+             task_ =new Task_Impl(c,eid_);
             this.c=c;
+            category = new Category(c);
+            this.eid_t = eid_;
         }
         public Task_Impl task_;
         public void InitVariables(){
@@ -60,7 +65,7 @@ public class addTask extends AppCompatActivity {
             rdComplete=(RadioButton)findViewById(R.id.rdComplete);
 
         spinnerT = (Spinner)findViewById(R.id.spinnerT);
-
+        categoryType = (String[]) category.getAllCategory().toArray(new String[0]);
         ArrayAdapter<String>adapter = new ArrayAdapter<String>(c,android.R.layout.simple_spinner_item,categoryType);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerT.setAdapter(adapter);
@@ -74,27 +79,21 @@ public class addTask extends AppCompatActivity {
             if(this.status!=null){
                 this.task_.status=this.status;}
 
-            if(null != category){
-                int index = Arrays.asList(categoryType).indexOf(category);
+            if(null != categoryTemp){
+                int index = Arrays.asList(categoryType).indexOf(categoryTemp);
                 spinnerT.setSelection(index, true);
-                spinnerItem = category;
+                spinnerItem = categoryTemp;
             }
-
-
             this.task_.description = ((EditText)findViewById(R.id.et_tdesc)).getText().toString();
             //this.task_.category = ((EditText)findViewById(R.id.ca)).getText().toString();
             this.task_.tdate = ((EditText)findViewById(R.id.et_tdate)).getText().toString();
-
-
         }
 
         public void setValuesToLayout(int id){
-
-            this.task_=task_.getTaskById(id);
+            this.task_=task_.getTaskById(eid_t,id);
             ((EditText)findViewById(R.id.et_tname)).setText(this.task_.tname, TextView.BufferType.EDITABLE);
             ((EditText)findViewById(R.id.et_tdesc)).setText(this.task_.description, TextView.BufferType.EDITABLE);
             ((EditText)findViewById(R.id.et_tdate)).setText(this.task_.tdate, TextView.BufferType.EDITABLE);
-
         }
 
 
@@ -133,9 +132,13 @@ public class addTask extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_task);
-        tlayout= new TaskLayoutClass(this);
-        final Context context = this;
+
         Bundle b = getIntent().getExtras();
+        if(b!=null) {
+            eid = b.getInt(ConstantBundleKeys.EVENT_ID, 0);
+        }
+        tlayout= new TaskLayoutClass(this,eid);
+        final Context context = this;
         tlayout.InitVariables();
         tlayout.setRadioEvents();
 
@@ -149,8 +152,9 @@ public class addTask extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //default previous intent
-                Intent i = new Intent(getApplicationContext(),taskList.class);
-                startActivity(i);
+                //Intent i = new Intent(getApplicationContext(),taskList.class);
+                //startActivity(i);
+                finish();
             }
         });
 
@@ -207,7 +211,7 @@ public class addTask extends AppCompatActivity {
     }
 
     public void handleClick(View v){
-        ITask task = new Task_Impl(this);
+        ITask task = new Task_Impl(this,eid);
         TaskLayoutClass guestlayout = tlayout;
 
         if(v.getId() == R.id.tsave_btn){
@@ -223,8 +227,13 @@ public class addTask extends AppCompatActivity {
         }
 
     }
-
-
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        //refresh activity
+        finish();
+        startActivity(getIntent());
+    }
 }
 
 

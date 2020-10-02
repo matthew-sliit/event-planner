@@ -12,6 +12,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.example.testapplication.constants.ConstantBundleKeys;
 import com.example.testapplication.db.guest.Companion_Impl;
 import com.example.testapplication.db.guest.Guest_Impl;
 import com.example.testapplication.db.guest.ICompanion;
@@ -24,14 +25,14 @@ public class AddCompanions extends AppCompatActivity {
 
     private class GuestLayoutClass{
         private Context c;
-        private int gid=0;
+        private int gid=0,eid_c=0;
         String gender,age;
 
-        public GuestLayoutClass(Context c,int gid){
+        public GuestLayoutClass(Context c,int gid,int eid){
             guest=new Companion_Impl(c);
             this.c=c;
             this.gid=gid;
-
+            this.eid_c=eid;
         }
         public Companion_Impl guest;
         public void InitVariables(){
@@ -91,24 +92,25 @@ public class AddCompanions extends AppCompatActivity {
         }
     }
     GuestLayoutClass glayout;
-
+    /*
+    ==================== OnCreate ==========================
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_companions);
         final Context context = this;
         Bundle b = getIntent().getExtras();
-        glayout = new GuestLayoutClass(this, gid);
+        glayout = new GuestLayoutClass(this, gid,eid);
         glayout.InitVariables();
         glayout.setRadioEvents();
 
         if (b != null) {
-
+            eid=b.getInt(ConstantBundleKeys.EVENT_ID,0);
             id = b.getInt("id");
             gid = b.getInt("gid");
             Log.d("Addpayactivity>>", "id -> " + id + " gid ->" + gid);
-            glayout = new GuestLayoutClass(this, gid);
-
+            glayout = new GuestLayoutClass(this, gid,eid);
         }
     }
 
@@ -125,6 +127,7 @@ public class AddCompanions extends AppCompatActivity {
             Intent i = new Intent(getApplicationContext(),EditGuest.class);
             Bundle b = new Bundle();
             b.putInt("id",glayout.gid);//int pk
+            b.putInt(ConstantBundleKeys.EVENT_ID,eid);//int pk
             i.putExtras(b);
             startActivity(i);
         }
@@ -134,6 +137,10 @@ public class AddCompanions extends AppCompatActivity {
     public void BackToEditGuest(View v){
 
         Intent i = new Intent(getApplicationContext(),EditGuest.class);
+        Bundle b = new Bundle();
+        b.putInt("id",glayout.gid);//int pk
+        b.putInt(ConstantBundleKeys.EVENT_ID,eid);//int pk
+        i.putExtras(b);
         startActivity(i);
     }
     }

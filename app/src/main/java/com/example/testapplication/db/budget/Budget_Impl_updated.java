@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
 
+import com.example.testapplication.constants.TableNames;
 import com.example.testapplication.db.DBHandler;
 import com.example.testapplication.db.commontables.EventsTable;
 import com.example.testapplication.db.commontables.PaymentTable;
@@ -17,7 +18,7 @@ public class Budget_Impl_updated implements Ibudget {
     private class Budget_table{
 
         public Budget_table(){}
-        private static final String tableName = "BudgetTest";
+        private static final String tableName = TableNames.BudgetTable;
         private static final String EID = EventsTable.EVENT_ID;
         public static final String ID = "id";
         public static final String NAME = "Name";
@@ -79,6 +80,7 @@ public class Budget_Impl_updated implements Ibudget {
 
     @Override
     public void addBudget() {
+        Log.d("BudgetImpl>>","Saving budget using eid -> " + this.eid);
         ContentValues cv= new ContentValues();
         //id auto increment
         cv.put(Budget_table.NAME,this.name);
@@ -90,6 +92,7 @@ public class Budget_Impl_updated implements Ibudget {
     }
     @Override
     public int addBudgetGetId() {
+        Log.d("BudgetImpl>>","Saving budget using eid -> " + this.eid);
         ContentValues cv= new ContentValues();
         //id auto increment
         cv.put(Budget_table.NAME,this.name);
@@ -104,6 +107,7 @@ public class Budget_Impl_updated implements Ibudget {
 
     @Override
     public List<Budget_Impl_updated> getBudgetList() {
+        Log.d("BudgetImpl>>","Reading budget using eid -> " + this.eid);
         try {
             Cursor c = db.readAllWitSelection(table.getColumns(), Budget_table.tableName,getWhereEidStatement()); //where eid like..
             List<Budget_Impl_updated> b = new ArrayList<>();
@@ -163,7 +167,7 @@ public class Budget_Impl_updated implements Ibudget {
     @Override
     public Budget_Impl_updated getBudgetById(int eid, int bid) {
         try {
-            Cursor c = db.readAllWitSelection(table.getColumns(), Budget_table.tableName,getWhereEidaBidStatement(bid)); //where eid and bid
+            Cursor c = db.readAllWitSelection(table.getColumns(), Budget_table.tableName,getWhereEidaBidStatement(eid,bid)); //where eid and bid
             Budget_Impl_updated ib = new Budget_Impl_updated(this.c,eid);
             while(c.moveToNext()){
                 ib = new Budget_Impl_updated(this.c,eid);
@@ -214,6 +218,10 @@ public class Budget_Impl_updated implements Ibudget {
     private String getWhereEidaBidStatement(int bid){
         return Budget_table.EID + " LIKE " + eid + " AND " + Budget_table.ID + " LIKE " + bid;
     }
+    private String getWhereEidaBidStatement(int eid, int bid){
+        return Budget_table.EID + " LIKE " + eid + " AND " + Budget_table.ID + " LIKE " + bid;
+    }
+
     private String getUpdateWhere(int eid_, int bid_){
         return Budget_table.EID + " LIKE " + eid_ +
                 " AND " + Budget_table.ID + " LIKE " + bid_;

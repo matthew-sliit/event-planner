@@ -13,18 +13,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.testapplication.EditGuest;
 import com.example.testapplication.R;
 
+import com.example.testapplication.constants.ConstantBundleKeys;
 import com.example.testapplication.db.guest.Guest_Impl;
 
 public class GuestViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
      TextView lg_name, lg_invitation;
-
-    public GuestViewHolder(final View itemView, Context currentAct) {
+     int eid = 0;
+    public GuestViewHolder(final View itemView, Context currentAct, int eid) {
         super(itemView);
         lg_name = (TextView) itemView.findViewById(R.id.lg_name);
         lg_invitation = (TextView) itemView.findViewById(R.id.lg_invitation);
         itemView.setOnClickListener(this);
         this.currentAct = currentAct; //assigning context
+        this.eid = eid;
     }
 
     public Guest_Impl guest_;
@@ -43,7 +45,7 @@ public class GuestViewHolder extends RecyclerView.ViewHolder implements View.OnC
             }
         }else{
             //this only happens if null list is passed
-            this.guest_ = new Guest_Impl(currentAct);
+            this.guest_ = new Guest_Impl(currentAct,eid);
             lg_name.setText("");
             lg_invitation.setText("");
         }
@@ -56,8 +58,8 @@ public class GuestViewHolder extends RecyclerView.ViewHolder implements View.OnC
         Intent i = new Intent(view.getContext(), EditGuest.class);
         Bundle b = new Bundle();
         b.putInt("id",guest_.id);//int pk
+        b.putInt(ConstantBundleKeys.EVENT_ID,eid);
         b.putString("title","Edit Guest");
-
         i.putExtras(b);
         view.getContext().startActivity(i);
     }

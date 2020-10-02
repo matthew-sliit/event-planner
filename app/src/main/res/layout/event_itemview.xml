@@ -51,6 +51,7 @@
                     android:gravity="right"
                     android:orientation="vertical">
 
+                     
                     <RadioButton
                         android:id="@+id/radioeventselect"
                         android:layout_width="139dp"

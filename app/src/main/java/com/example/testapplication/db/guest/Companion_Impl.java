@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
 
+import com.example.testapplication.constants.TableNames;
 import com.example.testapplication.db.DBHandler;
 import com.example.testapplication.db.commontables.EventsTable;
 
@@ -16,7 +17,7 @@ public class Companion_Impl implements ICompanion {
 
     private class Com_table {
         public Com_table(){}
-        public static final String TABLE_COM="companionstable";
+        public static final String TABLE_COM= TableNames.CompanionTable;
         public static final String COLUMN_NAME_ID="cid";
         public static final String COLUMN_NAME_EID= EventsTable.EVENT_ID;
         public static final String COLUMN_NAME_GID=Guest_table.COLUMN_NAME_ID;
@@ -25,17 +26,6 @@ public class Companion_Impl implements ICompanion {
         public static final String COLUMN_NAME_AGE="age";
         public static final String COLUMN_NAME_NOTE="note";
 
-        public String getTableCreator(){
-            return "CREATE TABLE " + TABLE_COM+ " (" +
-                    COLUMN_NAME_ID + " INTEGER PRIMARY KEY,"+
-                    COLUMN_NAME_EID + " INTEGER REFERENCES "+EventsTable.TABLENAME+" ON DELETE CASCADE ON UPDATE CASCADE ,"+
-                    COLUMN_NAME_GID + " INTEGER REFERENCES "+Guest_table.TABLE_GUESTS+" ON DELETE CASCADE ON UPDATE CASCADE ,"+
-                    COLUMN_NAME_CNAME + " TEXT,"+
-                    COLUMN_NAME_GENDER+" TEXT,"+
-                    COLUMN_NAME_AGE+" TEXT,"+
-                    COLUMN_NAME_NOTE+" TEXT)";
-
-        }
         public String getIfNotExistStatement(){
             return "CREATE TABLE IF NOT EXISTS " + TABLE_COM+ " (" +
                     COLUMN_NAME_ID + " INTEGER PRIMARY KEY,"+
@@ -116,6 +106,7 @@ public class Companion_Impl implements ICompanion {
     @Override
     public void addCom(String cname, String gender, String age, String note) {
         ContentValues cv= new ContentValues();
+        cv.put(table.COLUMN_NAME_EID, eid);
         cv.put(table.COLUMN_NAME_CNAME, cname);
         cv.put(table.COLUMN_NAME_GENDER, gender);
         cv.put(table.COLUMN_NAME_AGE, age);
@@ -225,9 +216,9 @@ public class Companion_Impl implements ICompanion {
     }
 
     private String getWhereStatementWOWhere(int eid, int gid, int id){
-        return Com_table.COLUMN_NAME_GID+ " = " + gid + " AND " + Com_table.COLUMN_NAME_ID + " = " + id;
+        return Com_table.COLUMN_NAME_EID+ " = " + eid + " AND " +Com_table.COLUMN_NAME_GID+ " = " + gid + " AND " + Com_table.COLUMN_NAME_ID + " = " + id;
     }
     private String getWhereStatementWOWhere(int gid,int eid) {
-        return Com_table.COLUMN_NAME_GID+ " = " + gid;
+        return Com_table.COLUMN_NAME_EID+ " = " + eid +" AND " +Com_table.COLUMN_NAME_GID+ " = " + gid;
     }
 }

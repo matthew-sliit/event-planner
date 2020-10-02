@@ -58,16 +58,18 @@ public class EventAdapter  extends  RecyclerView.Adapter{
         private RadioButton lastCheckedRB = null; //save last checked radio button
         @Override
         public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, final int position) {
-            Log.d("EventAdapter>>","running onBindViewH pos->"+position);
+            //Log.d("EventAdapter>>","running onBindViewH pos->"+position);
             //final Lifecycle.Event event = models.get(position);
             //reset Listener
+
             ((EventViewHolder) holder).radioselectevent.setOnCheckedChangeListener(null);
             //reset button state
             ((EventViewHolder) holder).radioselectevent.setChecked(false);
-            int sid = event.getSelectEvent();
-            if(sid>=0){
-                if(models.get(position).id==sid){
-                    Log.d("EventViewH>>","RadioButton checked! For eid " + models.get(position).id);
+            int selected_eid = event.getSelectEvent();
+            Log.d("EventAdapter>>","getSelectEventId-> "  + selected_eid);
+            if(selected_eid>=0){
+                if(models.get(position).id==selected_eid){
+                    Log.d("EventAdapter>>","Set RadioButton checked For eid " + models.get(position).id);
                     ((EventViewHolder) holder).radioselectevent.setChecked(true);
                 }
             }
@@ -76,10 +78,10 @@ public class EventAdapter  extends  RecyclerView.Adapter{
             ((EventViewHolder) holder).radioselectevent.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean pressed) {
-                    Log.d("EventAdapter>>","OncheckChange Detected!");
+                    Log.d("EventAdapter>>","OncheckChange Detected! for eid -> " + models.get(position).id);
                     if(lastCheckedRB!=null){
                         lastCheckedRB.setChecked(false);
-                        //Log.d("EventAdapter>>","OncheckChange Setting previous button to uncheck! eid ->" + prev_pos);
+                        //Log.d("EventAdapter>>","OncheckChange Setting previous button to uncheck! eid ->" + models.get(position).id);
                     }
                     lastCheckedRB = ((EventViewHolder) holder).radioselectevent;
                     models.get(position).selectEvent(models.get(position));

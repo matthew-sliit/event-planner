@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.testapplication.AddEditBudgetActivity;
 import com.example.testapplication.R;
+import com.example.testapplication.constants.ConstantBundleKeys;
 import com.example.testapplication.db.budget.Budget_Impl_updated;
 import com.example.testapplication.db.budget.Budget_payments;
 
@@ -109,7 +110,8 @@ public class BudgetViewHolder extends RecyclerView.ViewHolder implements View.On
         //Log.d("BudgetViewHolder::", "OnClick>>layoutPos -> "+ getLayoutPosition());
         Intent i = new Intent(view.getContext(), AddEditBudgetActivity.class);
         Bundle b = new Bundle();
-        b.putInt("id",budget_model.id);//int pk
+        b.putInt(ConstantBundleKeys.ID,budget_model.id);//int pk
+        b.putInt(ConstantBundleKeys.EVENT_ID,budget_model.eid);//int pk
         b.putString("title","Edit Budget");
         /*
         b.putString("name",budget_model.name);

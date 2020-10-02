@@ -82,18 +82,18 @@
 
     <TextView
         android:id="@+id/sum_bpaid"
-        android:layout_width="31dp"
-        android:layout_height="wrap_content"
+        android:layout_width="83dp"
+        android:layout_height="25dp"
         android:text="0"
         android:textColor="@android:color/black"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.633"
+        app:layout_constraintHorizontal_bias="0.723"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.697" />
+        app:layout_constraintVertical_bias="0.694" />
 
     <TextView
         android:id="@+id/sum_sent"
@@ -451,18 +451,18 @@
 
     <TextView
         android:id="@+id/sum_bpen"
-        android:layout_width="31dp"
-        android:layout_height="wrap_content"
+        android:layout_width="82dp"
+        android:layout_height="28dp"
         android:text="0"
         android:textColor="@android:color/black"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.633"
+        app:layout_constraintHorizontal_bias="0.724"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.639" />
+        app:layout_constraintVertical_bias="0.642" />
 
     <TextView
         android:id="@+id/sum_tpaid"

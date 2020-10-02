@@ -6,11 +6,13 @@
     <color name="textColorRegular">#383838</color>
     <color name="colorPrimary">#6200EE</color>
     <color name="light_purple">#F5EEF8</color>
+    <color name="purple">#9C27B0</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
     <color name="red">#ffff0000</color>
     <color name="green">#B200AE07</color>
     <color name="black">#000000</color>
+    <color name="blue">#0385EC</color>
     <color name="white">#ffffff</color>
     <color name="medium_seaGreen">#3CB371</color>
     <color name="yellow_green">#9ACD32</color>

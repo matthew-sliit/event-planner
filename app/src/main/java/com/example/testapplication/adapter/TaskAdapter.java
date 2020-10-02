@@ -24,13 +24,14 @@ public class TaskAdapter extends RecyclerView.Adapter {
      * ================== Adapter constructor ========================
      */
     private Context context;
-    public TaskAdapter(Context currentAct) {
+    private int eid= 0;
+    public TaskAdapter(Context currentAct, int eid) {
         if (currentAct == null) {
             Log.d("GuestAdapter>>", "CurrentAct is null!");
         } else {
             Log.d("GuestAdapter>>", "CurrentAct is NOT null!");
         }
-        ITask task = new Task_Impl(currentAct);
+        ITask task = new Task_Impl(currentAct, eid);
         List<Task_Impl> lb = new ArrayList<Task_Impl>();
         lb = task.getTaskList(); //error
         if (lb != null) {
@@ -40,19 +41,18 @@ public class TaskAdapter extends RecyclerView.Adapter {
             }
         }
         this.context = currentAct;
-
+        this.eid = eid;
     }
 
     @NonNull
     public TaskViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         final View view = LayoutInflater.from(parent.getContext()).inflate(viewType, parent, false);
-        return new TaskViewHolder(view,context);
+        return new TaskViewHolder(view,context,eid);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         ((TaskViewHolder) holder).bindData(models.get(position)); //bind each obj from model
-
     }
 
     @Override

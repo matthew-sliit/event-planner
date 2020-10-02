@@ -18,7 +18,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.testapplication.db.budget.Budget_Impl;
+import com.example.testapplication.constants.ConstantBundleKeys;
 import com.example.testapplication.db.budget.Ibudget;
 import com.example.testapplication.db.category.Category;
 import com.example.testapplication.db.category.ICategory;
@@ -28,20 +28,8 @@ public class Addpayment extends AppCompatActivity {
 
     RadioGroup rdpStatus;
     RadioButton rdPaid,rdPending;
-    private String has_title="Add Payment";// name="null",desc="null",amt="0.00",paid="0.00",balance="0.00",category=null;
+    private String has_title="Add Payment";
     private int eid=0,vid=0;
-    //private int id = 0;
-   /* @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        final String[] defaultCat={"Beauty","Decor"};
-        Spinner cat=(Spinner)findViewById(R.id.category);
-        ArrayAdapter<String> catAdapter=new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,defaultCat);
-        catAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        cat.setAdapter(catAdapter);
-    }*/
 
     private class VendorLayoutClass{
         private Context c;
@@ -124,50 +112,29 @@ public class Addpayment extends AppCompatActivity {
         vendorlayout=new VendorLayoutClass(this,vid);
         vendorlayout.InitVariables();
         vendorlayout.setRadioEvents();
-        if(b!=null){
-            has_title=b.getString("title","Add Budget");
-            /*name=b.getString("name","Enter name");
-            desc=b.getString("desc","Enter description");
-            amt=b.getString("amount","0.00");
-            category = b.getString("cat",null);
-            balance=b.getString("balance","0.00");*/
-           // id = b.getInt("id");
-            vid = b.getInt("vid");
-           // Log.d("Addpayactivity>>","id -> " + id+" vid ->"+vid);
-            vendorlayout= new VendorLayoutClass(this,vid);
-           /* if(has_title.equalsIgnoreCase("edit budget")){
-                Ibudget budget = new Budget_Impl(this);
-                Budget_Impl budget_model = new Budget_Impl(this);
-                budget_model=budget.getBudgetById(b.getInt("id"));
-                name = budget_model.name;
-                desc = budget_model.desc;
-                amt = budget_model.amt;
-                category = budget_model.cat;
-            }*/
-
-        /*}else{
-            ((EditText)findViewById(R.id.toolbar)).setHint("Budget Name");
-            //((EditText)findViewById(R.id.editTxt_bud_name)).setHint("Budget Name");
-
-        }*/
+        if(b!=null) {
+            has_title = b.getString("title", "Add Budget");
+            vid = b.getInt("id", 0);
+            eid = b.getInt(ConstantBundleKeys.EVENT_ID, 0);
+            // Log.d("Addpayactivity>>","id -> " + id+" vid ->"+vid);
+            vendorlayout = new VendorLayoutClass(this, vid);
+        }
+        Log.d("VendorAddPay>>","Receiving eid -> " + eid);
             Toolbar toolbar = findViewById(R.id.toolbar4); //set toolbar
             setSupportActionBar(toolbar);
             //set toolbar title
-            toolbar.setTitle("Add Vendor");//either default or from bundle
+            toolbar.setTitle("Add Payment");//either default or from bundle
             //for back button
             toolbar.setNavigationIcon(R.drawable.back_btn);
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     //default previous intent
-                    Intent i = new Intent(getApplicationContext(),Vendorview.class);
-                    startActivity(i);
+                    //Intent i = new Intent(getApplicationContext(),Vendorview.class);
+                    //startActivity(i);
+                    finish();
                 }
             });
-
-
-
-        }
     }
     //menu layout
     @Override
@@ -194,7 +161,6 @@ public class Addpayment extends AppCompatActivity {
     }
 
     public void handleClick(View v){
-        Ibudget budget = new Budget_Impl(this);
         if(v.getId() == R.id.imageButton_add_v){
             Log.d("BUTTON","AddPayment Button Pressed!");
         }
@@ -213,7 +179,7 @@ public class Addpayment extends AppCompatActivity {
                 Intent i = new Intent(getApplicationContext(), Vendorview.class);
                 Bundle b = new Bundle();
                 b.putInt("id", vendorlayout.vid);//int pk
-                b.putInt("eid", eid);
+                b.putInt(ConstantBundleKeys.EVENT_ID, eid);
                 i.putExtras(b);
                 startActivity(i);
             }
@@ -232,20 +198,5 @@ public class Addpayment extends AppCompatActivity {
             startActivity(i);
         }
     }
-  /*  public void logInputs(){
-        String name = ((EditText) findViewById(R.id.editTxt_bud_name)).getText().toString();
-        Log.d("NAME","name: " + name);
-        String desc = ((EditText) findViewById(R.id.descInput)).getText().toString();
-        Log.d("DESC","desc: " + desc);
-
-        //((TextView) findViewById(R.id.SelectedBudgetBalance)).setVisibility(View.VISIBLE);
-        //((TextView) findViewById(R.id.SelectedBudgetBalance)).setText("" + amount);
-    }
-    public void setBalance(){
-        double amount = Double.parseDouble(((EditText) findViewById(R.id.amountInput)).getText().toString()); //input is always a number
-        Log.d("AMOUNT","amount: " + amount);
-        findViewById(R.id.SelectedBudgetBalance).setVisibility(View.VISIBLE);
-        ((TextView) findViewById(R.id.SelectedBudgetBalance)).setText("" + amount);
-    }*/
 }
 

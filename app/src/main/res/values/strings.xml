@@ -28,7 +28,6 @@
     <string name="total_paid">Total Amount Paid:</string>
     <string name="total_remaining">Total Amount Remain:</string>
     <string name="paypending">Payments Pending:</string>
-    <string name="pending">Pending</string>
     <string name="paid">Paid</string>
     <string name="paid_">Paid: </string>
     <string name="paymentStatus">Payment status</string>
@@ -41,6 +40,12 @@
         <item>Beauty</item>
         <item>Decor</item>
     </string-array>
+    <!--Events-->
+    <string name="pending">Pending</string>
+    <string name="completed">Completed</string>
+    <string name="update_t">Update</string>
+    <string name="task">Tasks</string>
+    <!--Tasks-->
     <string name="edate">Edate</string>
     <string name="time">Time</string>
     <string name="ename">ename</string>
@@ -51,4 +56,49 @@
     <string name="eventName">Enter event name</string>
     <string name="event">Event List</string>
     <string name="taskk">Task List</string>
+    <!--Guests and Companions -->
+    <string name="dialog_message">Are you sure want to delete</string>
+    <string name="toolbar_eventplan">Event Planner</string>
+    <string name="toolbar_add_guest">Add Guests</string>
+    <string name="toolbar_edit_guest">Edit Guests</string>
+    <string name="toolbar_sum">Summary</string>
+    <string name="textView_guest">Guests Details</string>
+    <string name="textView_guest_contact">Contact Details</string>
+    <string name="textView_companion">No of Companions</string>
+    <string name="textView_taskguest">Tasks</string>
+    <string name="textView_guest_invi">Guests Invitations</string>
+    <string name="dialog_title">title</string>
+    <string name="viewguest">Guests</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="child">Child</string>
+    <string name="adult">Adult</string>
+    <string name="invitation_sent">Invitation sent</string>
+    <string name="Invitation_n_sent">Invitation not sent</string>
+    <string name="phonenumber">Phone Number</string>
+    <string name="email_g">Email</string>
+    <string name="address_g">Address</string>
+    <string name="name_g">Name</string>
+    <string name="update_g">Update</string>
+    <string name="pending_sum">Pending :</string>
+    <string name="compl_sum">Completed :</string>
+    <string name="paid_sum">Paid :</string>
+    <string name="notsent">Not Sent :</string>
+    <string name="sent">Sent :</string>
+    <string name="add_companinos">Add Companion</string>
+    <string name="companinos">Companions</string>
+    <string name="com_details">Companion Details</string>
+    <string name="com_note">Note</string>
+    <string name="tbadd_com">Add Companions</string>
+    <string name="total">Total - </string>
+    <!--Vendors-->
+    <string name="textView1">Details of Vendor</string>
+    <string name="textview2">Contact Details</string>
+    <string name="textView3">Payment Info</string>
+    <string name="textview4">Payment</string>
+    <string name="textview5">Payment</string>
+    <string name="button1">SAVE AND EXIT</string>
+    <string name="button2">Clear</string>
+    <string name="toolbar">Add Vendor</string>
+    <string name="title_activity_vendorview">Vendorview</string>
 </resources>

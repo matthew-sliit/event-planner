@@ -17,6 +17,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.testapplication.constants.ConstantBundleKeys;
 import com.example.testapplication.db.category.Category;
 import com.example.testapplication.db.category.ICategory;
 import com.example.testapplication.db.vendor.Vendor_pay_Impl;
@@ -65,24 +66,6 @@ public class Editpayment extends AppCompatActivity {
             ((EditText) findViewById(R.id.amount1)).setText(this.vendor.amount, TextView.BufferType.EDITABLE);
             ((EditText) findViewById(R.id.note)).setText(this.vendor.note, TextView.BufferType.EDITABLE);
 
-          /*  String[] defaultOrder = (String[]) category.getAllCategory().toArray(new String[0]);
-            for(int i=0;i<defaultOrder.length;i++){
-                if(defaultOrder[i].equals(category)){ //from bundle
-                    //Log.d("AddBudgetAct>>","setting default category as " + category);
-                    String temp = defaultOrder[i];
-                    defaultOrder[i] = defaultOrder[0];
-                    defaultOrder[0] = temp;
-                    break; //for loop
-                }
-            }
-            final String[] defaultCat = defaultOrder;
-            Spinner cat = findViewById(R.id.category_v); //spinner
-            ArrayAdapter<String> catAdapter = new ArrayAdapter<String>(c,android.R.layout.simple_spinner_item,defaultCat);
-            catAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            cat.setAdapter(catAdapter);
-            if(category!=null){
-                //set category
-            }*/
             if (vendor.status != null) {
                 if (vendor.status.equalsIgnoreCase("paid")) {
 
@@ -127,11 +110,12 @@ public class Editpayment extends AppCompatActivity {
             balance=b.getString("balance","0.00");*/
             id = b.getInt("id");
             vid = b.getInt("vid");
-            Log.d("Addpayactivity>>", "id -> " + id + " vid ->" + vid);
-
+            eid = b.getInt(ConstantBundleKeys.EVENT_ID,0);
+            //Log.d("Addpayactivity>>", "id -> " + id + " vid ->" + vid);
         }
+        Log.d("VendorEditPay>>","Receiving eid -> " + eid);
         //Added
-        Log.d("Edit Payment", "id = " + id);
+        //Log.d("Edit Payment", "id = " + id);
         Toolbar toolbar = findViewById(R.id.toolbar2); //set toolbar
         setSupportActionBar(toolbar);
         //set toolbar title
@@ -142,17 +126,9 @@ public class Editpayment extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //default previous intent
-                Intent i = new Intent(getApplicationContext(),Vendorview.class);
-                startActivity(i);
-            }
-        });
-
-        ((Button)findViewById(R.id.button2)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                vendorlayout.vendor.removePayment(id);
-                Intent i=new Intent(getApplicationContext(),Vendorview.class);
-                startActivity(i);
+               // Intent i = new Intent(getApplicationContext(),Vendorview.class);
+                //startActivity(i);
+                finish();
             }
         });
 
@@ -160,6 +136,23 @@ public class Editpayment extends AppCompatActivity {
         vendorlayout.InitVariables();
         vendorlayout.setValuesToLayout(id);
         vendorlayout.setRadioEvents();
+
+        ((Button)findViewById(R.id.button2)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //vendorlayout.vendor.removePayment(id);
+                vendorlayout.vendor.removePayment(id,eid,vid);
+               /* Intent i=new Intent(getApplicationContext(),Vendorview.class);
+                Bundle s = new Bundle();
+                s.putInt(ConstantBundleKeys.EVENT_ID,eid);
+                i.putExtras(s);
+                startActivity(i);
+
+                */
+               finish();
+            }
+        });
+
         closeButton = (Button) findViewById(R.id.button);
         builder = new AlertDialog.Builder(this);
         closeButton.setOnClickListener(new View.OnClickListener() {
@@ -169,6 +162,9 @@ public class Editpayment extends AppCompatActivity {
                 vendorlayout.vendor.updatePayment(vendorlayout.vendor);
                 Intent i=new Intent(getApplicationContext(),Vendorview.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);//clear stack
+                Bundle s = new Bundle();
+                s.putInt(ConstantBundleKeys.EVENT_ID,eid);
+                i.putExtras(s);
                 startActivity(i);
                 //Uncomment the below code to Set the message and title from the strings.xml file
                 builder.setMessage(R.string.dialog_message) .setTitle(R.string.dialog_title);

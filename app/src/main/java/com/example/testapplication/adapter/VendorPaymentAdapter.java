@@ -23,16 +23,20 @@ public class VendorPaymentAdapter extends RecyclerView.Adapter{
     private Context context;
     private int id=0,eid=0;
     public VendorPaymentAdapter(Context currentAct,int vid,int eid) {
+        /*
         if(currentAct == null){
             Log.d("BudgetAdapter>>","CurrentAct is null!");
         }else{
             Log.d("BudgetAdapter>>","CurrentAct is NOT null!");
         }
+
+         */
+        Log.d("VendorPayA>>","Requesting paylist eid -> " + eid);
         IVendor_pay budget = new Vendor_pay_Impl(currentAct);
         List<Vendor_pay_Impl> lb = new ArrayList<Vendor_pay_Impl>();
         this.eid=eid;
         this.id=vid;
-        lb = budget.getPayment(eid,id); //error
+        lb = budget.getPayment(eid,id);
         if (!lb.isEmpty()) {
             this.models.addAll(lb);
             int i=0;
@@ -45,7 +49,6 @@ public class VendorPaymentAdapter extends RecyclerView.Adapter{
             Log.d("VpAdapter>>","ListNull");
         }
         this.context = currentAct;
-
     }
 
     /**
@@ -61,7 +64,7 @@ public class VendorPaymentAdapter extends RecyclerView.Adapter{
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(final ViewGroup parent, final int viewType) {
         final View view = LayoutInflater.from(parent.getContext()).inflate(viewType, parent, false);
-        return new VendorPaymentViewHolder(view,context,id);
+        return new VendorPaymentViewHolder(view,context,eid);
     }
 
     /**

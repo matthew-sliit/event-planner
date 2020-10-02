@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.TextView;
 
 
+import com.example.testapplication.constants.ConstantBundleKeys;
 import com.example.testapplication.db.budget.Budget_Impl_updated;
 import com.example.testapplication.db.budget.Budget_payments;
 import com.example.testapplication.db.category.Category;
@@ -58,14 +59,14 @@ public class GraphActivity extends AppCompatActivity {
             int index = 0;//counter
             for(String c : categories){
                 //foreach category
-                Log.d("Graph>>","cat -> " + c);
+                //Log.d("Graph>>","cat -> " + c);
                 double btot = 0.00, ptot = 0.00;
                 //ignore if there aren't a budget for the category
                 if(budget.getBudgetListByCategory(c).size() > 0) {
                     //for each budget
                     for (Budget_Impl_updated b : budget.getBudgetListByCategory(c)) {
                         //for each payment of budget
-                        Log.d("Graph>>","budget_name -> " + b.name);
+                        //Log.d("Graph>>","budget_name -> " + b.name);
                         for (Budget_payments p : payments.getBudgetPaymentList(eid,b.id)) {
                             //only if paid
                             if(p.status.equalsIgnoreCase("paid")) {
@@ -102,21 +103,6 @@ public class GraphActivity extends AppCompatActivity {
             data.setBarWidth(0.6f);
             //BarData data = new BarData(labels, dataSets);
             barChart.setData(data);
-
-            //identify max and min values of budget
-            /*for(Budget_Impl b : budgetList){
-                Double amt = Double.parseDouble(b.amt);
-                if(amt > maxBudget){
-                    maxBudget = amt;
-                }
-                if(amt < minBudget){
-                    minBudget = amt;
-                }
-            }*/
-            //identify range
-            //double maxM10 = Math.log10(maxBudget), minM10 = Math.log10(minBudget);
-            //identify number of categories
-            //int categoryCount = categories.size();
         }
         public void setSummaryValues(){
             ((TextView)findViewById(R.id.textView3)).setText(String.valueOf(totalBudget));
@@ -134,72 +120,22 @@ public class GraphActivity extends AppCompatActivity {
 
         Bundle b = getIntent().getExtras();
         if(b!=null){
-            eid = b.getInt("eid",0);
+            eid = b.getInt(ConstantBundleKeys.EVENT_ID,0);
         }
+        Log.d("Graph>>","received eid -> " + eid);
         Toolbar toolbar = (Toolbar) findViewById(R.id.menu_bud);
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.back_btn);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(),MainActivityEmu.class);
+                Intent i = new Intent(getApplicationContext(),homepg.class);
                 startActivity(i);
             }
         });
 
         barChartHandler = new BarChartHandler(this);
         barChartHandler.draw();
-
-        /*
-        HorizontalBarChart barChart = (HorizontalBarChart) findViewById(R.id.barchart);
-        // create BarEntry for Bar Group 1
-        ArrayList<BarEntry> totalAmt = new ArrayList<>();
-        totalAmt.add(new BarEntry(0, 1000));
-        totalAmt.add(new BarEntry(1, 2000));
-        totalAmt.add(new BarEntry(2, 20000));
-        totalAmt.add(new BarEntry(3, 6000));
-        totalAmt.add(new BarEntry(4, 4000));
-        totalAmt.add(new BarEntry(5, 5000));
-        totalAmt.add(new BarEntry(6, 4000));
-        totalAmt.add(new BarEntry(7, 5000));
-        // creating dataset for Bar Group1
-        BarDataSet barDataSet1 = new BarDataSet(totalAmt, "Category Total");
-        //barDataSet1.setColor(Color.rgb(0, 155, 0));
-        //barDataSet1.setColors(ColorTemplate.COLORFUL_COLORS);
-        barDataSet1.setColors(ColorTemplate.rgb("ABEBC6"));
-
-        ArrayList<BarEntry> paidAmt = new ArrayList<>();
-        paidAmt.add(new BarEntry(0.2f, 10000));
-        paidAmt.add(new BarEntry(1.2f, 1500));
-        paidAmt.add(new BarEntry(2.2f, 16000));
-        paidAmt.add(new BarEntry(3.2f, 6000));
-        paidAmt.add(new BarEntry(4.2f, 400));
-        paidAmt.add(new BarEntry(5.2f, 500));
-        paidAmt.add(new BarEntry(6.2f, 400));
-        paidAmt.add(new BarEntry(7.2f, 500));
-        BarDataSet barDataSet2 = new BarDataSet(paidAmt, "Paid Amount");
-        barDataSet2.setColors(ColorTemplate.rgb("EC7063"));
-
-        ArrayList<String> labels = new ArrayList<String>();
-        labels.add("Chocolates");
-        labels.add("Decorations");
-        labels.add("Vehicles");
-        labels.add("Flowers");
-        labels.add("Ceremony");
-        labels.add("Gifts");
-        labels.add("C2");
-        labels.add("C3");
-        barChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(labels));
-
-        ArrayList<IBarDataSet> dataSets = new ArrayList<>();  // combined all dataset into an arraylist
-        dataSets.add(barDataSet1);
-        dataSets.add(barDataSet2);
-        // initialize the Bardata with argument labels and dataSet
-        BarData data = new BarData(dataSets);
-        data.setBarWidth(0.6f);
-        //BarData data = new BarData(labels, dataSets);
-        barChart.setData(data);
-         */
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -218,7 +154,6 @@ public class GraphActivity extends AppCompatActivity {
         if(item.getItemId()==R.id.action_settings){
             //About us page
         }
-
          */
         return super.onOptionsItemSelected(item);
     }
@@ -226,13 +161,16 @@ public class GraphActivity extends AppCompatActivity {
         if(v.getId()==R.id.btn_lb_list){
             //load list activity
             Intent i = new Intent(getApplicationContext(),ListBudgetsActivity.class);
+            Bundle b = new Bundle();
+            b.putInt(ConstantBundleKeys.EVENT_ID,eid);
+            i.putExtras(b);
             startActivity(i);
         }
         if(v.getId()==R.id.btn_add_budpay){
             Intent i = new Intent(getApplicationContext(), AddEditBudgetActivity.class);
             Bundle b = new Bundle();
-            b.putInt("eid",eid);
-            b.putString("pre_title","graph");
+            b.putInt(ConstantBundleKeys.EVENT_ID,eid);
+            b.putString(ConstantBundleKeys.PRE_TITLE,"graph");
             i.putExtras(b);
             startActivity(i);
         }

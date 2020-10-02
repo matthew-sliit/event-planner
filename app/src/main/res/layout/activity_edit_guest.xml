@@ -1,419 +1,390 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        tools:context=".EditGuest">
+<ScrollView xmlns:aapt="http://schemas.android.com/aapt"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EditGuest">
 
-        <ImageButton
-            android:id="@+id/ibtn_addc"
-            android:layout_width="52dp"
-            android:layout_height="50dp"
-            android:backgroundTint="@color/purple"
-            android:onClick="handleOnClick"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.363"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.87"
-            app:srcCompat="@drawable/ic_baseline_add_24" />
+    <ImageButton
+        android:id="@+id/ibtn_addc"
+        android:layout_width="52dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="220dp"
+        android:backgroundTint="@color/purple"
+        android:onClick="handleOnClick"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/deleteguestbutton"
+        app:srcCompat="@drawable/ic_baseline_add_24" />
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/companinos"
+        android:textColor="@color/textColorBold"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/ibtn_addc"
+        app:layout_constraintHorizontal_bias="0.44"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/deleteguestbutton" />
+
+    <ImageView
+        android:id="@+id/imageView17"
+        android:layout_width="45dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:background="@color/purple"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivPhone"
+        app:srcCompat="@android:drawable/sym_action_email" />
+
+    <EditText
+        android:id="@+id/etEmail"
+        android:layout_width="310dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="12dp"
+        android:ems="10"
+        android:hint="@string/email_g"
+        android:inputType="textEmailAddress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.275"
+        app:layout_constraintStart_toEndOf="@+id/imageView17"
+        app:layout_constraintTop_toBottomOf="@+id/etPhone" />
+
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="385dp"
+        android:layout_height="2dp"
+        android:background="@color/purple"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tb_editguest"
+        android:layout_width="416dp"
+        android:layout_height="51dp"
+        android:background="@color/purple"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="Edit Guest"
+        app:titleTextColor="@android:color/background_light" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="@string/textView_guest"
+        android:textColor="@color/purple"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.033"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tb_editguest" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="@string/textView_guest_contact"
+        android:textColor="@color/purple"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.034"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioInvitation" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="385dp"
+        android:layout_height="2dp"
+        android:background="@color/purple"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView1" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/name_g"
+        android:textColor="@android:color/background_dark"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.035"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider" />
+
+    <EditText
+        android:id="@+id/etGuestName"
+        android:layout_width="365dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="@string/name_g"
+        android:inputType="textPersonName"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.239"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <RadioGroup
+        android:id="@+id/radioGender"
+        android:layout_width="246dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal"
+        android:padding="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.066"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etGuestName">
+
+        <RadioButton
+            android:id="@+id/radioMale"
+            android:layout_width="116dp"
             android:layout_height="wrap_content"
-            android:text="@string/companinos"
-            android:textColor="@color/textColorBold"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.042"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.862" />
-
-        <ImageView
-            android:id="@+id/imageView17"
-            android:layout_width="45dp"
-            android:layout_height="40dp"
-            android:background="@color/purple"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.043"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.651"
-            app:srcCompat="@android:drawable/sym_action_email" />
-
-        <EditText
-            android:id="@+id/etEmail"
-            android:layout_width="310dp"
-            android:layout_height="40dp"
-            android:ems="10"
-            android:hint="@string/email_g"
-            android:inputType="textEmailAddress"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.811"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.651" />
-
-        <View
-            android:id="@+id/divider2"
-            android:layout_width="385dp"
-            android:layout_height="2dp"
-            android:background="@color/purple"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.346"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.521" />
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/tb_editguest"
-            android:layout_width="416dp"
-            android:layout_height="51dp"
-            android:background="@color/purple"
-            android:minHeight="?attr/actionBarSize"
-            android:theme="?attr/actionBarTheme"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
-            app:title="Edit Guest"
-
-            app:titleTextColor="@android:color/background_light" />
-
-        <TextView
-            android:id="@+id/textView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="@string/textView_guest"
-            android:textColor="@color/purple"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.037"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.092" />
-
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/textView_guest_contact"
-            android:textColor="@color/purple"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.042"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.499" />
-
-        <View
-            android:id="@+id/divider"
-            android:layout_width="385dp"
-            android:layout_height="2dp"
-            android:background="@color/purple"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.384"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.131" />
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/name_g"
-            android:textColor="@android:color/background_dark"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.041"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.149" />
-
-        <EditText
-            android:id="@+id/etGuestName"
-            android:layout_width="365dp"
-            android:layout_height="40dp"
-            android:ems="10"
-            android:hint="@string/name_g"
-            android:inputType="textPersonName"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.239"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.202" />
-
-        <RadioGroup
-            android:id="@+id/radioGender"
-            android:layout_width="246dp"
-            android:layout_height="50dp"
-            android:orientation="horizontal"
-            android:padding="5dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.066"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.274">
-
-            <RadioButton
-                android:id="@+id/radioMale"
-                android:layout_width="116dp"
-                android:layout_height="wrap_content"
-                android:button="@android:drawable/btn_radio"
-                android:buttonTint="@color/purple"
-                android:buttonTintMode="multiply"
-                android:checked="true"
-                android:foregroundTint="@color/purple"
-                android:shadowColor="@color/design_default_color_error"
-                android:text="@string/male"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.084"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.383" />
-
-            <RadioButton
-                android:id="@+id/radioFemale"
-                android:layout_width="121dp"
-                android:layout_height="37dp"
-                android:button="@android:drawable/btn_radio"
-                android:buttonTint="@color/purple"
-                android:buttonTintMode="multiply"
-                android:text="@string/female"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.498"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.381" />
-
-        </RadioGroup>
-
-        <RadioGroup
-            android:id="@+id/radioAge"
-            android:layout_width="223dp"
-            android:layout_height="44dp"
-            android:orientation="horizontal"
-            android:padding="5dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.057"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.35">
-
-
-            <RadioButton
-                android:id="@+id/radioAdult"
-                android:layout_width="116dp"
-                android:layout_height="40dp"
-                android:button="@android:drawable/btn_radio"
-                android:buttonTint="@color/purple"
-                android:buttonTintMode="multiply"
-                android:checked="true"
-                android:text="@string/adult"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.084"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.383" />
-
-            <RadioButton
-                android:id="@+id/radioChild"
-                android:layout_width="99dp"
-                android:layout_height="40dp"
-                android:button="@android:drawable/btn_radio"
-                android:buttonTint="@color/purple"
-                android:buttonTintMode="multiply"
-                android:text="@string/child"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.498"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.381" />
-
-        </RadioGroup>
-
-        <RadioGroup
-            android:id="@+id/radioInvitation"
-            android:layout_width="384dp"
-            android:layout_height="53dp"
-            android:orientation="horizontal"
-            android:padding="5dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.354"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.424">
-
-            <RadioButton
-                android:id="@+id/radioSent"
-                android:layout_width="174dp"
-                android:layout_height="wrap_content"
-                android:button="@android:drawable/btn_radio"
-                android:buttonTint="@color/purple"
-                android:buttonTintMode="multiply"
-                android:checked="true"
-                android:text="@string/invitation_sent"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.084"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.383" />
-
-            <RadioButton
-                android:id="@+id/radioNotsent"
-                android:layout_width="205dp"
-                android:layout_height="41dp"
-                android:button="@android:drawable/btn_radio"
-                android:buttonTint="@color/purple"
-                android:buttonTintMode="multiply"
-                android:text="@string/Invitation_n_sent"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.498"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.381" />
-
-        </RadioGroup>
-
-        <EditText
-            android:id="@+id/etPhone"
-            android:layout_width="310dp"
-            android:layout_height="40dp"
-            android:ems="10"
-            android:hint="@string/phonenumber"
-            android:inputType="phone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.811"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.575" />
-
-        <EditText
-            android:id="@+id/etAddress"
-            android:layout_width="310dp"
-            android:layout_height="40dp"
-            android:ems="10"
-            android:hint="@string/address_g"
-            android:inputType="textPostalAddress"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.811"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.729" />
-
-        <ImageView
-            android:id="@+id/ivPhone"
-            android:layout_width="45dp"
-            android:layout_height="40dp"
-            android:background="@color/purple"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.043"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.575"
-            app:srcCompat="@android:drawable/stat_sys_phone_call" />
-
-        <ImageView
-            android:id="@+id/ivAddress"
-            android:layout_width="45dp"
-            android:layout_height="40dp"
-            android:background="@color/purple"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.049"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.729"
-            app:srcCompat="@android:drawable/ic_dialog_map" />
-
-        <Button
-            android:id="@+id/updateguestbutton"
-            android:layout_width="111dp"
-            android:layout_height="39dp"
-            android:background="@color/purple"
-            android:text="@string/update_g"
-            android:textColor="@color/design_default_color_background"
+            android:button="@android:drawable/btn_radio"
+            android:buttonTint="@color/purple"
+            android:buttonTintMode="multiply"
+            android:checked="true"
+            android:foregroundTint="@color/purple"
+            android:shadowColor="@color/design_default_color_error"
+            android:text="@string/male"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.285"
-            app:layout_constraintStart_toEndOf="@+id/deleteguestbutton"
+            app:layout_constraintHorizontal_bias="0.084"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.802" />
+            app:layout_constraintVertical_bias="0.383" />
 
-        <Button
-            android:id="@+id/deleteguestbutton"
-            android:layout_width="111dp"
-            android:layout_height="39dp"
-            android:background="@color/design_default_color_error"
-            android:text="@string/delete"
-            android:textColor="@color/design_default_color_background"
+        <RadioButton
+            android:id="@+id/radioFemale"
+            android:layout_width="121dp"
+            android:layout_height="37dp"
+            android:button="@android:drawable/btn_radio"
+            android:buttonTint="@color/purple"
+            android:buttonTintMode="multiply"
+            android:text="@string/female"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.239"
+            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.802" />
+            app:layout_constraintVertical_bias="0.381" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_eg"
-            android:layout_width="404dp"
-            android:layout_height="79dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="16dp"
+    </RadioGroup>
+
+    <RadioGroup
+        android:id="@+id/radioAge"
+        android:layout_width="223dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="4dp"
+        android:orientation="horizontal"
+        android:padding="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.053"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioGender">
+
+
+        <RadioButton
+            android:id="@+id/radioAdult"
+            android:layout_width="116dp"
+            android:layout_height="40dp"
+            android:button="@android:drawable/btn_radio"
+            android:buttonTint="@color/purple"
+            android:buttonTintMode="multiply"
+            android:checked="true"
+            android:text="@string/adult"
+            android:textSize="18sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.281"
+            app:layout_constraintHorizontal_bias="0.084"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            app:layout_constraintVertical_bias="0.383" />
+
+        <RadioButton
+            android:id="@+id/radioChild"
+            android:layout_width="99dp"
+            android:layout_height="40dp"
+            android:button="@android:drawable/btn_radio"
+            android:buttonTint="@color/purple"
+            android:buttonTintMode="multiply"
+            android:text="@string/child"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.381" />
+
+    </RadioGroup>
+
+    <RadioGroup
+        android:id="@+id/radioInvitation"
+        android:layout_width="384dp"
+        android:layout_height="53dp"
+        android:layout_marginTop="4dp"
+        android:orientation="horizontal"
+        android:padding="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.37"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioAge">
+
+        <RadioButton
+            android:id="@+id/radioSent"
+            android:layout_width="174dp"
+            android:layout_height="wrap_content"
+            android:button="@android:drawable/btn_radio"
+            android:buttonTint="@color/purple"
+            android:buttonTintMode="multiply"
+            android:checked="true"
+            android:text="@string/invitation_sent"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.084"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.383" />
+
+        <RadioButton
+            android:id="@+id/radioNotsent"
+            android:layout_width="205dp"
+            android:layout_height="41dp"
+            android:button="@android:drawable/btn_radio"
+            android:buttonTint="@color/purple"
+            android:buttonTintMode="multiply"
+            android:text="@string/Invitation_n_sent"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.381" />
+
+    </RadioGroup>
+
+    <EditText
+        android:id="@+id/etPhone"
+        android:layout_width="310dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:hint="@string/phonenumber"
+        android:inputType="phone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.275"
+        app:layout_constraintStart_toEndOf="@+id/ivPhone"
+        app:layout_constraintTop_toBottomOf="@+id/divider2" />
+
+    <EditText
+        android:id="@+id/etAddress"
+        android:layout_width="310dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="9dp"
+        android:layout_marginTop="12dp"
+        android:ems="10"
+        android:hint="@string/address_g"
+        android:inputType="textPostalAddress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/ivAddress"
+        app:layout_constraintTop_toBottomOf="@+id/etEmail" />
+
+    <ImageView
+        android:id="@+id/ivPhone"
+        android:layout_width="45dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/purple"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider2"
+        app:srcCompat="@android:drawable/stat_sys_phone_call" />
+
+    <ImageView
+        android:id="@+id/ivAddress"
+        android:layout_width="45dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:background="@color/purple"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView17"
+        app:srcCompat="@android:drawable/ic_dialog_map" />
+
+    <Button
+        android:id="@+id/updateguestbutton"
+        android:layout_width="111dp"
+        android:layout_height="39dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="40dp"
+        android:background="@color/purple"
+        android:text="@string/update_g"
+        android:textColor="@color/design_default_color_background"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etAddress" />
+
+    <Button
+        android:id="@+id/deleteguestbutton"
+        android:layout_width="111dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="128dp"
+        android:layout_marginTop="12dp"
+        android:background="@color/design_default_color_error"
+        android:text="@string/delete"
+        android:textColor="@color/design_default_color_background"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivAddress" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_eg"
+        android:layout_width="404dp"
+        android:layout_height="79dp"
+        android:layout_marginTop="1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ibtn_addc" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

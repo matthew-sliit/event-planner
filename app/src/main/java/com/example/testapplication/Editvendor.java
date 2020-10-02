@@ -20,6 +20,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.testapplication.constants.ConstantBundleKeys;
 import com.example.testapplication.db.category.Category;
 import com.example.testapplication.db.category.ICategory;
 import com.example.testapplication.db.vendor.Vendor_impl;
@@ -38,8 +39,8 @@ public class Editvendor extends AppCompatActivity {
         private Context c;
 
 
-        public VendorLayoutClass(Context c) {
-            vendor = new Vendor_impl(c);
+        public VendorLayoutClass(Context c, int eid) {
+            vendor = new Vendor_impl(c,eid);
             this.c = c;
 
         }
@@ -56,7 +57,6 @@ public class Editvendor extends AppCompatActivity {
             this.vendor.email = ((EditText) findViewById(R.id.email_v)).getText().toString();
             //  vendor.addVendor();
         }
-
 
         public void setValuesToLayout(int id) {
             this.vendor = vendor.getVendorbyid(id);
@@ -91,21 +91,22 @@ public class Editvendor extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editvendor);
-         vlayout=new VendorLayoutClass(this);
+
         // Log.d("EditCategoryAct", " has started! ");
         Bundle b = getIntent().getExtras();
-        has_title="Edit vendor";
+        has_title="Edit Vendor";
         if (b != null) {
-
             id = b.getInt("id");
-            eid=b.getInt("eid",0);
-            Log.d("RELOAD", "id = " + id);
+            eid=b.getInt(ConstantBundleKeys.EVENT_ID,0);
+            //Log.d("RELOAD", "id = " + id);
+        }
+        vlayout=new VendorLayoutClass(this,eid);
+        if(b!=null) {
             vlayout.setValuesToLayout(id);
-
         }
         final Bundle bl=new Bundle();
-        bl.putInt("eid",eid);
-        Log.d("Edit Vendor", "id = " + id);
+        bl.putInt(ConstantBundleKeys.EVENT_ID,eid);
+        //Log.d("Edit Vendor", "id = " + id);
         Toolbar toolbar = findViewById(R.id.toolbar_add_v); //set toolbar
         setSupportActionBar(toolbar);
         //set toolbar title
@@ -116,9 +117,10 @@ public class Editvendor extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //default previous intent
-                Intent i = new Intent(getApplicationContext(),Vendorview.class);
-                i.putExtras(bl);
-                startActivity(i);
+              //  Intent i = new Intent(getApplicationContext(),Vendorview.class);
+               // i.putExtras(bl);
+                //startActivity(i);
+                finish();
             }
         });
         ((Button)findViewById(R.id.button_view)).setOnClickListener(new View.OnClickListener() {
@@ -126,7 +128,7 @@ public class Editvendor extends AppCompatActivity {
             public void onClick(View view) {
                 Bundle b=new Bundle();
                 b.putInt("id",id);
-                b.putInt("eid",eid);
+                b.putInt(ConstantBundleKeys.EVENT_ID,eid);
              //   setContentView(R.layout.activity_vendorpayview);
                 Intent i=new Intent(getApplicationContext(),Vendorpaymentview.class);
                 i.putExtras(b);
@@ -158,7 +160,6 @@ public class Editvendor extends AppCompatActivity {
                     vlayout.vendor.updateVendor(vlayout.vendor);
 
                     Intent i = new Intent(getApplicationContext(), Vendorview.class);
-
                     i.putExtras(bl);
                     startActivity(i);
                 }
@@ -206,9 +207,16 @@ public class Editvendor extends AppCompatActivity {
             Bundle b = new Bundle();
            // b.putInt("vid");//int pk
             b.putInt("vid",vlayout.vendor.id);//int pk
-            b.putInt("eid",eid);
+            b.putInt(ConstantBundleKeys.EVENT_ID,eid);
             i.putExtras(b);
             startActivity(i);
         }
-
-}}
+    }
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        //refresh activity
+        finish();
+        startActivity(getIntent());
+    }
+}

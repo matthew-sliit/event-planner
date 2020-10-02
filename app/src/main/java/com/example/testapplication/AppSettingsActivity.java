@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.example.testapplication.constants.ConstantBundleKeys;
 import com.example.testapplication.db.category.Category;
 import com.example.testapplication.db.category.ICategory;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -36,11 +37,11 @@ public class AppSettingsActivity extends AppCompatActivity {
         //read bundle data from previous intent
         Bundle b = getIntent().getExtras();
         if(b!=null){
-            pre_intent = b.getString("pre_activity","home");
-            is_in_setting = b.getString("is_in_setting","false");
+            pre_intent = b.getString(ConstantBundleKeys.PRE_ACTIVITY,"home");
+            is_in_setting = b.getString(ConstantBundleKeys.IS_IN_SETTING,"false");
             edit = b.getString("edit","none");
-            is_in_cat = b.getString("set_to_cat","false");
-            has_title = b.getString("title","none");
+            is_in_cat = b.getString(ConstantBundleKeys.SET_TO_CATEGORY,"false");
+            has_title = b.getString(ConstantBundleKeys.TITLE,"none");
             //Log.d("RELOAD","previous activity = " + pre_intent);
             //Log.d("RELOAD","is_in_setting = " + is_in_setting);
             //Log.d("RELOAD","is_in_cat = " + is_in_cat);
@@ -48,41 +49,45 @@ public class AppSettingsActivity extends AppCompatActivity {
         //setup toolbar
         Toolbar toolbar = findViewById(R.id.aps_menu);
         setSupportActionBar(toolbar);
+        Log.d("AppSettings>>","has_title -> " + has_title);
         if(has_title.equalsIgnoreCase("none")){
             Log.d("RELOAD","SETTING TITLE ");
         }else{
+
             toolbar.setTitle(has_title);
         }
         toolbar.setNavigationIcon(R.drawable.back_btn);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 /*
                 When pressed back, use bundle data to get previous activity
                  */
                 //Log.d("BUTTON","Back Button in Settings Pressed!");
+                /*
                 if(is_in_setting.equalsIgnoreCase("true")) {
                     Bundle b = new Bundle();
-                    b.putString("pre_activity", pre_intent); //pass
+                    b.putString(ConstantBundleKeys.PRE_ACTIVITY, pre_intent); //pass
                     Intent j = new Intent(getApplicationContext(), AppSettingsActivity.class);
-                    b.putString("set_to_cat","false");
+                    b.putString(ConstantBundleKeys.SET_TO_CATEGORY,"false");
                     b.putString("edit","Manage Category");
                     Log.d("BACK BUTTON","Resetting SET");
-                    b.putString("is_in_setting", "false");
+                    b.putString(ConstantBundleKeys.IS_IN_SETTING, "false");
                     j.putExtras(b);
                     startActivity(j);
                 }else if(pre_intent.equalsIgnoreCase("listBudget")){
                     Intent i = new Intent(getApplicationContext(), ListBudgetsActivity.class);
                     startActivity(i);
-                }else{
-                    //default
-                    Intent i = new Intent(getApplicationContext(), MainActivityEmu.class);
-                    startActivity(i);
                 }
                 Log.d("BACK BUTTON","previous activity = " + pre_intent);
                 Log.d("BACK BUTTON","is_in_setting = " + is_in_setting);
                 Log.d("BACK BUTTON","is_in_cat = " + is_in_cat);
+
+                 */
+                Log.d("BACK BUTTON","previous activity = " + pre_intent);
+                Log.d("BACK BUTTON","is_in_setting = " + is_in_setting);
+                Log.d("BACK BUTTON","is_in_cat = " + is_in_cat);
+                finish();
 
             }
         });
@@ -103,8 +108,10 @@ public class AppSettingsActivity extends AppCompatActivity {
                 startActivity(k);
 
             }else if(edit.equalsIgnoreCase(option_names[1])){
+                //ICategory categoryObj = new Category(this);
                 Log.d("SETTINGS GEN","Loading Categories");
-                option_names = getResources().getStringArray(R.array.default_categories); //escapes default
+                //option_names = getResources().getStringArray(R.array.default_categories); //escapes default
+                option_names = (String[]) category.getAllCategory().toArray(new String[0]);
                 //option_names = null;
                 generateSettingsList(pre_intent, option_names,"true",edit);
 
@@ -115,10 +122,10 @@ public class AppSettingsActivity extends AppCompatActivity {
                         //go to Add Category
                         Intent k = new Intent(getApplicationContext(), EditCategoryActivity.class);
                         Bundle data = new Bundle();
-                        data.putString("cat_edit","Add New Category");
-                        data.putString("pre_activity",pre_intent);
-                        data.putString("set_to_cat","true");
-                        data.putString("is_in_setting","true");
+                        data.putString(ConstantBundleKeys.EDIT_CATEGORY_MODE,"Add New Category");
+                        data.putString(ConstantBundleKeys.PRE_ACTIVITY,pre_intent);
+                        data.putString(ConstantBundleKeys.SET_TO_CATEGORY,"true");
+                        data.putString(ConstantBundleKeys.IS_IN_SETTING,"true");
                         k.putExtras(data);
                         startActivity(k);
 
@@ -140,14 +147,17 @@ public class AppSettingsActivity extends AppCompatActivity {
                     }
                 }
                 //if(edit.equalsIgnoreCase(option_names[Arrays.asList(option_names).indexOf(edit)])){
+                /*
+                If a category is selected from the list then;
+                 */
                 if(exec){
                     Log.d("SETTINGS GEN","Loading type of Category: " + edit);
                     Intent k = new Intent(getApplicationContext(), EditCategoryActivity.class);
                     Bundle data = new Bundle();
-                    data.putString("cat_edit",edit);
-                    data.putString("pre_activity",pre_intent);
-                    data.putString("set_to_cat","true");
-                    data.putString("is_in_setting","true");
+                    data.putString(ConstantBundleKeys.EDIT_CATEGORY_MODE,edit);
+                    data.putString(ConstantBundleKeys.PRE_ACTIVITY,pre_intent);
+                    data.putString(ConstantBundleKeys.SET_TO_CATEGORY,"true");
+                    data.putString(ConstantBundleKeys.IS_IN_SETTING,"true");
                     k.putExtras(data);
                     startActivity(k);
                 }
@@ -192,19 +202,19 @@ public class AppSettingsActivity extends AppCompatActivity {
                 String selection = (String) adapterView.getItemAtPosition(i); //returns option_name selected
                 Log.d("SETTINGS SELECT",selection);
 
-                Intent j = new Intent(getApplicationContext(),AppSettingsActivity.class);
+                Intent j = new Intent(getApplicationContext(),AppSettingsActivity.class);//post to this activity
                 Bundle b = new Bundle();
-                b.putString("pre_activity",pre_intent); //pass
-                b.putString("is_in_setting","true");
+                b.putString(ConstantBundleKeys.PRE_ACTIVITY,pre_intent); //pass
+                b.putString(ConstantBundleKeys.IS_IN_SETTING,"true");
                 b.putString("edit",selection); //for categories
                 if(set_to_cat.equalsIgnoreCase("true")){
-                    b.putString("set_to_cat","true");
+                    b.putString(ConstantBundleKeys.SET_TO_CATEGORY,"true");
                 }
                 if(!title.equalsIgnoreCase("none")){
-                    Log.d("SETTINGS GEN","title is " + selection);
-                    b.putString("title",selection);
+                    Log.d("AppSettings>>","category selected -> " + selection);
+                    b.putString(ConstantBundleKeys.TITLE,selection);
                 }
-                b.putString("title",selection);
+                b.putString(ConstantBundleKeys.TITLE,selection);
                 j.putExtras(b);
                 startActivity(j);
             }

@@ -48,6 +48,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
+        android:onClick="handleClick"
         app:backgroundTint="@color/menu_background"
         app:layout_constraintBottom_toTopOf="@+id/editTxt_bud_amt"
         app:layout_constraintEnd_toEndOf="parent"

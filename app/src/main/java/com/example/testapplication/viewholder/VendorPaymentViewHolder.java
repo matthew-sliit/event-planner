@@ -12,12 +12,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.testapplication.Editpayment;
 import com.example.testapplication.R;
+import com.example.testapplication.constants.ConstantBundleKeys;
 import com.example.testapplication.db.vendor.Vendor_pay_Impl;
 
 public class VendorPaymentViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     private TextView lb_name, lb_totamt, lb_paidamt; //from layout
-    private int vid=0;
+    private int eid=0;
     /*
      * ================== ViewHolder constructor ========================
      * @param itemView
@@ -25,13 +26,13 @@ public class VendorPaymentViewHolder extends RecyclerView.ViewHolder implements 
      * @param currentAct
      *         The context of the activity
      */
-    public VendorPaymentViewHolder(final View itemView, Context currentAct,int vid) {
+    public VendorPaymentViewHolder(final View itemView, Context currentAct,int eid) {
         super(itemView);
         lb_name = (TextView) itemView.findViewById(R.id.textView_lb_name);
         lb_totamt = (TextView) itemView.findViewById(R.id.textView_lb_totamt);
         lb_paidamt = (TextView) itemView.findViewById(R.id.textView_lb_paidamt);
         itemView.setOnClickListener(this);
-        this.vid=vid;
+        this.eid=eid;
         this.currentAct = currentAct; //assigning context
     }
     public Context currentAct;//passed from ActivityClass through Adapter
@@ -78,8 +79,9 @@ public class VendorPaymentViewHolder extends RecyclerView.ViewHolder implements 
         Log.d("SimpleViewHolder::", "OnClick>>layoutPos -> "+ getLayoutPosition());
         Intent i = new Intent(view.getContext(), Editpayment.class);
         Bundle b = new Bundle();
+        b.putInt(ConstantBundleKeys.EVENT_ID,vendor_model.eid);//int pk
         b.putInt("id",vendor_model.id);//int pk
-        b.putInt("vid",vid);//int pk
+        b.putInt("vid",vendor_model.vid);
         b.putString("title","Edit Budget");
         /*
         b.putString("name",budget_model.name);
