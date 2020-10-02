@@ -22,6 +22,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.testapplication.constants.ConstantBundleKeys;
+import com.example.testapplication.db.category.Category;
+import com.example.testapplication.db.category.ICategory;
 import com.example.testapplication.db.task.Task_Impl;
 
 import java.text.SimpleDateFormat;
@@ -43,13 +45,15 @@ public class EditTask extends AppCompatActivity {
 
     private class TaskLayoutClass {
 
-        String tname, status, category;
+        String tname, status;
+        ICategory category;
         public int id = 0, eid__ = 0;
         private Context c;
         public TaskLayoutClass(Context c, int eid_) {
             task_ = new Task_Impl(c, eid_);
             this.c = c;
             this.eid__ = eid_;
+            category = new Category(c);
         }
 
         public Task_Impl task_;
@@ -60,11 +64,6 @@ public class EditTask extends AppCompatActivity {
             rdComplete = (RadioButton) findViewById(R.id.rdComplete);
 
             spinnerT = (Spinner) findViewById(R.id.spinnerT);
-
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(c, android.R.layout.simple_spinner_item, categoryType);
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spinnerT.setAdapter(adapter);
-
         }
 
 
@@ -74,26 +73,28 @@ public class EditTask extends AppCompatActivity {
             if (this.status != null) {
                 this.task_.status = this.status;
             }
-
+            //?
+            /*
             if (null != category) {
                 int index = Arrays.asList(categoryType).indexOf(category);
                 spinnerT.setSelection(index, true);
                 spinnerItem = category;
+            }*/
+            try {
+                this.task_.category = spinnerT.getSelectedItem().toString();
+            }catch (NullPointerException e){
+                this.task_.category="Ceremony";
             }
-
-
             this.task_.description = ((EditText) findViewById(R.id.et_tdesc)).getText().toString();
             //this.task_.category = ((EditText)findViewById(R.id.ca)).getText().toString();
             this.task_.tdate = ((EditText) findViewById(R.id.et_tdate)).getText().toString();
-
-
         }
 
         public void setValuesToLayout(int id) {
             this.InitVariables();
-
-            this.task_ = task_.getTaskById(id, eid__);
-            Log.d("EditTask>>","id = " + id + " eid=" + eid__);
+            this.task_ = task_.getTaskById(eid__,id);
+            Log.d("EditTask>>","Bundle: id = " + id + " eid=" + eid__);
+            Log.d("EditTask>>","Object: id = " + task_.id + " eid=" + task_.eid);
             ((EditText) findViewById(R.id.et_tname)).setText(this.task_.tname, TextView.BufferType.EDITABLE);
             ((EditText) findViewById(R.id.et_tdesc)).setText(this.task_.description, TextView.BufferType.EDITABLE);
             ((EditText) findViewById(R.id.et_tdate)).setText(this.task_.tdate, TextView.BufferType.EDITABLE);
@@ -107,7 +108,20 @@ public class EditTask extends AppCompatActivity {
                     rdComplete.setChecked(true);
                 }
             }
-
+            String[] defaultOrder = (String[]) category.getAllCategory().toArray(new String[0]);
+            for(int i=0;i<defaultOrder.length;i++){
+                if(defaultOrder[i].equals(task_.category)){ //from bundle
+                    //Log.d("AddBudgetAct>>","setting default category as " + category);
+                    String temp = defaultOrder[i];
+                    defaultOrder[i] = defaultOrder[0];
+                    defaultOrder[0] = temp;
+                    break; //for loop
+                }
+            }
+            final String[] defaultCat = defaultOrder;
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(c, android.R.layout.simple_spinner_item, defaultCat);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinnerT.setAdapter(adapter);
         }
 
         public void setRadioEvents() {

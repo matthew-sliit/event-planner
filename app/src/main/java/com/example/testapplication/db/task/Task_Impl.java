@@ -3,6 +3,7 @@ package com.example.testapplication.db.task;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.CursorIndexOutOfBoundsException;
 import android.util.Log;
 
 import com.example.testapplication.constants.TableNames;
@@ -160,7 +161,7 @@ public class Task_Impl implements ITask {
         String[] cols = {Task_table.COLUMN_NAME_ID,Task_table.COLUMN_NAME_EID,table.COLUMN_NAME_TASKNAME,Task_table.COLUMN_NAME_EID,table.COLUMN_NAME_CAT,table.COLUMN_NAME_DESC,table.COLUMN_NAME_STATUS,table.COLUMN_NAME_DATE};
         try {
             Cursor c = db.readAllWitSelection(cols,table.TABLE_TASK,getWhereEidaBidStatement(eid,id));
-            List<Task_Impl> b = new ArrayList<>();
+            //List<Task_Impl> b = new ArrayList<>();
             Task_Impl ib = new Task_Impl(this.c, eid);
             while(c.moveToNext()){
                 ib.id = c.getInt(c.getColumnIndexOrThrow(Task_table.COLUMN_NAME_ID));//int
@@ -170,16 +171,19 @@ public class Task_Impl implements ITask {
                 ib.description = c.getString(c.getColumnIndexOrThrow(Task_table.COLUMN_NAME_DESC));
                 ib.status = c.getString(c.getColumnIndexOrThrow(Task_table.COLUMN_NAME_STATUS));
                 ib.tdate = c.getString(c.getColumnIndexOrThrow(Task_table.COLUMN_NAME_DATE));
-                /*Log.d("Budget_Impl>>","================ Printing Read Values ================");
+                Log.d("Budget_Impl>>","================ Printing Read Values ================");
                 Log.d("id -> ",""+ib.id);
-                Log.d("name -> ",ib.name);
-                Log.d("cat -> ",ib.cat);
-                Log.d("amt -> ",ib.amt);
-                Log.d("desc -> ",ib.desc);*/
+                Log.d("name -> ",""+ib.tname);
+                Log.d("cat -> ",""+ib.category);
+                Log.d("amt -> ",""+ib.status);
+                Log.d("desc -> ",""+ib.tdate);
             }
             return ib;
-        }catch (NullPointerException np){
+        }catch (CursorIndexOutOfBoundsException np){
             Log.d("Task_Impl>>","NPE " + np.getMessage());
+            return null;
+        }catch (NullPointerException e){
+            Log.d("Task_Impl>>","NPE " + e.getMessage());
             return null;
         }
 

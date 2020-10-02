@@ -40,7 +40,7 @@ public class addTask extends AppCompatActivity {
     RadioGroup rdstatus;
     RadioButton rdPend,rdComplete;
     Spinner spinnerT;
-    String[] categoryType ={"Ceremony", "Decoration", "Reception", "Jewelry"};
+    //String[] categoryType ={"Ceremony", "Decoration", "Reception", "Jewelry"};
 
     String spinnerItem = null;
 
@@ -65,7 +65,7 @@ public class addTask extends AppCompatActivity {
             rdComplete=(RadioButton)findViewById(R.id.rdComplete);
 
         spinnerT = (Spinner)findViewById(R.id.spinnerT);
-        categoryType = (String[]) category.getAllCategory().toArray(new String[0]);
+        String[] categoryType = (String[]) category.getAllCategory().toArray(new String[0]);
         ArrayAdapter<String>adapter = new ArrayAdapter<String>(c,android.R.layout.simple_spinner_item,categoryType);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerT.setAdapter(adapter);
@@ -78,11 +78,17 @@ public class addTask extends AppCompatActivity {
             this.task_.tname = ((EditText)findViewById(R.id.et_tname)).getText().toString();
             if(this.status!=null){
                 this.task_.status=this.status;}
-
+            /*
             if(null != categoryTemp){
                 int index = Arrays.asList(categoryType).indexOf(categoryTemp);
                 spinnerT.setSelection(index, true);
                 spinnerItem = categoryTemp;
+            }
+             */
+            try {
+                this.task_.category = spinnerT.getSelectedItem().toString();
+            }catch (NullPointerException e){
+                this.task_.category="Ceremony";
             }
             this.task_.description = ((EditText)findViewById(R.id.et_tdesc)).getText().toString();
             //this.task_.category = ((EditText)findViewById(R.id.ca)).getText().toString();
@@ -218,12 +224,14 @@ public class addTask extends AppCompatActivity {
             Log.d("BUTTON","Save Button Pressed!");
             guestlayout.loadValuesFromLayout();
             guestlayout.task_.addTask();
+            Log.d("addTask>>","Task Added with eid=" + eid + " and id="+id);
 
             //  logInputs();
             //default go back to list view
 
-            Intent i = new Intent(getApplicationContext(),taskList.class);
-            startActivity(i);
+           // Intent i = new Intent(getApplicationContext(),taskList.class);
+           // startActivity(i);
+            finish();
         }
 
     }
