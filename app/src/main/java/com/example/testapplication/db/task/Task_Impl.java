@@ -19,7 +19,7 @@ import java.util.List;
 public class Task_Impl implements ITask {
     private class Task_table {
         public Task_table(){}
-        public static final String TABLE_TASK="taskTableTest";
+        public static final String TABLE_TASK=TableNames.TaskTable;
         public static final String COLUMN_NAME_ID="id";
         public static final String COLUMN_NAME_EID= EventsTable.EVENT_ID;
         public static final String COLUMN_NAME_TASKNAME="tname";

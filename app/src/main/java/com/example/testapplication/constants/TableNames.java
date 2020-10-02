@@ -5,7 +5,7 @@ public class TableNames {
     public static final String EventTable = "EventTableTest1";
     public static final String SelectEventTable = "eventsSelect";
     //task
-    public static final String TaskTable = "Tasks";
+    public static final String TaskTable = "taskTableTest";
     //guest
     public static final String GuestTable = "guestsTable";
     public static final String CompanionTable = "companionstable";

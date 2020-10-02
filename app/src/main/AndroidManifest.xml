@@ -10,43 +10,47 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-        android:screenOrientation="portrait"
         tools:node="replace">
-        <activity android:name=".BudgetPaymentsActivity"/>
-        <activity android:name=".NumberStandardActivity" />
-        <activity android:name=".EditCategoryActivity" />
-        <activity android:name=".AppSettingsActivity" />
-        <activity android:name=".ListBudgetsActivity" />
-        <activity android:name=".MainActivityEmu"/>
-        <activity android:name=".homepg">
+        <!--SETTINGS-->
+        <activity android:name=".NumberStandardActivity" android:screenOrientation = "portrait"/>
+        <activity android:name=".EditCategoryActivity" android:screenOrientation = "portrait"/>
+        <activity android:name=".AppSettingsActivity" android:screenOrientation = "portrait"/>
+         <!--<activity android:name=".MainActivityEmu" android:screenOrientation = "portrait"/>-->
+        <!--HOMEPAGE-->
+        <activity android:name=".homepg" android:screenOrientation = "portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!--SUMMARY-->
+        <activity android:name=".Summary" android:screenOrientation = "portrait"/>
+        <!--BUDGET-->
+        <activity android:name=".BudgetPaymentsActivity" android:screenOrientation = "portrait"/>
         <activity android:name=".GraphActivity" /> <!-- android:theme="@style/AppTheme"> -->
-        <activity
-            android:name=".AddEditBudgetActivity"
-            android:windowSoftInputMode="stateUnchanged|adjustResize" />
-        <activity android:name=".eventList" />
-        <activity android:name=".editEvent" />
-        <activity android:name=".AddEvent" />
-        <activity android:name=".Summary"/>
-        <activity android:name=".taskList"/>
-        <activity android:name=".addTask"/>
-        <activity android:name=".EditTask"/>
-        <activity android:name=".ViewGuest"/>
-        <activity android:name=".AddGuest"/>
-        <activity android:name=".EditGuest"/>
-        <activity android:name=".AddCompanions"/>
-        <activity android:name=".EditCompanions"/>
-        <activity android:name=".Vendorview"/>
-        <activity android:name=".Addvendor"/>
-        <activity android:name=".Editvendor"/>
-        <activity android:name=".Addpayment"/>
-        <activity android:name=".Editpayment"/>
-        <activity android:name=".Vendorpaymentview"/>
+        <activity android:name=".AddEditBudgetActivity" android:windowSoftInputMode="stateUnchanged|adjustResize" />
+        <activity android:name=".ListBudgetsActivity" android:screenOrientation = "portrait"/>
+        <!--TASKS-->
+        <activity android:name=".taskList" android:screenOrientation = "portrait"/>
+        <activity android:name=".addTask" android:screenOrientation = "portrait"/>
+        <activity android:name=".EditTask" android:screenOrientation = "portrait"/>
+        <!--EVENT-->
+        <activity android:name=".eventList" android:screenOrientation = "portrait"/>
+        <activity android:name=".editEvent" android:screenOrientation = "portrait"/>
+        <activity android:name=".AddEvent" android:screenOrientation = "portrait"/>
+        <!--GUEST-->
+        <activity android:name=".ViewGuest" android:screenOrientation = "portrait"/>
+        <activity android:name=".AddGuest" android:screenOrientation = "portrait"/>
+        <activity android:name=".EditGuest" android:screenOrientation = "portrait"/>
+        <activity android:name=".AddCompanions" android:screenOrientation = "portrait"/>
+        <activity android:name=".EditCompanions" android:screenOrientation = "portrait"/>
+        <!--VENDOR-->
+        <activity android:name=".Vendorview" android:screenOrientation = "portrait"/>
+        <activity android:name=".Addvendor" android:screenOrientation = "portrait"/>
+        <activity android:name=".Editvendor" android:screenOrientation = "portrait"/>
+        <activity android:name=".Addpayment" android:screenOrientation = "portrait"/>
+        <activity android:name=".Editpayment" android:screenOrientation = "portrait"/>
+        <activity android:name=".Vendorpaymentview" android:screenOrientation = "portrait"/>
     </application>
 
 </manifest>
