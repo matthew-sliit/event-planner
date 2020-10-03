@@ -16,13 +16,19 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.ArrayList;
+import java.util.List;
 
+/*
+================== BUDGET model and Database Unit Tests ======================
+ */
 public class BudgetDBUnitTest {
     private Budget_Impl_updated budget_model, budget_model_result;
     private int event_id = 0, budget_id = 0;
+    private Context context;
     @Before
     public void setUp() {
-        Context context = new RenamingDelegatingContext(InstrumentationRegistry.getTargetContext(), "test_");
+        context = new RenamingDelegatingContext(InstrumentationRegistry.getTargetContext(), "test_");
         budget_model = new Budget_Impl_updated(context,0);
         budget_model_result = new Budget_Impl_updated(context,0);
     }
@@ -33,10 +39,10 @@ public class BudgetDBUnitTest {
          */
         //assign data
         budget_model.eid = event_id;
-        budget_model.name = "James";
+        budget_model.name = "Academy Junior Association";
         budget_model.amt = String.valueOf(20000.00);
-        budget_model.cat = "Chocolates";
-        budget_model.desc = "Mr.Willy Wonka Chocolates";
+        budget_model.cat = "Accessories";
+        budget_model.desc = "Exercise books, Pencil cases, color books";
         //save to db and get the primary key of the record
         budget_id = budget_model.addBudgetGetId();
         //read from db to new instance
@@ -53,7 +59,7 @@ public class BudgetDBUnitTest {
         budget_model = budget_model.getBudgetById(event_id,budget_id);//get saved record
         //set another name
         String prev_name = budget_model.name;
-        String newName = "Billy";
+        String newName = "Academy Senior Association";
         budget_model.name = newName;
         budget_model.updateBudget(budget_model);
         //read from db to new instance
@@ -67,15 +73,39 @@ public class BudgetDBUnitTest {
         ==================== REMOVE =========================
          */
         budget_model.removeBudget(budget_id);
-        try{
-            budget_model_result = budget_model_result.getBudgetById(event_id,budget_id);
-            assertNotEquals(budget_model.name,budget_model_result.name);
-        }catch (CursorIndexOutOfBoundsException ignored){
-
-        }
+        budget_model_result = budget_model_result.getBudgetById(event_id,budget_id);
+        assertNotEquals(budget_model.name,budget_model_result.name);
     }
     @Test
     public void db_InsertReadList(){
-
+        /*
+        =============== INSERT SETS OF DATA ==================
+         */
+        //assign dataset1
+        String[] names = {"2015","2016","2017"};
+        Double[] amt = {2500.00,48000.00,110000.00};
+        String[] category = {"Basement","Glass Doors","Pool"};
+        String[] desc = {"Concrete,iron bars","White tinted","10ft deep, dark blue tiles"};
+        for(int i=0;i<names.length;i++){
+            budget_model.name = names[i];
+            budget_model.setAmt(amt[i]);
+            budget_model.cat = category[i];
+            budget_model.desc = desc[i];
+            //save to db
+            budget_model.addBudget();
+        }
+        /*
+        =============== RETRIEVE SETS OF DATA ==================
+         */
+        List<Budget_Impl_updated> list = new ArrayList<>();
+        list = budget_model_result.getBudgetList();
+        for(int i=0;i<list.size();i++){
+            budget_model = list.get(i); //get object element from list to class obj
+            //assert with original
+            assertEquals(names[i],budget_model.name);
+            assertEquals(amt[i],budget_model.getAmt());
+            assertEquals(category[i],budget_model.cat);
+            assertEquals(desc[i],budget_model.desc);
+        }
     }
 }
