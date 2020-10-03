@@ -26,7 +26,7 @@ import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
 import java.util.List;
-public class VendorDBUnitTest {
+public class VendorDBInstrumentedTest {
     private Vendor_impl vendor_model, vendor_model_result;
     private int event_id = 0, vendor_id = 0;
     private Context context;

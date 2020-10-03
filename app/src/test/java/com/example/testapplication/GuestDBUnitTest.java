@@ -23,7 +23,7 @@ import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
 import java.util.List;
-public class GuestDBUnitTest {
+public class GuestDBInstrumentedTest {
     private Guest_Impl guest_model, guest_model_result;
     private int event_id = 0, guest_id = 0;
     private Context context;
