@@ -1,11 +1,16 @@
 package com.example.testapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -101,6 +106,20 @@ public class AddCompanions extends AppCompatActivity {
         setContentView(R.layout.activity_add_companions);
         final Context context = this;
         Bundle b = getIntent().getExtras();
+
+        Toolbar toolbar = findViewById(R.id.tbAddGuest); //set toolbar
+        setSupportActionBar(toolbar);
+        //set toolbar title
+        toolbar.setTitle("Add Companion");//either default or from bundle
+        //for back button
+        toolbar.setNavigationIcon(R.drawable.back_btn);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         glayout = new GuestLayoutClass(this, gid,eid);
         glayout.InitVariables();
         glayout.setRadioEvents();
@@ -109,11 +128,33 @@ public class AddCompanions extends AppCompatActivity {
             eid=b.getInt(ConstantBundleKeys.EVENT_ID,0);
             id = b.getInt("id");
             gid = b.getInt("gid");
-            Log.d("Addpayactivity>>", "id -> " + id + " gid ->" + gid);
+            //Log.d("Addpayactivity>>", "id -> " + id + " gid ->" + gid);
             glayout = new GuestLayoutClass(this, gid,eid);
         }
     }
-
+    //menu layout
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return true;
+    }
+    //menu right corner buttons
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId()==R.id.action_settings){
+            //Settings btn
+            Log.d("ADD_GUEST>>","Navigating to AppSettingsActivity!");
+            Intent i = new Intent(getApplicationContext(),AppSettingsActivity.class);
+            startActivity(i);
+        }
+        /*
+        if(item.getItemId()==R.id.action_settings){
+            //About us page
+        }
+         */
+        return super.onOptionsItemSelected(item);
+    }
 
     public void handleClick(View v){
 
@@ -142,5 +183,13 @@ public class AddCompanions extends AppCompatActivity {
         b.putInt(ConstantBundleKeys.EVENT_ID,eid);//int pk
         i.putExtras(b);
         startActivity(i);
+        finish();
     }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK ) {
+            finish();
+        }
+        return super.onKeyDown(keyCode, event);
     }
+}

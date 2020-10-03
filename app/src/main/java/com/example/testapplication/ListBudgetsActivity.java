@@ -6,8 +6,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,6 +37,7 @@ public class ListBudgetsActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.abb_menu);
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.back_btn);
+
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,6 +120,24 @@ public class ListBudgetsActivity extends AppCompatActivity {
          */
         return super.onOptionsItemSelected(item);
     }
-
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        //refresh activity
+        finish();
+        startActivity(getIntent());
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK ) {
+            Intent i = new Intent(getApplicationContext(), GraphActivity.class);
+            Bundle b = new Bundle();
+            b.putInt(ConstantBundleKeys.EVENT_ID,eid);//int pk
+            i.putExtras(b);
+            startActivity(i);
+            finish();
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 
 }

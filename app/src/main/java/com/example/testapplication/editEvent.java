@@ -10,6 +10,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -132,9 +133,11 @@ public class editEvent extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     elayout.loadValuesFromLayout();
-                    elayout.event_.updateEvent(elayout.event_);
-                    Intent i = new Intent(getApplicationContext(),eventList.class);
-                    startActivity(i);
+                    if(validated()) {
+                        elayout.event_.updateEvent(elayout.event_);
+                        Intent i = new Intent(getApplicationContext(), eventList.class);
+                        startActivity(i);
+                    }
                 }
             });
 
@@ -166,8 +169,28 @@ public class editEvent extends AppCompatActivity {
 
 
         }
-
-
+    public boolean validated(){
+        if(elayout.event_.ename.isEmpty()){
+            Toast.makeText(getApplicationContext(),"Please enter name", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if(elayout.event_.edate.isEmpty()){
+            Toast.makeText(getApplicationContext(),"Please enter date", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if(elayout.event_.etime.isEmpty()){
+            Toast.makeText(getApplicationContext(),"Please enter a time", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
     }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK ) {
+            finish();
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+}
 
 

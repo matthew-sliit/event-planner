@@ -2,12 +2,17 @@ package com.example.testapplication;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -122,6 +127,23 @@ public class EditCompanions extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_companions);
+
+        Toolbar toolbar = findViewById(R.id.tbAddGuest); //set toolbar
+        setSupportActionBar(toolbar);
+        //set toolbar title
+        toolbar.setTitle("Edit Companion");//either default or from bundle
+        //for back button
+        toolbar.setNavigationIcon(R.drawable.back_btn);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //default previous intent
+                //Intent i = new Intent(getApplicationContext(),ViewGuest.class);
+                //startActivity(i);
+                finish();
+            }
+        });
+
         delBtn=(Button) findViewById(R.id.delCom);
         final Context context = this;
         Bundle b = getIntent().getExtras();
@@ -199,5 +221,34 @@ public class EditCompanions extends AppCompatActivity {
             }
         });
     }
-
+    //menu layout
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return true;
+    }
+    //menu right corner buttons
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId()==R.id.action_settings){
+            //Settings btn
+            Log.d("ADD_GUEST>>","Navigating to AppSettingsActivity!");
+            Intent i = new Intent(getApplicationContext(),AppSettingsActivity.class);
+            startActivity(i);
+        }
+        /*
+        if(item.getItemId()==R.id.action_settings){
+            //About us page
+        }
+         */
+        return super.onOptionsItemSelected(item);
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK ) {
+            finish();
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 }

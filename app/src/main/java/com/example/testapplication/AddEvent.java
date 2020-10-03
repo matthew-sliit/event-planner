@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -20,6 +21,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.testapplication.db.event.Event_Impl;
 import com.example.testapplication.db.event.IEvent;
@@ -189,6 +191,21 @@ public class AddEvent extends AppCompatActivity {
          */
         return super.onOptionsItemSelected(item);
     }
+    public boolean validated(){
+        if(elayout.event_.ename.isEmpty()){
+            Toast.makeText(getApplicationContext(),"Please enter name", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if(elayout.event_.edate.isEmpty()){
+            Toast.makeText(getApplicationContext(),"Please enter date", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if(elayout.event_.etime.isEmpty()){
+            Toast.makeText(getApplicationContext(),"Please enter a time", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
 
     public void handleClick(View v){
         IEvent event = new Event_Impl(this);
@@ -197,20 +214,24 @@ public class AddEvent extends AppCompatActivity {
         if(v.getId() == R.id.Esave){
             Log.d("BUTTON","Save Button Pressed!");
             eventlayout.loadValuesFromLayout();
-            eventlayout.event_.AddEvent();
+            //validate loaded values
+            if(validated()) {
+                //if validated then add
+                eventlayout.event_.AddEvent();
 
-            //  logInputs();
-            //default go back to list view
+                //  logInputs();
+                //default go back to list view
 
-            Intent i = new Intent(getApplicationContext(),eventList.class);
-            startActivity(i);
+                Intent i = new Intent(getApplicationContext(), eventList.class);
+                startActivity(i);
+            }
         }
     }
-
-
-
-
-
-
-
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK ) {
+           finish();
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 }

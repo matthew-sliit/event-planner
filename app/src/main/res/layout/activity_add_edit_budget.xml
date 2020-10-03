@@ -49,14 +49,14 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:onClick="handleClick"
-        app:backgroundTint="@color/menu_background"
+        app:backgroundTint="@color/purple"
         app:layout_constraintBottom_toTopOf="@+id/editTxt_bud_amt"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.828"
         app:layout_constraintStart_toEndOf="@+id/ab_cat"
         app:layout_constraintTop_toBottomOf="@+id/editTxt_bud_name"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@android:drawable/ic_input_add" />
+        app:srcCompat="@drawable/add_fab" />
 
     <TextView
         android:id="@+id/ab_cat"

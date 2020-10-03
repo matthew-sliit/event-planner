@@ -40,7 +40,8 @@
                 android:id="@+id/recycler"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:backgroundTintMode="@color/purple" />
         </LinearLayout>
 
 
@@ -82,19 +83,20 @@
             <com.google.android.material.floatingactionbutton.FloatingActionButton android:id="@+id/fabAdd" style="@style/FloatingActionButtonCommon"/>
             -->
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/lb_add_budget"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="33dp"
-                android:layout_marginBottom="145dp"
-                android:clickable="true"
-                android:elevation="10dp"
-                android:layout_gravity="bottom|end"
-                android:onClick="handleOnClick"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:srcCompat="@android:drawable/ic_input_add" />
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/lb_add_budget"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginEnd="33dp"
+            android:layout_marginBottom="145dp"
+            android:clickable="true"
+            android:elevation="10dp"
+            android:onClick="handleOnClick"
+            app:backgroundTint="@color/purple"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/add_fab" />
         </FrameLayout>
     </LinearLayout>
 </ScrollView>

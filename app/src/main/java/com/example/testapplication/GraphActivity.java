@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -103,6 +104,7 @@ public class GraphActivity extends AppCompatActivity {
             data.setBarWidth(0.6f);
             //BarData data = new BarData(labels, dataSets);
             barChart.setData(data);
+            setSummaryValues();
         }
         public void setSummaryValues(){
             ((TextView)findViewById(R.id.textView3)).setText(String.valueOf(totalBudget));
@@ -175,5 +177,24 @@ public class GraphActivity extends AppCompatActivity {
             startActivity(i);
         }
 
+    }
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        //refresh activity
+        finish();
+        startActivity(getIntent());
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK ) {
+            Intent i = new Intent(getApplicationContext(),homepg.class);
+            Bundle b = new Bundle();
+            b.putInt(ConstantBundleKeys.EVENT_ID,eid);//int pk
+            i.putExtras(b);
+            startActivity(i);
+            finish();
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

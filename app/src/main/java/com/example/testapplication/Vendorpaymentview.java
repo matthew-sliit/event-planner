@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -106,6 +107,18 @@ public class Vendorpaymentview extends AppCompatActivity {
         //refresh activity
         finish();
         startActivity(getIntent());
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK ) {
+            Bundle b = new Bundle();
+            Intent i = new Intent(getApplicationContext(),Editvendor.class);
+            b.putInt(ConstantBundleKeys.EVENT_ID,eid);
+            i.putExtras(b);
+            startActivity(i);
+            finish();
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }
 

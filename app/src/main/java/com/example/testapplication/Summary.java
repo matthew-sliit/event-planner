@@ -5,6 +5,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
 
@@ -124,5 +125,12 @@ public class Summary extends AppCompatActivity {
         }
         showVendorPaid.setText(String.valueOf(vpaid));
         showVendorPend.setText(String.valueOf(vpend));
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK ) {
+            finish();
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

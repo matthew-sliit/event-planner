@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -361,5 +362,17 @@ public class AddEditBudgetActivity extends AppCompatActivity{
 
         //((TextView) findViewById(R.id.SelectedBudgetBalance)).setVisibility(View.VISIBLE);
         //((TextView) findViewById(R.id.SelectedBudgetBalance)).setText("" + amount);
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK ) {
+            Intent i = new Intent(getApplicationContext(),ListBudgetsActivity.class);
+            Bundle b = new Bundle();
+            b.putInt(ConstantBundleKeys.EVENT_ID,eid);//int pk
+            i.putExtras(b);
+            startActivity(i);
+            finish();
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

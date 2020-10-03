@@ -26,7 +26,7 @@
         android:layout_width="411dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:background="#907EC9 "
+        android:background="@color/purple"
         android:onClick="handleClick"
         android:text="@string/list"
         android:textColor="#FFFFFF"
@@ -73,7 +73,7 @@
 
         <TextView
             android:id="@+id/textView11"
-            android:layout_width="119dp"
+            android:layout_width="123dp"
             android:layout_height="match_parent"
             android:gravity="right"
             android:text="3000.00" />
@@ -85,11 +85,14 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
         android:layout_marginEnd="32dp"
+        android:background="@color/colorPrimary"
+        android:backgroundTint="@color/purple"
         android:clickable="true"
         android:onClick="handleClick"
+        app:backgroundTint="@color/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/barchart"
-        app:srcCompat="@android:drawable/ic_input_add" />
+        app:srcCompat="@drawable/add_fab" />
 
     <TableRow
         android:id="@+id/tableRow"

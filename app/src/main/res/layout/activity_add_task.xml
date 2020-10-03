@@ -94,6 +94,25 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.286" />
 
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/lg_add_task"
+            android:layout_width="103dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right|end"
+            android:layout_marginEnd="60dp"
+            android:layout_marginBottom="480dp"
+            android:backgroundTint="@color/purple"
+            android:clickable="true"
+            android:elevation="10dp"
+            android:onClick="handleClick"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.92"
+            app:layout_constraintStart_toEndOf="@+id/spinnerT"
+            app:layout_constraintTop_toBottomOf="@+id/et_tname"
+            app:srcCompat="@drawable/ic_baseline_add_24" />
+
         <EditText
             android:id="@+id/et_tdate"
             android:layout_width="311dp"

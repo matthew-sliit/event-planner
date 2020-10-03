@@ -233,6 +233,17 @@ public class addTask extends AppCompatActivity {
            // startActivity(i);
             finish();
         }
+        if(v.getId() == R.id.lg_add_task){
+            Bundle b = new Bundle();
+            b.putString(ConstantBundleKeys.SET_TO_CATEGORY,"false");
+            b.putString(ConstantBundleKeys.TITLE,"Add Category");
+            b.putString(ConstantBundleKeys.EDIT_CATEGORY_MODE,"Add name"); //placeholder
+            b.putString(ConstantBundleKeys.IS_IN_SETTING,"false");
+            b.putString(ConstantBundleKeys.PRE_ACTIVITY,has_title);
+            Intent i = new Intent(getApplicationContext(),EditCategoryActivity.class);
+            i.putExtras(b);
+            startActivity(i);
+        }
 
     }
     @Override

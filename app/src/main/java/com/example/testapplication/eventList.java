@@ -29,13 +29,11 @@ public class eventList extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Intent i = new Intent(getApplicationContext(),homepg.class);
-                //startActivity(i);
+                Intent i = new Intent(getApplicationContext(),homepg.class);
+                startActivity(i);
+                finish();
             }
         });
-
-
-        IEvent event = new Event_Impl(this);
 
         EventAdapter adapter = new EventAdapter(this);
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_e);
@@ -54,14 +52,17 @@ public class eventList extends AppCompatActivity {
 
     }
     @Override
+    protected void onRestart() {
+        super.onRestart();
+        //refresh activity
+        finish();
+        startActivity(getIntent());
+    }
+    @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK ) {
            finish();
         }
         return super.onKeyDown(keyCode, event);
     }
-
-
-
-
 }
