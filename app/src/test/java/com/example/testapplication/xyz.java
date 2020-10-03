@@ -1,4 +1,4 @@
 package com.example.testapplication;
 
-public class BudgetUnitTest {
+public class xyz {
 }
