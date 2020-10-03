@@ -102,7 +102,7 @@
         app:layout_constraintTop_toBottomOf="@+id/hr_ignore">
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/textView40"
             android:layout_width="149dp"
             android:layout_height="wrap_content"
             android:text="@string/total_budget" />

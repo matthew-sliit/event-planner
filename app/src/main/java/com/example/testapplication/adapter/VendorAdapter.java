@@ -94,7 +94,7 @@ public class VendorAdapter extends RecyclerView.Adapter{
      */
     @Override
     public int getItemViewType(final int position) {
-        return R.layout.simple_itemview;
+        return R.layout.vendor_itemview;
     }
 
 }

@@ -9,31 +9,31 @@
 
     <EditText
         android:id="@+id/address_v"
-        android:layout_width="263dp"
-        android:layout_height="40dp"
+        android:layout_width="264dp"
+        android:layout_height="44dp"
         android:ems="10"
         android:hint="address"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.191"
+        app:layout_constraintHorizontal_bias="0.19"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.685" />
+        app:layout_constraintVertical_bias="0.691" />
 
     <EditText
         android:id="@+id/email_v"
-        android:layout_width="265dp"
-        android:layout_height="38dp"
+        android:layout_width="262dp"
+        android:layout_height="41dp"
         android:ems="10"
         android:hint="email"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.191"
+        app:layout_constraintHorizontal_bias="0.187"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.796" />
+        app:layout_constraintVertical_bias="0.8" />
 
     <EditText
         android:id="@+id/amount_vendor"
@@ -45,7 +45,7 @@
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.205"
+        app:layout_constraintHorizontal_bias="0.206"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.38" />
@@ -59,10 +59,10 @@
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.088"
+        app:layout_constraintHorizontal_bias="0.082"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar_add_v"
-        app:layout_constraintVertical_bias="0.162" />
+        app:layout_constraintVertical_bias="0.167" />
 
     <TextView
         android:id="@+id/textView8"
@@ -76,10 +76,10 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.339" />
+        app:layout_constraintVertical_bias="0.332" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/textView40"
         android:layout_width="wrap_content"
         android:layout_height="28dp"
         android:text="Contact Details"
@@ -94,7 +94,7 @@
         app:layout_constraintVertical_bias="0.473" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/textView40"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
@@ -103,10 +103,10 @@
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.082"
+        app:layout_constraintHorizontal_bias="0.077"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.082" />
+        app:layout_constraintVertical_bias="0.08" />
 
     <TextView
         android:id="@+id/textView5"
@@ -153,8 +153,8 @@
 
     <EditText
         android:id="@+id/name1"
-        android:layout_width="265dp"
-        android:layout_height="38dp"
+        android:layout_width="272dp"
+        android:layout_height="42dp"
         android:layout_marginTop="69dp"
         android:ems="10"
         android:hint="name"
@@ -195,10 +195,10 @@
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.205"
+        app:layout_constraintHorizontal_bias="0.198"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.274"
+        app:layout_constraintVertical_bias="0.278"
         tools:listitem="@android:layout/preference_category" />
 
     <TextView
