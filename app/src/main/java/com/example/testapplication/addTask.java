@@ -204,15 +204,14 @@ public class addTask extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId()==R.id.action_settings){
             //Settings btn
-            Log.d("ADD_GUEST>>","Navigating to AppSettingsActivity!");
-            Intent i = new Intent(getApplicationContext(),AppSettingsActivity.class);
+            //Log.d("ADD_GUEST>>","Navigating to AppSettingsActivity!");
+            Intent i = new Intent(getApplicationContext(),ListCategory.class);
             startActivity(i);
         }
-        /*
-        if(item.getItemId()==R.id.action_settings){
-            //About us page
+        if(item.getItemId()==R.id.action_about_us) {
+            Intent i = new Intent(getApplicationContext(), About_us.class);
+            startActivity(i);
         }
-         */
         return super.onOptionsItemSelected(item);
     }
 

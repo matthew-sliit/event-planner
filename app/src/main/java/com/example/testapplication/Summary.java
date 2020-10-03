@@ -3,9 +3,13 @@ package com.example.testapplication;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -125,6 +129,31 @@ public class Summary extends AppCompatActivity {
         }
         showVendorPaid.setText(String.valueOf(vpaid));
         showVendorPend.setText(String.valueOf(vpend));
+    }
+    //menu layout
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        menu.findItem(R.id.action_about_us).setVisible(false);
+        return true;
+    }
+    //menu right corner buttons
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId()==R.id.action_settings){
+            //Settings btn
+            //Log.d("ADD_GUEST>>","Navigating to AppSettingsActivity!");
+            Intent i = new Intent(getApplicationContext(),ListCategory.class);
+            startActivity(i);
+        }
+
+        /*
+        if(item.getItemId()==R.id.action_settings){
+            //About us page
+        }
+         */
+        return super.onOptionsItemSelected(item);
     }
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

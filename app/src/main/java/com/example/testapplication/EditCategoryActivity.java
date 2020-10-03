@@ -13,8 +13,10 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.testapplication.constants.ConstantBundleKeys;
@@ -75,6 +77,17 @@ public class EditCategoryActivity extends AppCompatActivity {
                     j = new Intent(getApplicationContext(), AppSettingsActivity.class);
                     b.putString(ConstantBundleKeys.TITLE,"Manage Category");
                 }
+                j.putExtras(b);
+                startActivity(j);
+                 */
+                /*
+                Bundle b = new Bundle();
+                b.putString(ConstantBundleKeys.PRE_ACTIVITY,pre_intent);
+                b.putString(ConstantBundleKeys.IS_IN_SETTING,is_in_setting);
+                b.putString("edit","Manage Category");
+                b.putString(ConstantBundleKeys.TITLE,"Manage Category");
+                b.putString(ConstantBundleKeys.SET_TO_CATEGORY,"true");
+                Intent j = new Intent(getApplicationContext(),AppSettingsActivity.class);
                 j.putExtras(b);
                 startActivity(j);
                  */
@@ -139,6 +152,7 @@ public class EditCategoryActivity extends AppCompatActivity {
                         ((TextView) findViewById(R.id.editcat_er_msg)).setTextColor(Color.parseColor("#FF0000"));
                     }
                 }
+
                 /*
                 Bundle b = new Bundle();
                 b.putString(ConstantBundleKeys.PRE_ACTIVITY,pre_intent);
@@ -149,6 +163,7 @@ public class EditCategoryActivity extends AppCompatActivity {
                 Intent j = new Intent(getApplicationContext(),AppSettingsActivity.class);
                 j.putExtras(b);
                 startActivity(j);
+
                  */
                 finish();
             }
@@ -162,6 +177,7 @@ public class EditCategoryActivity extends AppCompatActivity {
                 Log.d("BUTTON","Deleting Category " + text.getText().toString());
                 category.deleteCategory(text.getText().toString());
 
+                /*
                 Bundle b = new Bundle();
                 b.putString(ConstantBundleKeys.PRE_ACTIVITY,pre_intent);
                 b.putString(ConstantBundleKeys.IS_IN_SETTING,is_in_setting);
@@ -171,6 +187,9 @@ public class EditCategoryActivity extends AppCompatActivity {
                 Intent j = new Intent(getApplicationContext(),AppSettingsActivity.class);
                 j.putExtras(b);
                 startActivity(j);
+
+                 */
+                finish();
             }
         });
     }
@@ -194,15 +213,45 @@ public class EditCategoryActivity extends AppCompatActivity {
 
          */
     }
+    //menu right corner buttons
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        /*
+        if(item.getItemId()==R.id.action_settings){
+            //Settings btn
+            //Log.d("ADD_BUDGET>>","Navigating to AppSettingsActivity!");
+            //Intent i = new Intent(getApplicationContext(),ListCategory.class);
+            //startActivity(i);
+        }
+         */
+        if(item.getItemId()==R.id.action_about_us) {
+            Intent i = new Intent(getApplicationContext(), About_us.class);
+            startActivity(i);
+        }
+        return super.onOptionsItemSelected(item);
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu, menu);
+        menu.findItem(R.id.action_settings).setVisible(false);
         return true;
     }
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK ) {
+            /*
+            Bundle b = new Bundle();
+            b.putString(ConstantBundleKeys.PRE_ACTIVITY,pre_intent);
+            b.putString(ConstantBundleKeys.IS_IN_SETTING,is_in_setting);
+            b.putString("edit","Manage Category");
+            b.putString(ConstantBundleKeys.TITLE,"Manage Category");
+            b.putString(ConstantBundleKeys.SET_TO_CATEGORY,"true");
+            Intent j = new Intent(getApplicationContext(),AppSettingsActivity.class);
+            j.putExtras(b);
+            startActivity(j);
+
+             */
             finish();
         }
         return super.onKeyDown(keyCode, event);

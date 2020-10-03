@@ -130,6 +130,20 @@ public class Guest_Impl  implements IGuest {
         cv.put(table.COLUMN_NAME_ADDRESS, address);
         db.insert(cv,table.TABLE_GUESTS);
     }
+    @Override
+    public int addGuestGetId() {
+        ContentValues cv= new ContentValues();
+        cv.put(Guest_table.COLUMN_NAME_EID, eid);
+        cv.put(table.COLUMN_NAME_GUESTNAME, guestname);
+        cv.put(table.COLUMN_NAME_GENDER, gender);
+        cv.put(table.COLUMN_NAME_AGE, age);
+        cv.put(table.COLUMN_NAME_INVITATION, invitation);
+        cv.put(table.COLUMN_NAME_PHONE, phone);
+        cv.put(table.COLUMN_NAME_EMAIL, email);
+        cv.put(table.COLUMN_NAME_ADDRESS, address);
+        long i = db.insertGetId(cv,table.TABLE_GUESTS);
+        return (int)i;
+    }
 
     @Override
         public List<Guest_Impl> getGuestList() {

@@ -11,8 +11,12 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -244,14 +248,21 @@ public class EditGuest extends AppCompatActivity {
         ((Button) findViewById(R.id.updateguestbutton)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                glayout.loadValuesFromLayout();
-                glayout.guest_.updateGuest(glayout.guest_);
-                Intent i = new Intent(getApplicationContext(), ViewGuest.class);
-                Bundle b = new Bundle();
-                b.putInt(ConstantBundleKeys.EVENT_ID,eid);
-                i.putExtras(b);
-                startActivity(i);
-                //finish();
+                if (TextUtils.isEmpty(((EditText)findViewById(R.id.etGuestName)).getText().toString())){
+                    Toast.makeText(getApplicationContext(), "Please enter a name", Toast.LENGTH_SHORT).show();}
+
+                else {
+                    /*
+                    glayout.loadValuesFromLayout();
+                    glayout.guest_.updateGuest(glayout.guest_);
+                    Intent i = new Intent(getApplicationContext(), ViewGuest.class);
+                    Bundle b = new Bundle();
+                    b.putInt(ConstantBundleKeys.EVENT_ID, eid);
+                    i.putExtras(b);
+                    startActivity(i);
+                     */
+                    finish();
+                }
             }
         });
         CompanionAdapter adapter = new CompanionAdapter(this,id,eid); //Budget Adapter
@@ -262,6 +273,28 @@ public class EditGuest extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
 
+    }
+    //menu layout
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return true;
+    }
+    //menu right corner buttons
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId()==R.id.action_settings){
+            //Settings btn
+            //Log.d("ADD_GUEST>>","Navigating to AppSettingsActivity!");
+            Intent i = new Intent(getApplicationContext(),ListCategory.class);
+            startActivity(i);
+        }
+        if(item.getItemId()==R.id.action_about_us) {
+            Intent i = new Intent(getApplicationContext(), About_us.class);
+            startActivity(i);
+        }
+        return super.onOptionsItemSelected(item);
     }
     public void handleOnClick(View v){
         if(v.getId()==R.id.ibtn_addc){

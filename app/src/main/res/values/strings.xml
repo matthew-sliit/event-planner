@@ -28,6 +28,7 @@
     <string name="total_paid">Total Amount Paid:</string>
     <string name="total_remaining">Total Amount Remain:</string>
     <string name="paypending">Payments Pending:</string>
+    <string name="manage_categories">Manage Categories</string>
     <string name="paid">Paid</string>
     <string name="paid_">Paid: </string>
     <string name="paymentStatus">Payment status</string>
@@ -101,4 +102,7 @@
     <string name="button2">Clear</string>
     <string name="toolbar">Add Vendor</string>
     <string name="title_activity_vendorview">Vendorview</string>
+
+    <string name="about">About Us</string>
+    <string name="con">Contact us</string>
 </resources>

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,6 +19,7 @@ import com.example.testapplication.db.guest.Companion_Impl;
 public class CompanionViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     private TextView lg_name,lg_invitation; //from layout
+    private ImageView im_guest;
     private int gid=0,eid=0;
     /*
      * ================== ViewHolder constructor ========================
@@ -30,6 +32,7 @@ public class CompanionViewHolder extends RecyclerView.ViewHolder implements View
         super(itemView);
         lg_name = (TextView) itemView.findViewById(R.id.lg_name);
         lg_invitation = (TextView) itemView.findViewById(R.id.lg_invitation);
+        im_guest = (ImageView) itemView.findViewById(R.id.im_guest);
         itemView.setOnClickListener(this);
         this.gid=gid;
         this.eid=eid;
@@ -45,6 +48,11 @@ public class CompanionViewHolder extends RecyclerView.ViewHolder implements View
             this.companion = companion;
             lg_name.setText(companion.cname);
             lg_invitation.setText(""+companion.age);
+            if(companion.age.equals("adult")) {
+                im_guest.setImageResource(R.drawable.adult);
+            }else if(companion.age.equals("child")) {
+                im_guest.setImageResource(R.drawable.child);
+            }
 
         }else{
             //this only happens if null list is passed

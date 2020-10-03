@@ -8,6 +8,7 @@ public interface IGuest {
 
     void addGuest(String guestname, String gender, String age, String invitation, String phone, String email, String address, int eid);
     void addGuest();
+    int addGuestGetId();
     List<Guest_Impl> getGuestList();
     Guest_Impl getGuestById(int id);
     //pass id since name can be duplicated

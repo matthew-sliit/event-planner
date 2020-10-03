@@ -10,7 +10,7 @@
 
         <menu>
             <item android:id="@+id/action_settings"
-                android:title="@string/settings" />
+                android:title="@string/manage_categories" />
             <item android:id="@+id/action_about_us"
                 android:title="@string/about_us" />
         </menu>

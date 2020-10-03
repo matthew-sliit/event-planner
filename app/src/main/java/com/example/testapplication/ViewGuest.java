@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -61,11 +62,27 @@ public class ViewGuest extends AppCompatActivity {
         }
 
     }
+    //menu layout
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main_menu, menu);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
         return true;
+    }
+    //menu right corner buttons
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId()==R.id.action_settings){
+            //Settings btn
+            //Log.d("ADD_GUEST>>","Navigating to AppSettingsActivity!");
+            Intent i = new Intent(getApplicationContext(),ListCategory.class);
+            startActivity(i);
+        }
+        if(item.getItemId()==R.id.action_about_us) {
+            Intent i = new Intent(getApplicationContext(), About_us.class);
+            startActivity(i);
+        }
+        return super.onOptionsItemSelected(item);
     }
     @Override
     protected void onRestart() {

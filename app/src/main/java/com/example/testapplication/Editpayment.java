@@ -10,6 +10,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -194,6 +197,28 @@ public class Editpayment extends AppCompatActivity {
                 alert.show();
             }
         });
+    }
+    //menu layout
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return true;
+    }
+    //menu right corner buttons
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId()==R.id.action_settings){
+            //Settings btn
+            //Log.d("ADD_GUEST>>","Navigating to AppSettingsActivity!");
+            Intent i = new Intent(getApplicationContext(),ListCategory.class);
+            startActivity(i);
+        }
+        if(item.getItemId()==R.id.action_about_us) {
+            Intent i = new Intent(getApplicationContext(), About_us.class);
+            startActivity(i);
+        }
+        return super.onOptionsItemSelected(item);
     }
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

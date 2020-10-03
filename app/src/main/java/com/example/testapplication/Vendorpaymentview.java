@@ -86,19 +86,14 @@ public class Vendorpaymentview extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId()==R.id.action_settings){
             //Settings btn
-            Intent i = new Intent(getApplicationContext(), AppSettingsActivity.class);
-            Bundle b = new Bundle();
-            b.putString("pre_activity","listBudget");
-            i.putExtras(b);
+            Intent i = new Intent(getApplicationContext(),ListCategory.class);
             startActivity(i);
             //finish();//check
         }
-        /*
-        if(item.getItemId()==R.id.action_settings){
-            //About us page
+        if(item.getItemId()==R.id.action_about_us) {
+            Intent i = new Intent(getApplicationContext(), About_us.class);
+            startActivity(i);
         }
-
-         */
         return super.onOptionsItemSelected(item);
     }
     @Override

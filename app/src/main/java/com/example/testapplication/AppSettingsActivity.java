@@ -30,6 +30,9 @@ public class AppSettingsActivity extends AppCompatActivity {
 
 
     private String pre_intent = "home", is_in_setting = "false",edit = "none", is_in_cat = "false", has_title="none";
+    /*
+    =================== On Create ======================
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +49,17 @@ public class AppSettingsActivity extends AppCompatActivity {
             //Log.d("RELOAD","previous activity = " + pre_intent);
             //Log.d("RELOAD","is_in_setting = " + is_in_setting);
             //Log.d("RELOAD","is_in_cat = " + is_in_cat);
+        }else{
+            Bundle h = new Bundle();
+            h.putString(ConstantBundleKeys.PRE_ACTIVITY,pre_intent);
+            h.putString(ConstantBundleKeys.IS_IN_SETTING,is_in_setting);
+            h.putString("edit","Manage Category");
+            h.putString(ConstantBundleKeys.TITLE,"Manage Category");
+            h.putString(ConstantBundleKeys.SET_TO_CATEGORY,"true");
+            Intent j = new Intent(getApplicationContext(),AppSettingsActivity.class);
+            j.putExtras(h);
+            startActivity(j);
+            finish();
         }
         //setup toolbar
         Toolbar toolbar = findViewById(R.id.aps_menu);
@@ -61,30 +75,6 @@ public class AppSettingsActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*
-                When pressed back, use bundle data to get previous activity
-                 */
-                //Log.d("BUTTON","Back Button in Settings Pressed!");
-                /*
-                if(is_in_setting.equalsIgnoreCase("true")) {
-                    Bundle b = new Bundle();
-                    b.putString(ConstantBundleKeys.PRE_ACTIVITY, pre_intent); //pass
-                    Intent j = new Intent(getApplicationContext(), AppSettingsActivity.class);
-                    b.putString(ConstantBundleKeys.SET_TO_CATEGORY,"false");
-                    b.putString("edit","Manage Category");
-                    Log.d("BACK BUTTON","Resetting SET");
-                    b.putString(ConstantBundleKeys.IS_IN_SETTING, "false");
-                    j.putExtras(b);
-                    startActivity(j);
-                }else if(pre_intent.equalsIgnoreCase("listBudget")){
-                    Intent i = new Intent(getApplicationContext(), ListBudgetsActivity.class);
-                    startActivity(i);
-                }
-                Log.d("BACK BUTTON","previous activity = " + pre_intent);
-                Log.d("BACK BUTTON","is_in_setting = " + is_in_setting);
-                Log.d("BACK BUTTON","is_in_cat = " + is_in_cat);
-
-                 */
                 Log.d("BACK BUTTON","previous activity = " + pre_intent);
                 Log.d("BACK BUTTON","is_in_setting = " + is_in_setting);
                 Log.d("BACK BUTTON","is_in_cat = " + is_in_cat);
@@ -227,6 +217,9 @@ public class AppSettingsActivity extends AppCompatActivity {
         inflater.inflate(R.menu.main_menu, menu);
         return true;
     }
+    /*
+    =================== On Activity Restart ===============
+     */
     @Override
     protected void onRestart() {
         super.onRestart();
@@ -234,6 +227,9 @@ public class AppSettingsActivity extends AppCompatActivity {
         finish();
         startActivity(getIntent());
     }
+    /*
+    ==================== On Key Down native ===============
+     */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK ) {

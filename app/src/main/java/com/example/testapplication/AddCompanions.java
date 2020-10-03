@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -16,6 +17,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.testapplication.constants.ConstantBundleKeys;
 import com.example.testapplication.db.guest.Companion_Impl;
@@ -144,33 +146,36 @@ public class AddCompanions extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId()==R.id.action_settings){
             //Settings btn
-            Log.d("ADD_GUEST>>","Navigating to AppSettingsActivity!");
-            Intent i = new Intent(getApplicationContext(),AppSettingsActivity.class);
+            //Log.d("ADD_GUEST>>","Navigating to AppSettingsActivity!");
+            Intent i = new Intent(getApplicationContext(),ListCategory.class);
             startActivity(i);
         }
-        /*
-        if(item.getItemId()==R.id.action_settings){
-            //About us page
+        if(item.getItemId()==R.id.action_about_us) {
+            Intent i = new Intent(getApplicationContext(), About_us.class);
+            startActivity(i);
         }
-         */
         return super.onOptionsItemSelected(item);
     }
 
     public void handleClick(View v){
 
         if(v.getId() == R.id.addcombtn){
-            Log.d("BUTTON","Save Button Pressed!");
-            glayout.loadValuesFromLayout();
-            glayout.guest.addCom(eid,gid);
+            if (TextUtils.isEmpty(((EditText) findViewById(R.id.etcName)).getText().toString())) {
+                Toast.makeText(getApplicationContext(), "Please enter a name", Toast.LENGTH_SHORT).show();
+            } else {
+                Log.d("BUTTON", "Save Button Pressed!");
+                glayout.loadValuesFromLayout();
+                glayout.guest.addCom(eid, gid);
 
-            //  logInputs();
-            //default go back to list view
-            Intent i = new Intent(getApplicationContext(),EditGuest.class);
-            Bundle b = new Bundle();
-            b.putInt("id",glayout.gid);//int pk
-            b.putInt(ConstantBundleKeys.EVENT_ID,eid);//int pk
-            i.putExtras(b);
-            startActivity(i);
+                //  logInputs();
+                //default go back to list view
+                Intent i = new Intent(getApplicationContext(), EditGuest.class);
+                Bundle b = new Bundle();
+                b.putInt("id", glayout.gid);//int pk
+                b.putInt(ConstantBundleKeys.EVENT_ID, eid);//int pk
+                i.putExtras(b);
+                startActivity(i);
+            }
         }
 
     }

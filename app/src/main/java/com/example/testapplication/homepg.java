@@ -16,6 +16,8 @@ import android.widget.Toast;
 import com.example.testapplication.constants.ConstantBundleKeys;
 import com.example.testapplication.db.event.Event_Impl;
 
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+
 public class homepg extends AppCompatActivity {
     /*
     ================== HomePage =========================
@@ -67,14 +69,13 @@ public class homepg extends AppCompatActivity {
         if(item.getItemId()==R.id.action_settings){
             //Settings btn
             //Log.d("ADD_BUDGET>>","Navigating to AppSettingsActivity!");
-            Intent i = new Intent(getApplicationContext(),AppSettingsActivity.class);
+            Intent i = new Intent(getApplicationContext(),ListCategory.class);
             startActivity(i);
         }
-        /*
-        if(item.getItemId()==R.id.action_settings){
-            //About us page
+        if(item.getItemId()==R.id.action_about_us) {
+            Intent i = new Intent(getApplicationContext(), About_us.class);
+            startActivity(i);
         }
-         */
         return super.onOptionsItemSelected(item);
     }
     public void openEvents(View view){
@@ -127,14 +128,16 @@ public class homepg extends AppCompatActivity {
         Intent intent = new Intent(this,Summary.class);
 
         Toast.makeText(this,"Opening Summary...",Toast.LENGTH_SHORT).show();
-        intent.putExtras(b);
         startActivity(intent);
+        setContentView(R.layout.activity_about_us);
     }
     @Override
     protected void onRestart() {
         super.onRestart();
         //refresh activity
         finish();
-        startActivity(getIntent());
+        Intent i = getIntent();
+        i.setFlags(FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(i);
     }
 }

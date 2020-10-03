@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -182,15 +183,14 @@ public class AddGuest extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId()==R.id.action_settings){
             //Settings btn
-            Log.d("ADD_GUEST>>","Navigating to AppSettingsActivity!");
-            Intent i = new Intent(getApplicationContext(),AppSettingsActivity.class);
+            //Log.d("ADD_GUEST>>","Navigating to AppSettingsActivity!");
+            Intent i = new Intent(getApplicationContext(),ListCategory.class);
             startActivity(i);
         }
-        /*
-        if(item.getItemId()==R.id.action_settings){
-            //About us page
+        if(item.getItemId()==R.id.action_about_us) {
+            Intent i = new Intent(getApplicationContext(), About_us.class);
+            startActivity(i);
         }
-         */
         return super.onOptionsItemSelected(item);
     }
 
@@ -199,18 +199,33 @@ public class AddGuest extends AppCompatActivity {
         GuestLayoutClass guestlayout = glayout;
 
         if(v.getId() == R.id.addguestbutton){
-            Log.d("BUTTON","Save Button Pressed!");
-            guestlayout.loadValuesFromLayout();
-            guestlayout.guest_.addGuest();
+            if (TextUtils.isEmpty(((EditText)findViewById(R.id.etGuestName)).getText().toString())){
+                Toast.makeText(getApplicationContext(), "Please enter a name", Toast.LENGTH_SHORT).show();}
+            else {
+                Log.d("BUTTON", "Save Button Pressed!");
+                guestlayout.loadValuesFromLayout();
+                guestlayout.guest_.addGuest();
 
-            //  logInputs();
-            //default go back to list view
-
-            Intent i = new Intent(getApplicationContext(),ViewGuest.class);
-            Bundle b = new Bundle();
-            b.putInt(ConstantBundleKeys.EVENT_ID,eid);
-            i.putExtras(b);
-            startActivity(i);
+                Intent i = new Intent(getApplicationContext(), ViewGuest.class);
+                Bundle b = new Bundle();
+                b.putInt(ConstantBundleKeys.EVENT_ID, eid);
+                i.putExtras(b);
+                startActivity(i);
+            }
+        }
+        if(v.getId()==R.id.ibtn_addcom){
+            if (TextUtils.isEmpty(((EditText) findViewById(R.id.etGuestName)).getText().toString())) {
+                Toast.makeText(getApplicationContext(), "Please enter a name", Toast.LENGTH_SHORT).show();
+            } else {
+                guestlayout.loadValuesFromLayout();
+                int id = guestlayout.guest_.addGuestGetId();
+                Bundle b = new Bundle();
+                b.putInt(ConstantBundleKeys.EVENT_ID, eid);
+                b.putInt(ConstantBundleKeys.ID, id);
+                Intent i = new Intent(getApplicationContext(), AddCompanions.class);
+                i.putExtras(b);
+                startActivity(i);
+            }
         }
 
     }
