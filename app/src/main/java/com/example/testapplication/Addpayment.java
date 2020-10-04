@@ -42,7 +42,7 @@ public class Addpayment extends AppCompatActivity {
         catAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         cat.setAdapter(catAdapter);
     }*/
-
+  //new comment
     private class VendorLayoutClass{
         private Context c;
         private int vid=0;
