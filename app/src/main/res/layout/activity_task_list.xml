@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
 
         android:layout_marginBottom="15dp"
-        android:background="@android:color/holo_purple"
+        android:background="#9C27B0"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:title="@string/taskk"
