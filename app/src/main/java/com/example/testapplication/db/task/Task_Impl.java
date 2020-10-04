@@ -130,6 +130,17 @@ public class Task_Impl implements ITask {
         cv.put(Task_table.COLUMN_NAME_DATE, tdate);
         db.insert(cv,Task_table.TABLE_TASK);
     }
+    public int addTaskGetId() {
+        Log.d("TaskImpl>>","eid -> " + eid);
+        ContentValues cv= new ContentValues();
+        cv.put(Task_table.COLUMN_NAME_EID, eid);
+        cv.put(Task_table.COLUMN_NAME_TASKNAME, tname);
+        cv.put(Task_table.COLUMN_NAME_CAT, category);
+        cv.put(Task_table.COLUMN_NAME_DESC, description);
+        cv.put(Task_table.COLUMN_NAME_STATUS, status);
+        cv.put(Task_table.COLUMN_NAME_DATE, tdate);
+        return (int) db.insertGetId(cv,Task_table.TABLE_TASK);
+    }
 
     @Override
     public List<Task_Impl> getTaskList() {

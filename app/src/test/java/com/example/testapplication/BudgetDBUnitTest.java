@@ -24,6 +24,7 @@ import java.util.List;
 ================== BUDGET model and Database Unit Tests ======================
  */
 @RunWith(RobolectricTestRunner.class)
+@Config(manifest= Config.NONE)
 public class BudgetDBUnitTest {
     private Budget_Impl_updated budget_model, budget_model_result;
     private int event_id = 0, budget_id = 0;

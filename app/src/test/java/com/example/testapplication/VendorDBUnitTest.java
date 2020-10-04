@@ -12,10 +12,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
+import org.robolectric.annotation.Config;
 
 import java.util.ArrayList;
 import java.util.List;
 @RunWith(RobolectricTestRunner.class)
+@Config(manifest= Config.NONE)
 public class VendorDBUnitTest {
     private Vendor_impl vendor_model, vendor_model_result;
     private int event_id = 0, vendor_id = 0;

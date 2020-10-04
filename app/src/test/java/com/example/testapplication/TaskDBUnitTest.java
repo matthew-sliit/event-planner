@@ -1,10 +1,7 @@
 package com.example.testapplication;
 
 import android.content.Context;
-import android.database.CursorIndexOutOfBoundsException;
-import android.test.RenamingDelegatingContext;
 
-import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.example.testapplication.db.task.Task_Impl;
 
@@ -14,6 +11,9 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.RobolectricTestRunner;
+import org.robolectric.RuntimeEnvironment;
+import org.robolectric.annotation.Config;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,15 +21,18 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
+@RunWith(RobolectricTestRunner.class)
+@Config(manifest= Config.NONE)
 public class TaskDBUnitTest {
     private Task_Impl task_model, task_model_result;
     private int event_id = 0, task_id = 0;
     private Context context;
     @Before
     public void setUp() {
-        context = new RenamingDelegatingContext(InstrumentationRegistry.getTargetContext(),"test_");
-        task_model = new Task_Impl(context);
-        task_model_result = new Task_Impl(context);
+        //context = new RenamingDelegatingContext(InstrumentationRegistry.getTargetContext(),"test_");
+        context = RuntimeEnvironment.application;
+        task_model = new Task_Impl(context,0);
+        task_model_result = new Task_Impl(context,0);
     }
     @Test
     public void db_recordInsertSearchUpdateDelete(){
@@ -45,26 +48,26 @@ public class TaskDBUnitTest {
         task_model.tdate="12-11-2020";
 
         //save to db and get the primary key of the record
-         task_model.addTask();
+         int task_id = task_model.addTaskGetId();
         //read from db to new instance
         /*
         ================= SEARCH NSERTED ====================
          */
-        task_model_result = task_model_result.getTaskById(task_id);//get saved record
+        task_model_result = task_model_result.getTaskById(event_id,task_id);//get saved record
         //assert
         assertEquals(task_model.tname,task_model_result.tname);
 
         /*
         ==================== UPDATE =========================
          */
-        task_model = task_model.getTaskById(task_id);//get saved record
+        task_model = task_model.getTaskById(event_id,task_id);//get saved record
         //set another name
         String prev_name = task_model.tname;
         String newName = "Order Flowers";
         task_model.tname = newName;
         task_model.updateTask(task_model);
         //read from db to new instance
-        task_model_result = task_model_result.getTaskById(task_id);//get saved record
+        task_model_result = task_model_result.getTaskById(event_id,task_id);//get saved record
         //assert update name should be 'Billy'
         assertEquals(newName,task_model_result.tname);
         //assert update name should NOT be 'James'
@@ -74,7 +77,7 @@ public class TaskDBUnitTest {
         ==================== REMOVE =========================
          */
         task_model.removeTask(task_id);
-        task_model_result = task_model_result.getTaskById(task_id);
+        task_model_result = task_model_result.getTaskById(event_id,task_id);
         assertNotEquals(task_model.tname,task_model_result.tname);
     }
     @Test
