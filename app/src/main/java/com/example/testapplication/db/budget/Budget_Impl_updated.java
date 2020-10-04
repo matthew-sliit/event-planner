@@ -3,6 +3,7 @@ package com.example.testapplication.db.budget;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteException;
 import android.util.Log;
 
 import com.example.testapplication.constants.TableNames;
@@ -182,9 +183,13 @@ public class Budget_Impl_updated implements Ibudget {
     public void removeBudget(int budgetID) {
         //get all payments for budget
         Budget_payments bp = new Budget_payments(c);
-        for(Budget_payments b : bp.getBudgetPaymentList(eid,budgetID)){
-            //remove payments initiated from budget
-            b.removePayment(eid,budgetID,b.payment_id);
+        try {
+            for (Budget_payments b : bp.getBudgetPaymentList(eid, budgetID)) {
+                //remove payments initiated from budget
+                b.removePayment(eid, budgetID, b.payment_id);
+            }
+        }catch (SQLiteException e){
+            //ignore if no records
         }
         //delete budget
         db.delete(Budget_table.tableName,getWhereEidaBidStatement(budgetID),null);

@@ -3,6 +3,7 @@ package com.example.testapplication.db.guest;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteException;
 import android.util.Log;
 
 import com.example.testapplication.db.DBHandler;
@@ -212,8 +213,12 @@ public class Guest_Impl  implements IGuest {
         @Override
         public void removeGuest(int guestID) {
             Companion_Impl ci = new Companion_Impl(c);
-            for(Companion_Impl c : ci.getComList(eid,guestID)){
-                c.removeCom(c.id,eid,guestID);
+            try {
+                for (Companion_Impl c : ci.getComList(eid, guestID)) {
+                    c.removeCom(c.id, eid, guestID);
+                }
+            }catch (SQLiteException e){
+                //ignore for no records
             }
             db.delete(table.TABLE_GUESTS,getWhereEidaBidStatement(guestID),null);
         }
