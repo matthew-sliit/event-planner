@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".BudgetPaymentsActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -144,7 +145,7 @@
         android:layout_height="55dp"
         android:layout_marginTop="40dp"
         android:background="#EDE3E3"
-        android:backgroundTint="#F2F2F2"
+        android:backgroundTint="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.899"
         app:layout_constraintStart_toStartOf="parent"
@@ -156,7 +157,7 @@
         android:layout_width="61dp"
         android:layout_height="54dp"
         android:layout_marginTop="40dp"
-        android:background="#F2F2F2"
+        android:background="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.654"
         app:layout_constraintStart_toStartOf="parent"

@@ -35,18 +35,18 @@
 
     <TextView
         android:id="@+id/textView17"
-        android:layout_width="334dp"
-        android:layout_height="139dp"
+        android:layout_width="383dp"
+        android:layout_height="146dp"
         android:text="We are students in a campus who are trying to build a mobile app for event planning as our group project. In advance we are a group of people love to give you a way to plan your events and manage your time. "
         android:textColor="#888181"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.337"
+        app:layout_constraintHorizontal_bias="0.609"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.25" />
+        app:layout_constraintVertical_bias="0.246" />
 
     <TextView
         android:id="@+id/textView16"
@@ -60,7 +60,7 @@
         app:layout_constraintHorizontal_bias="0.41"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.433" />
+        app:layout_constraintVertical_bias="0.443" />
 
     <ImageView
         android:id="@+id/imageView3"
@@ -122,18 +122,18 @@
 
     <TextView
         android:id="@+id/textView15"
-        android:layout_width="324dp"
-        android:layout_height="145dp"
+        android:layout_width="374dp"
+        android:layout_height="138dp"
         android:text="Our app helps you to add all the occations related to an event like tasks, events, budget, guests and many more. So that you can easily add the relavent data and organize your event. That way you wouldn't miss a thing."
         android:textColor="#888181"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.298"
+        app:layout_constraintHorizontal_bias="0.648"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.588" />
+        app:layout_constraintVertical_bias="0.593" />
 
     <ImageView
         android:id="@+id/imageView7"

@@ -22,17 +22,18 @@
         android:theme="?attr/actionBarTheme"
         app:title="@string/budget_role" />
 
-    <Button
-        android:id="@+id/btn_lb_graph"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/light_purple"
-        android:onClick="handleOnClick"
-        android:text="@string/graph"
-        app:layout_constraintBaseline_toBaselineOf="@+id/button2"
-        app:layout_constraintStart_toStartOf="parent" />
+        <Button
+            android:id="@+id/btn_lb_graph"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/purple_1"
+            android:onClick="handleOnClick"
+            android:text="@string/graph"
+            android:textColor="#FFFFFF"
+            app:layout_constraintBaseline_toBaselineOf="@+id/button2"
+            app:layout_constraintStart_toStartOf="parent" />
 
-    <FrameLayout android:layout_width="match_parent" android:layout_height="match_parent" android:layout_weight="1">
+        <FrameLayout android:layout_width="match_parent" android:layout_height="match_parent" android:layout_weight="1">
 
         <LinearLayout android:orientation="vertical" android:id="@+id/linData" android:tag="binding_1" android:layout_width="match_parent" android:layout_height="match_parent">
 
