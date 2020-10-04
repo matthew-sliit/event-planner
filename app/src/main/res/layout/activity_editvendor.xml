@@ -41,7 +41,7 @@
         android:layout_height="50dp"
         android:ems="10"
         android:hint="amount"
-        android:inputType="textPersonName"
+        android:inputType="numberDecimal"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

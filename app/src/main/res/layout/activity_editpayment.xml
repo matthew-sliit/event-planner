@@ -8,8 +8,8 @@
 
     <EditText
         android:id="@+id/note"
-        android:layout_width="250dp"
-        android:layout_height="40dp"
+        android:layout_width="256dp"
+        android:layout_height="49dp"
         android:ems="10"
         android:hint="any note"
         android:inputType="textPersonName"
@@ -104,7 +104,7 @@
         android:layout_height="40dp"
         android:ems="10"
         android:hint="amount"
-        android:inputType="textPersonName"
+        android:inputType="numberDecimal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.105"

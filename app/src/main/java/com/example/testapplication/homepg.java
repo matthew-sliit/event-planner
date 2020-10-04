@@ -145,6 +145,7 @@ public class homepg extends AppCompatActivity {
         Intent intent = new Intent(this, Summary.class);
 
         Toast.makeText(this, "Opening Summary...", Toast.LENGTH_SHORT).show();
+        intent.putExtras(b);
         startActivity(intent);
     }
     @Override
