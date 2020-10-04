@@ -45,16 +45,17 @@ public class homepg extends AppCompatActivity {
         //get event data
         event = new Event_Impl(this);
         String byDefault = "Default";
+        ICategory category = new Category(this);
+        //if category is empty
+        category.setDefault(getResources().getStringArray(R.array.default_categories));
         try {
             event = event.getEventById(event.getSelectEvent());
-            Log.d("homepg>>","event id -> " +event.id);
-            Log.d("homepg>>","event name -> " +event.ename);
+            //Log.d("homepg>>","event id -> " +event.id);
+            //Log.d("homepg>>","event name -> " +event.ename);
             if (event.ename != null) {
                 ((TextView) findViewById(R.id.tv_event)).setText(event.ename);
                 b.putInt(ConstantBundleKeys.EVENT_ID,event.id);
                 allowActivityLaunch = true;
-                ICategory category = new Category(this);
-                category.setDefault(getResources().getStringArray(R.array.default_categories));
             }else{
                 b.putInt(ConstantBundleKeys.EVENT_ID,0);
                 ((TextView) findViewById(R.id.tv_event)).setText(byDefault);
@@ -133,7 +134,7 @@ public class homepg extends AppCompatActivity {
         if(allowActivityLaunch) {
             Intent intent = new Intent(this, Vendorview.class);
 
-            Toast.makeText(this, "Opening Guests...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Opening Vendors...", Toast.LENGTH_SHORT).show();
             intent.putExtras(b);
             startActivity(intent);
         }else{

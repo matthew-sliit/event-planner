@@ -314,7 +314,7 @@ public class EditGuest extends AppCompatActivity {
             Intent i = new Intent(getApplicationContext(),AddCompanions.class);
             Bundle b = new Bundle();
             // b.putInt("vid");//int pk
-            b.putInt("gid",glayout.guest_.id);//int pk
+            b.putInt("id",id);//int pk
             b.putInt(ConstantBundleKeys.EVENT_ID,eid);//int pk
             i.putExtras(b);
             startActivity(i);

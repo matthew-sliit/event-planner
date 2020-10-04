@@ -207,7 +207,7 @@ public class Editvendor extends AppCompatActivity {
             Intent i = new Intent(getApplicationContext(),Addpayment.class);
             Bundle b = new Bundle();
            // b.putInt("vid");//int pk
-            b.putInt("vid",vlayout.vendor.id);//int pk
+            b.putInt("id",vlayout.vendor.id);//int pk
             b.putInt(ConstantBundleKeys.EVENT_ID,eid);
             i.putExtras(b);
             startActivity(i);
