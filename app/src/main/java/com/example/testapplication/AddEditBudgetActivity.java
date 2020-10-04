@@ -69,7 +69,11 @@ public class AddEditBudgetActivity extends AppCompatActivity{
             budget_model.name = nameInput.getText().toString();
             budget_model.amt = (amtInput.getText().toString());
             budget_model.cat = catInput.getSelectedItem().toString();
-            budget_model.desc = descInput.getText().toString();
+            try {
+                budget_model.desc = descInput.getText().toString();
+            }catch (NullPointerException e){
+                budget_model.desc = "";
+            }
             showBalance.setText(amt);
         }
         public void setValuesToLayout(int eid, int bid){

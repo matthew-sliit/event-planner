@@ -83,8 +83,8 @@
 
     <EditText
         android:id="@+id/etcName"
-        android:layout_width="365dp"
-        android:layout_height="40dp"
+        android:layout_width="360dp"
+        android:layout_height="45dp"
         android:ems="10"
         android:hint="@string/name_g"
         android:inputType="textPersonName"
@@ -92,10 +92,10 @@
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.347"
+        app:layout_constraintHorizontal_bias="0.294"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.212" />
+        app:layout_constraintVertical_bias="0.215" />
 
     <RadioGroup
         android:id="@+id/radioGender"
@@ -203,7 +203,7 @@
     <EditText
         android:id="@+id/etcomNote"
         android:layout_width="365dp"
-        android:layout_height="40dp"
+        android:layout_height="50dp"
         android:ems="10"
         android:hint="@string/com_note"
         android:inputType="textPostalAddress"
@@ -212,7 +212,7 @@
         app:layout_constraintHorizontal_bias="0.347"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.538" />
+        app:layout_constraintVertical_bias="0.547" />
 
     <Button
         android:id="@+id/updatecombtn"

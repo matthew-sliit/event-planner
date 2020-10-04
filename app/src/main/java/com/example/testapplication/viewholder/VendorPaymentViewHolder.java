@@ -83,12 +83,6 @@ public class VendorPaymentViewHolder extends RecyclerView.ViewHolder implements 
         b.putInt("id",vendor_model.id);//int pk
         b.putInt("vid",vendor_model.vid);
         b.putString("title","Edit Budget");
-        /*
-        b.putString("name",budget_model.name);
-        b.putString("category",budget_model.cat);
-        b.putString("amount",budget_model.amt);
-        b.putString("desc",budget_model.desc);
-         */
         i.putExtras(b);
         view.getContext().startActivity(i);
     }

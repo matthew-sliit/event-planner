@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.example.testapplication.db.DBHandler;
 import com.example.testapplication.db.budget.Budget_Impl_updated;
+import com.example.testapplication.db.guest.Companion_Impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -133,6 +134,10 @@ public class Vendor_impl implements IVendor {
 
     @Override
     public void removeVendor(int id) {
+        Vendor_pay_Impl ci = new Vendor_pay_Impl(c);
+        for(Vendor_pay_Impl c : ci.getPayment(eid,id)){
+            c.removePayment(c.id,eid,id);
+        }
         db.delete(Vendor_table.TABLENAME,getWhereEidaBidStatement(id),null);
     }
 

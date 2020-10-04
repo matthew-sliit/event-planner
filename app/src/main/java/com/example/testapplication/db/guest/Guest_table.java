@@ -7,7 +7,7 @@ public class Guest_table {
         public Guest_table(){}
         public static final String TABLE_GUESTS= TableNames.GuestTable;
         public static final String COLUMN_NAME_ID="id";
-        public static final String COLUMN_NAME_EID="eid";
+        public static final String COLUMN_NAME_EID=EventsTable.EVENT_ID;
         public static final String COLUMN_NAME_GUESTNAME="guestname";
         public static final String COLUMN_NAME_GENDER="gender";
         public static final String COLUMN_NAME_AGE="age";

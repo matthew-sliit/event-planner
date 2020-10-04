@@ -221,7 +221,7 @@ public class AddGuest extends AppCompatActivity {
                 int id = guestlayout.guest_.addGuestGetId();
                 Bundle b = new Bundle();
                 b.putInt(ConstantBundleKeys.EVENT_ID, eid);
-                b.putInt(ConstantBundleKeys.ID, id);
+                b.putInt(ConstantBundleKeys.ID, id); //gid -> 'id'
                 Intent i = new Intent(getApplicationContext(), AddCompanions.class);
                 i.putExtras(b);
                 startActivity(i);

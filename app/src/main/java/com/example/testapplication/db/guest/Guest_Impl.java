@@ -211,8 +211,11 @@ public class Guest_Impl  implements IGuest {
 
         @Override
         public void removeGuest(int guestID) {
+            Companion_Impl ci = new Companion_Impl(c);
+            for(Companion_Impl c : ci.getComList(eid,guestID)){
+                c.removeCom(c.id,eid,guestID);
+            }
             db.delete(table.TABLE_GUESTS,getWhereEidaBidStatement(guestID),null);
-
         }
 
         @Override

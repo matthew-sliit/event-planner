@@ -81,7 +81,7 @@ public class ListCategory extends AppCompatActivity {
             public void onClick(View view) {
                 Intent k = new Intent(getApplicationContext(), EditCategoryActivity.class);
                 Bundle data = new Bundle();
-                data.putString(ConstantBundleKeys.EDIT_CATEGORY_MODE,"Add New Category");
+                data.putString(ConstantBundleKeys.EDIT_CATEGORY_MODE,"add name");
                 data.putString(ConstantBundleKeys.TITLE,"Add Category");
                 data.putString(ConstantBundleKeys.SET_TO_CATEGORY,"true");
                 data.putString(ConstantBundleKeys.IS_IN_SETTING,"true");

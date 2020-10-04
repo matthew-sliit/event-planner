@@ -70,12 +70,14 @@ public class Editvendor extends AppCompatActivity {
             ((EditText) findViewById(R.id.email_v)).setText(this.vendor.email, TextView.BufferType.EDITABLE);
 
             String[] defaultOrder = (String[]) category.getAllCategory().toArray(new String[0]);
+            boolean catNotFound = true;
             for(int i=0;i<defaultOrder.length;i++){
                 if(defaultOrder[i].equals(this.vendor.category)){ //from bundle
                     //Log.d("AddBudgetAct>>","sthetting default category as " + category);
                     String temp = defaultOrder[i];
                     defaultOrder[i] = defaultOrder[0];
                     defaultOrder[0] = temp;
+                    catNotFound = true;
                     break; //for loop
                 }
             }
@@ -86,7 +88,7 @@ public class Editvendor extends AppCompatActivity {
             cat.setAdapter(catAdapter);
 
         }
-    }
+    }private  boolean continueToListFromAdd = false;
     VendorLayoutClass vlayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +101,7 @@ public class Editvendor extends AppCompatActivity {
         if (b != null) {
             id = b.getInt("id");
             eid=b.getInt(ConstantBundleKeys.EVENT_ID,0);
+            continueToListFromAdd = b.getBoolean("AddToEdit",false);
             //Log.d("RELOAD", "id = " + id);
         }
         vlayout=new VendorLayoutClass(this,eid);
@@ -117,11 +120,17 @@ public class Editvendor extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //default previous intent
-              //  Intent i = new Intent(getApplicationContext(),Vendorview.class);
-               // i.putExtras(bl);
-                //startActivity(i);
-                finish();
+                if(continueToListFromAdd){
+                    Intent i = new Intent(getApplicationContext(), Vendorview.class);
+                    Bundle b = new Bundle();
+                    b.putInt(ConstantBundleKeys.EVENT_ID,eid);
+                    //b.putInt(ConstantBundleKeys.ID,id);
+                    i.putExtras(b);
+                    i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);//check?
+                    startActivity(i);
+                }else {
+                    finish();
+                }
             }
         });
         ((Button)findViewById(R.id.button_view)).setOnClickListener(new View.OnClickListener() {
@@ -167,14 +176,6 @@ public class Editvendor extends AppCompatActivity {
             }
 
         });
-
-        /*VendorPaymentAdapter adapter = new VendorPaymentAdapter(this,id,eid); //Budget Adapter
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_ev);
-     //   recyclerView.setHasFixedSize(true);
-//        recyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL));//item to item decoration
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(adapter);
-*/
     }
 
 
@@ -222,12 +223,17 @@ public class Editvendor extends AppCompatActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK ) {
-            Bundle b = new Bundle();
-            Intent i = new Intent(getApplicationContext(),homepg.class);
-            b.putInt(ConstantBundleKeys.EVENT_ID,eid);
-            i.putExtras(b);
-            startActivity(i);
-            finish();
+            if(continueToListFromAdd){
+                Intent i = new Intent(getApplicationContext(), Vendorview.class);
+                Bundle b = new Bundle();
+                b.putInt(ConstantBundleKeys.EVENT_ID,eid);
+                //b.putInt(ConstantBundleKeys.ID,id);
+                i.putExtras(b);
+                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);//check?
+                startActivity(i);
+            }else {
+                finish();
+            }
         }
         return super.onKeyDown(keyCode, event);
     }

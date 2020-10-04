@@ -171,6 +171,7 @@ public class EditGuest extends AppCompatActivity {
     Button closeButton;
     AlertDialog.Builder builder;
     GuestLayoutClass glayout;
+    private  boolean continueToListFromAdd = false;
     /*
     ====================== OnCreate =========================
      */
@@ -182,9 +183,9 @@ public class EditGuest extends AppCompatActivity {
         Bundle b = getIntent().getExtras();
         if(b!=null) {
             eid = b.getInt(ConstantBundleKeys.EVENT_ID, 0);
-            id = b.getInt("id");
+            id = b.getInt("id",0);
+            continueToListFromAdd = b.getBoolean("AddToEdit",false);
         }
-
         Toolbar toolbar = findViewById(R.id.tb_editguest);
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.back_btn);
@@ -193,7 +194,17 @@ public class EditGuest extends AppCompatActivity {
             public void onClick(View v) {
                // Intent i = new Intent(getApplicationContext(), ViewGuest.class);
                 //startActivity(i);
-                finish();
+                if(continueToListFromAdd){
+                    Intent i = new Intent(getApplicationContext(), ViewGuest.class);
+                    Bundle b = new Bundle();
+                    b.putInt(ConstantBundleKeys.EVENT_ID,eid);
+                    //b.putInt(ConstantBundleKeys.ID,id);
+                    i.putExtras(b);
+                    i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);//check?
+                    startActivity(i);
+                }else {
+                    finish();
+                }
             }
         });
 
@@ -252,6 +263,8 @@ public class EditGuest extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Please enter a name", Toast.LENGTH_SHORT).show();}
 
                 else {
+                    glayout.loadValuesFromLayout();
+                    glayout.guest_.updateGuest(glayout.guest_);
                     /*
                     glayout.loadValuesFromLayout();
                     glayout.guest_.updateGuest(glayout.guest_);
@@ -310,8 +323,42 @@ public class EditGuest extends AppCompatActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK ) {
-            finish();
+            if(continueToListFromAdd){
+                Intent i = new Intent(getApplicationContext(), ViewGuest.class);
+                Bundle b = new Bundle();
+                b.putInt(ConstantBundleKeys.EVENT_ID,eid);
+                b.putInt(ConstantBundleKeys.ID,id);
+                i.putExtras(b);
+                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);//check?
+                startActivity(i);
+            }else {
+                finish();
+            }
         }
         return super.onKeyDown(keyCode, event);
+    }
+    /*
+    ============== On Restart ================
+     */
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+
+        //refresh activity
+        Bundle b = getIntent().getExtras();
+        if(b!=null) {
+            eid = b.getInt(ConstantBundleKeys.EVENT_ID, 0);
+            id = b.getInt("id",0);
+            continueToListFromAdd = b.getBoolean("AddToEdit",false);
+        }
+        Intent i = getIntent();
+        if(continueToListFromAdd){
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        }
+        if(b!=null) {
+            i.putExtras(b);//pass
+        }
+        finish();
+        startActivity(i);
     }
 }

@@ -1,11 +1,10 @@
 package com.example.testapplication;
 
 import android.content.Context;
-import android.database.CursorIndexOutOfBoundsException;
-import android.test.AndroidTestCase;
-import android.test.RenamingDelegatingContext;
 
 import com.example.testapplication.db.budget.Budget_Impl_updated;
+
+import static android.os.Build.VERSION_CODES.LOLLIPOP;
 import static org.junit.Assert.*;
 
 import org.junit.After;
@@ -13,6 +12,10 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.Robolectric;
+import org.robolectric.RobolectricTestRunner;
+import org.robolectric.RuntimeEnvironment;
+import org.robolectric.annotation.Config;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,14 +23,15 @@ import java.util.List;
 /*
 ================== BUDGET model and Database Unit Tests ======================
  */
-public class BudgetDBInstrumentedTest extends AndroidTestCase {
+@RunWith(RobolectricTestRunner.class)
+public class BudgetDBUnitTest {
     private Budget_Impl_updated budget_model, budget_model_result;
     private int event_id = 0, budget_id = 0;
     private Context context;
     @Before
     public void setUp() {
         //context = new RenamingDelegatingContext(InstrumentationRegistry.getTargetContext(), "test_");
-        context = new RenamingDelegatingContext(getContext(), "test_");
+        context = RuntimeEnvironment.application;
         budget_model = new Budget_Impl_updated(context,0);
         budget_model_result = new Budget_Impl_updated(context,0);
     }

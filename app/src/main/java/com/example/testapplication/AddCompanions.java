@@ -128,8 +128,7 @@ public class AddCompanions extends AppCompatActivity {
 
         if (b != null) {
             eid=b.getInt(ConstantBundleKeys.EVENT_ID,0);
-            id = b.getInt("id");
-            gid = b.getInt("gid");
+            gid = b.getInt("id",0);
             //Log.d("Addpayactivity>>", "id -> " + id + " gid ->" + gid);
             glayout = new GuestLayoutClass(this, gid,eid);
         }
@@ -171,10 +170,12 @@ public class AddCompanions extends AppCompatActivity {
                 //default go back to list view
                 Intent i = new Intent(getApplicationContext(), EditGuest.class);
                 Bundle b = new Bundle();
-                b.putInt("id", glayout.gid);//int pk
+                b.putInt("id", gid);//int pk
                 b.putInt(ConstantBundleKeys.EVENT_ID, eid);//int pk
+                b.putBoolean("AddToEdit",true);
                 i.putExtras(b);
                 startActivity(i);
+                finish();
             }
         }
 

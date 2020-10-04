@@ -31,6 +31,7 @@ public class CompanionViewHolder extends RecyclerView.ViewHolder implements View
     public CompanionViewHolder(final View itemView, Context currentAct, int gid,int eid) {
         super(itemView);
         lg_name = (TextView) itemView.findViewById(R.id.lg_name);
+
         lg_invitation = (TextView) itemView.findViewById(R.id.lg_invitation);
         im_guest = (ImageView) itemView.findViewById(R.id.im_guest);
         itemView.setOnClickListener(this);
@@ -47,7 +48,8 @@ public class CompanionViewHolder extends RecyclerView.ViewHolder implements View
             //Log.d("BudgetViewModel>>","id -> " + budget_model.id);
             this.companion = companion;
             lg_name.setText(companion.cname);
-            lg_invitation.setText(""+companion.age);
+            String age = "" + companion.age;
+            lg_invitation.setText(age);
             if(companion.age.equals("adult")) {
                 im_guest.setImageResource(R.drawable.adult);
             }else if(companion.age.equals("child")) {

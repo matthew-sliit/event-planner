@@ -38,12 +38,12 @@ public class CompanionAdapter extends RecyclerView.Adapter{
             this.models.addAll(lb);
             int i=0;
             for(Companion_Impl ib : lb){
-                 Log.d("BudgetAdapter>>","models.get("+i+").id -> "+ib.cname);
+                 Log.d("ComAdapter>>","models.get("+i+").id -> "+ib.cname);
                 // Log.d("BudgetAdapter>>","List.get("+i+").id -> "+lb.get(i).id);
                  i++;
             }
         }else{
-            Log.d("VpAdapter>>","ListNull");
+            Log.d("ComAdapter>>","ListNull");
         }
         this.context = currentAct;
 

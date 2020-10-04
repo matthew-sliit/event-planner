@@ -4,15 +4,6 @@ import android.database.CursorIndexOutOfBoundsException;
 import android.test.RenamingDelegatingContext;
 import androidx.test.InstrumentationRegistry;
 import com.example.testapplication.db.guest.Guest_Impl;
-
-import android.content.Context;
-import android.database.CursorIndexOutOfBoundsException;
-import android.test.RenamingDelegatingContext;
-
-import androidx.test.InstrumentationRegistry;
-
-
-import com.example.testapplication.db.budget.Budget_Impl_updated;
 import static org.junit.Assert.*;
 
 import org.junit.After;
@@ -20,16 +11,20 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.RobolectricTestRunner;
+import org.robolectric.RuntimeEnvironment;
 
 import java.util.ArrayList;
 import java.util.List;
-public class GuestDBInstrumentedTest {
+@RunWith(RobolectricTestRunner.class)
+public class GuestDBUnitTest {
     private Guest_Impl guest_model, guest_model_result;
     private int event_id = 0, guest_id = 0;
     private Context context;
     @Before
     public void setUp() {
-        context = new RenamingDelegatingContext(InstrumentationRegistry.getTargetContext(), "test_");
+        //context = new RenamingDelegatingContext(InstrumentationRegistry.getTargetContext(), "test_");
+        context = RuntimeEnvironment.application;
         guest_model = new Guest_Impl(context,0);
         guest_model_result = new Guest_Impl(context,0);
     }

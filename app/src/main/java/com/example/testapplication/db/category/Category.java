@@ -7,12 +7,19 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.example.testapplication.db.DBHandler;
+import com.example.testapplication.db.budget.Budget_Impl_updated;
+import com.example.testapplication.db.commontables.CategoryTable;
+import com.example.testapplication.db.commontables.EventsTable;
+import com.example.testapplication.db.event.Event_Impl;
+import com.example.testapplication.db.task.Task_Impl;
+import com.example.testapplication.db.vendor.Vendor_impl;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Category implements ICategory {
     public static final boolean debugger_mode = false;
+    /*
     private static class CategoryTable{
         public static final String TABLE_NAME = "CATEGORIES";
         public static final String COL_NAME_CAT = "CATEGORY_NAME";
@@ -26,12 +33,25 @@ public class Category implements ICategory {
             return cols;
         }
     }
+
+     */
     private DBHandler db;
     private static CategoryTable ct = new CategoryTable();
     public int id = 0;
     public int eid = 0;
+    private Context context;
     public Category(Context context){
         db = new DBHandler(context, ct.getTableCreator());
+        this.context = context;
+    }
+    @Override
+    public void setDefault(String[] defaultArray) {
+        Category c = new Category(context);
+        if (c.getAllCategory().isEmpty()) {
+            for(String cat : defaultArray){
+                c.addCategory(cat);
+            }
+        }
     }
     @Override
     public String addCategory(String name) {
@@ -56,6 +76,35 @@ public class Category implements ICategory {
     @Override
     public void deleteCategory(String name) {
         String[] n = {name};
+        db.delete(CategoryTable.COL_NAME_CAT,n, CategoryTable.TABLE_NAME);
+    }
+    @Override
+    public void deleteCategoryWithDependencies(String categoryName) {
+        //unreliable - till on delete cascade is fixed
+        Event_Impl events = new Event_Impl(context);
+        Log.d("cat>>","search = " + categoryName);
+        //in each event
+        for(Event_Impl e : events.getEventList()) {
+            //for each feature - remove if it depends on categoryName
+            Task_Impl task = new Task_Impl(context, e.id);
+            for (Task_Impl t : task.getTaskList()) {
+                if (t.category.equalsIgnoreCase(categoryName)) {
+                    t.removeTask(t.id);
+                }
+            }
+            Vendor_impl vendor = new Vendor_impl(context, e.id);
+            for (Vendor_impl t : vendor.getVendor()) {
+                if (t.category.equalsIgnoreCase(categoryName)) {
+                    t.removeVendor(t.id);
+                }
+            }
+            Budget_Impl_updated budget = new Budget_Impl_updated(context, e.id);
+            for (Budget_Impl_updated t : budget.getBudgetListByCategory(categoryName)) {
+                t.removeBudget(t.id);
+            }
+        }
+        //afterwards delete category name
+        String[] n = {categoryName};
         db.delete(CategoryTable.COL_NAME_CAT,n, CategoryTable.TABLE_NAME);
     }
 

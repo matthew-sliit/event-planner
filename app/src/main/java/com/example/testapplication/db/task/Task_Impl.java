@@ -9,6 +9,7 @@ import android.util.Log;
 import com.example.testapplication.constants.TableNames;
 import com.example.testapplication.db.DBHandler;
 import com.example.testapplication.db.budget.Budget_Impl_updated;
+import com.example.testapplication.db.commontables.CategoryTable;
 import com.example.testapplication.db.commontables.EventsTable;
 
 

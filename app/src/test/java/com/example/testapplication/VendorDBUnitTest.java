@@ -1,19 +1,6 @@
 package com.example.testapplication;
 
 import android.content.Context;
-import android.database.CursorIndexOutOfBoundsException;
-import android.test.RenamingDelegatingContext;
-import androidx.test.InstrumentationRegistry;
-import com.example.testapplication.db.guest.Guest_Impl;
-
-import android.content.Context;
-import android.database.CursorIndexOutOfBoundsException;
-import android.test.RenamingDelegatingContext;
-
-import androidx.test.InstrumentationRegistry;
-
-
-import com.example.testapplication.db.budget.Budget_Impl_updated;
 import com.example.testapplication.db.vendor.Vendor_impl;
 
 import static org.junit.Assert.*;
@@ -23,16 +10,20 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.RobolectricTestRunner;
+import org.robolectric.RuntimeEnvironment;
 
 import java.util.ArrayList;
 import java.util.List;
-public class VendorDBInstrumentedTest {
+@RunWith(RobolectricTestRunner.class)
+public class VendorDBUnitTest {
     private Vendor_impl vendor_model, vendor_model_result;
     private int event_id = 0, vendor_id = 0;
     private Context context;
     @Before
     public void setUp() {
-        context = new RenamingDelegatingContext(InstrumentationRegistry.getTargetContext(), "test_");
+        //context = new RenamingDelegatingContext(InstrumentationRegistry.getTargetContext(), "test_");
+        context = RuntimeEnvironment.application;
         vendor_model = new Vendor_impl(context,0);
         vendor_model_result = new Vendor_impl(context,0);
     }

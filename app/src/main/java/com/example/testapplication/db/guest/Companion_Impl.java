@@ -129,7 +129,7 @@ public class Companion_Impl implements ICompanion {
 
     @Override
     public List<Companion_Impl> getComList(int eid,int gid) {
-        String[] cols = {Com_table.COLUMN_NAME_ID,table.COLUMN_NAME_CNAME,table.COLUMN_NAME_GENDER,table.COLUMN_NAME_AGE,table.COLUMN_NAME_NOTE};
+        String[] cols = {Com_table.COLUMN_NAME_ID,Com_table.COLUMN_NAME_EID,table.COLUMN_NAME_CNAME,table.COLUMN_NAME_GENDER,table.COLUMN_NAME_AGE,table.COLUMN_NAME_NOTE};
         try {
             //Cursor c = db.readAllIgnoreArgs(cols, table.TABLE_COM);
             Cursor c = db.readAllWitSelection(cols, table.TABLE_COM,getWhereStatementWOWhere(gid,eid));
@@ -138,6 +138,7 @@ public class Companion_Impl implements ICompanion {
             while(c.moveToNext()){
                 ib = new Companion_Impl(this.c,eid,gid);
                 ib.id = c.getInt(c.getColumnIndexOrThrow(Com_table.COLUMN_NAME_ID));//int
+                ib.eid = c.getInt(c.getColumnIndexOrThrow(Com_table.COLUMN_NAME_EID));//int
                 ib.cname = c.getString(c.getColumnIndexOrThrow("cname"));
                 ib.gender = c.getString(c.getColumnIndexOrThrow("gender"));
                 ib.age = c.getString(c.getColumnIndexOrThrow("age"));
@@ -155,7 +156,7 @@ public class Companion_Impl implements ICompanion {
 
     @Override
     public Companion_Impl getComById(int id,int eid,int gid) {
-        String[] cols = {Com_table.COLUMN_NAME_ID,table.COLUMN_NAME_CNAME,table.COLUMN_NAME_GENDER,table.COLUMN_NAME_AGE,table.COLUMN_NAME_NOTE};
+        String[] cols = {Com_table.COLUMN_NAME_ID,Com_table.COLUMN_NAME_EID,table.COLUMN_NAME_CNAME,table.COLUMN_NAME_GENDER,table.COLUMN_NAME_AGE,table.COLUMN_NAME_NOTE};
         try {
             // Cursor c = db.readWithWhere(cols,table.TABLENAME,"id","" + id);
             Cursor c = db.readAllWitSelection(cols, table.TABLE_COM,getWhereStatementWOWhere(eid,gid,id));
@@ -164,6 +165,7 @@ public class Companion_Impl implements ICompanion {
             while(c.moveToNext()){
                 ib = new Companion_Impl(this.c);
                 ib.id = c.getInt(c.getColumnIndexOrThrow(Com_table.COLUMN_NAME_ID));//int
+                ib.eid = c.getInt(c.getColumnIndexOrThrow(Com_table.COLUMN_NAME_EID));//int
                 ib.cname = c.getString(c.getColumnIndexOrThrow("cname"));
                 ib.gender = c.getString(c.getColumnIndexOrThrow("gender"));
                 ib.age = c.getString(c.getColumnIndexOrThrow("age"));
@@ -182,10 +184,10 @@ public class Companion_Impl implements ICompanion {
     public void removeCom(int comID,int eid,int gid) {
 
         db.delete(Com_table.TABLE_COM,getWhereStatementWOWhere(eid,gid,comID),null);
-        Log.d("Com Impl update>>","id="+comID);
-        Log.d("Com Impl update>>","eid="+eid);
-        Log.d("Com Impl update>>","gid="+gid);
-        Log.d("Com Impl update>>","name="+this.cname);
+        //Log.d("Com Impl update>>","id="+comID);
+        //Log.d("Com Impl update>>","eid="+eid);
+        //Log.d("Com Impl update>>","gid="+gid);
+        //Log.d("Com Impl update>>","name="+this.cname);
     }
 
     @Override
@@ -196,7 +198,8 @@ public class Companion_Impl implements ICompanion {
 
         }
         String id2Str = "" + this.id;
-        db.update(cv,"id",id2Str,table.TABLE_COM);
+        //db.update(cv,"id",id2Str,table.TABLE_COM);
+        db.update(cv,getWhereStatementWOWhere(eid,gid,id), Guest_table.TABLE_GUESTS);
     }
 
     @Override

@@ -26,7 +26,7 @@
     <string name="list">View List</string>
     <string name="total_budget">Total Budget Amount:</string>
     <string name="total_paid">Total Amount Paid:</string>
-    <string name="total_remaining">Total Amount Remain:</string>
+    <string name="total_remaining">Total Balance:</string>
     <string name="paypending">Payments Pending:</string>
     <string name="manage_categories">Manage Categories</string>
     <string name="paid">Paid</string>

@@ -104,6 +104,9 @@ public class Addpayment extends AppCompatActivity {
     }
     VendorLayoutClass vendorlayout;
 
+    /*
+    ================== On Create ===========================
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -117,6 +120,7 @@ public class Addpayment extends AppCompatActivity {
             has_title = b.getString("title", "Add Budget");
             vid = b.getInt("id", 0);
             eid = b.getInt(ConstantBundleKeys.EVENT_ID, 0);
+
             // Log.d("Addpayactivity>>","id -> " + id+" vid ->"+vid);
             vendorlayout = new VendorLayoutClass(this, vid);
         }
@@ -176,10 +180,11 @@ public class Addpayment extends AppCompatActivity {
 
                 //  logInputs();
                 //default go back to list view
-                Intent i = new Intent(getApplicationContext(), Vendorview.class);
+                Intent i = new Intent(getApplicationContext(), Vendorpaymentview.class);
                 Bundle b = new Bundle();
                 b.putInt("id", vendorlayout.vid);//int pk
                 b.putInt(ConstantBundleKeys.EVENT_ID, eid);
+                b.putBoolean("AddToEdit",true);
                 i.putExtras(b);
                 startActivity(i);
             }

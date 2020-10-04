@@ -175,8 +175,8 @@ public class EditCategoryActivity extends AppCompatActivity {
 
                 ICategory category = new Category(context);
                 Log.d("BUTTON","Deleting Category " + text.getText().toString());
-                category.deleteCategory(text.getText().toString());
-
+                //category.deleteCategory(text.getText().toString());
+                category.deleteCategoryWithDependencies(text.getText().toString());
                 /*
                 Bundle b = new Bundle();
                 b.putString(ConstantBundleKeys.PRE_ACTIVITY,pre_intent);

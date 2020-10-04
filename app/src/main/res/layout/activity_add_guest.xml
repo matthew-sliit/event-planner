@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:aapt="http://schemas.android.com/aapt"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AddGuest">
@@ -26,7 +30,7 @@
         android:layout_width="45dp"
         android:layout_height="40dp"
         android:layout_marginStart="12dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="20dp"
         android:background="@color/purple"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ivPhone"
@@ -34,8 +38,8 @@
 
     <EditText
         android:id="@+id/etEmail"
-        android:layout_width="310dp"
-        android:layout_height="40dp"
+        android:layout_width="306dp"
+        android:layout_height="49dp"
         android:layout_marginStart="28dp"
         android:layout_marginTop="16dp"
         android:ems="10"
@@ -122,8 +126,8 @@
 
     <EditText
         android:id="@+id/etGuestName"
-        android:layout_width="365dp"
-        android:layout_height="40dp"
+        android:layout_width="364dp"
+        android:layout_height="49dp"
         android:layout_marginTop="4dp"
         android:ems="10"
         android:hint="@string/name_g"
@@ -288,7 +292,7 @@
     <EditText
         android:id="@+id/etPhone"
         android:layout_width="310dp"
-        android:layout_height="40dp"
+        android:layout_height="44dp"
         android:layout_marginTop="12dp"
         android:ems="10"
         android:hint="@string/phonenumber"
@@ -300,8 +304,8 @@
 
     <EditText
         android:id="@+id/etAddress"
-        android:layout_width="310dp"
-        android:layout_height="40dp"
+        android:layout_width="307dp"
+        android:layout_height="51dp"
         android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="@string/address_g"
@@ -327,7 +331,7 @@
         android:layout_width="45dp"
         android:layout_height="40dp"
         android:layout_marginStart="12dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:background="@color/purple"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ivEmail"
@@ -363,3 +367,4 @@
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

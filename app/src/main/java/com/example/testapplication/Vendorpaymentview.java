@@ -20,6 +20,7 @@ import com.example.testapplication.constants.ConstantBundleKeys;
 
 public class Vendorpaymentview extends AppCompatActivity {
     private int eid = 0, id = 0;
+    private boolean continueToListFromAdd = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +30,8 @@ public class Vendorpaymentview extends AppCompatActivity {
         if(b!=null){
             eid = b.getInt(ConstantBundleKeys.EVENT_ID,0);
             id=b.getInt("id",0);
+            continueToListFromAdd = b.getBoolean("AddToEdit",false);
+
         }
         Log.d("VendorPayView>>","Receiving eid -> " + eid);
         Toolbar toolbar = findViewById(R.id.abbb_menu);
@@ -37,9 +40,18 @@ public class Vendorpaymentview extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //    Intent i = new Intent(getApplicationContext(),GraphActivity.class);
-                //  startActivity(i);
-                finish();
+                if(continueToListFromAdd){
+                    Intent i = new Intent(getApplicationContext(), Editvendor.class);
+                    Bundle b = new Bundle();
+                    b.putInt(ConstantBundleKeys.EVENT_ID,eid);
+                    b.putInt(ConstantBundleKeys.ID,id);
+                    b.putBoolean("AddToEdit",true);
+                    i.putExtras(b);
+                    i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);//check?
+                    startActivity(i);
+                }else {
+                    finish();
+                }
             }
         });
         VendorPaymentAdapter adapter = new VendorPaymentAdapter(this,id,eid); //Budget Adapter
@@ -109,6 +121,8 @@ public class Vendorpaymentview extends AppCompatActivity {
             Bundle b = new Bundle();
             Intent i = new Intent(getApplicationContext(),Editvendor.class);
             b.putInt(ConstantBundleKeys.EVENT_ID,eid);
+            b.putInt(ConstantBundleKeys.ID,id);
+            b.putBoolean("AddToEdit",true);
             i.putExtras(b);
             startActivity(i);
             finish();

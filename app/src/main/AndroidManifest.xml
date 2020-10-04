@@ -5,13 +5,13 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/app_ic_v1"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/app_ic_v1"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         tools:node="replace">
-        <activity android:name=".ListCategory"></activity>
+        <activity android:name=".ListCategory" android:screenOrientation="portrait" />
         <!-- SETTINGS -->
         <activity
             android:name=".NumberStandardActivity"

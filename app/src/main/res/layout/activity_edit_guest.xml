@@ -57,16 +57,16 @@
         <EditText
             android:id="@+id/etEmail"
             android:layout_width="310dp"
-            android:layout_height="40dp"
+            android:layout_height="45dp"
             android:ems="10"
             android:hint="@string/email_g"
             android:inputType="textEmailAddress"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.821"
+            app:layout_constraintHorizontal_bias="0.794"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.574" />
+            app:layout_constraintVertical_bias="0.576" />
 
         <View
             android:id="@+id/divider2"
@@ -156,8 +156,8 @@
 
         <EditText
             android:id="@+id/etGuestName"
-            android:layout_width="365dp"
-            android:layout_height="40dp"
+            android:layout_width="358dp"
+            android:layout_height="46dp"
             android:ems="10"
             android:hint="@string/name_g"
             android:inputType="textPersonName"
@@ -165,10 +165,10 @@
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.326"
+            app:layout_constraintHorizontal_bias="0.264"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.171" />
+            app:layout_constraintVertical_bias="0.161" />
 
         <RadioGroup
             android:id="@+id/radioGender"
@@ -325,8 +325,8 @@
 
         <EditText
             android:id="@+id/etPhone"
-            android:layout_width="310dp"
-            android:layout_height="40dp"
+            android:layout_width="313dp"
+            android:layout_height="43dp"
             android:ems="10"
             android:hint="@string/phonenumber"
             android:inputType="phone"
@@ -339,8 +339,8 @@
 
         <EditText
             android:id="@+id/etAddress"
-            android:layout_width="310dp"
-            android:layout_height="40dp"
+            android:layout_width="313dp"
+            android:layout_height="47dp"
             android:ems="10"
             android:hint="@string/address_g"
             android:inputType="textPostalAddress"
@@ -408,8 +408,8 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_eg"
-            android:layout_width="349dp"
-            android:layout_height="203dp"
+            android:layout_width="393dp"
+            android:layout_height="190dp"
             android:layout_marginTop="1dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

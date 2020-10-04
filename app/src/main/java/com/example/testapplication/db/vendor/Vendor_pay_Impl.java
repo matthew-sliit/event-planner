@@ -20,11 +20,6 @@ public class Vendor_pay_Impl implements IVendor_pay {
 
     private Vendor_pay_table table = new Vendor_pay_table();
 
-    public Vendor_pay_Impl(Context c) {
-        this.c = c;
-        db = new DBHandler(c, table.getTableCreator());
-    }
-
     public int getId() {
         return id;
     }
@@ -56,7 +51,7 @@ public class Vendor_pay_Impl implements IVendor_pay {
         this.note = note;
     }
 
-    private class Vendor_pay_table {
+    private static class Vendor_pay_table {
 
         public static final String TABLENAME = TableNames.Vendor_payment;
         public static final String NAME = "Name";
@@ -71,19 +66,16 @@ public class Vendor_pay_Impl implements IVendor_pay {
         public Vendor_pay_table() {
         }
 
-
-        public String getTableCreator() {
+        public static String getTableCreator() {
 
             return "CREATE TABLE if not exists " + TABLENAME + " (" +
                     ID +" integer primary key," +
                     EID +" integer references " + EventsTable.TABLENAME + " on delete cascade on update cascade,"+
                     NAME + " TEXT," +
-                    V_ID + " INTEGER references " + Vendor_table.TABLENAME + "(" + Vendor_table.ID + ") on delete cascade on update cascade ," +
+                    V_ID + " INTEGER references " + Vendor_table.TABLENAME + " (" + Vendor_table.ID + ") on delete cascade on update cascade ," +
                     AMOUNT + " TEXT," +
                     STATUS + " TEXT, "+
                     NOTE + " TEXT)";
-
-
         }
     }
     public int id=0,vid=0,eid=0;
@@ -91,6 +83,12 @@ public class Vendor_pay_Impl implements IVendor_pay {
     public String amount = null;
     public String status = "paid";
     public String note = null;
+
+    public Vendor_pay_Impl(Context c) {
+        Log.d("VpT>>","Contructor called!");
+        this.c = c;
+        db = new DBHandler(c, Vendor_pay_table.getTableCreator());
+    }
 
     @Override
     public void addPayment(String name, String amount,String status,String note) {
@@ -149,7 +147,7 @@ public class Vendor_pay_Impl implements IVendor_pay {
         List<Vendor_pay_Impl> b = new ArrayList<>();
         try {
            // Cursor c = db.readAllIgnoreArgs(cols, table.TABLENAME);
-            Cursor c = db.readAllWitSelection(cols, table.TABLENAME,getWhereStatementWOWhere(vendorid,eventid));
+            Cursor c = db.readAllWitSelection(cols, Vendor_pay_table.TABLENAME,getWhereStatementWOWhere(vendorid,eventid));
             Vendor_pay_Impl ib;
             while(c.moveToNext()){
                 ib = new Vendor_pay_Impl(this.c);
@@ -179,13 +177,13 @@ public class Vendor_pay_Impl implements IVendor_pay {
         }
 
     }
-
+/*
     @Override
     public List<Vendor_pay_Impl> getPayment() {
         String[] cols = {"id",Vendor_pay_table.V_ID,Vendor_pay_table.EID,table.NAME,table.AMOUNT,table.STATUS,table.NOTE};
         List<Vendor_pay_Impl> b = new ArrayList<>();
         try {
-            Cursor c = db.readAllIgnoreArgs(cols, table.TABLENAME);
+            Cursor c = db.readAllWitSelection(cols, table.TABLENAME,getWhereEidStatement());
             Vendor_pay_Impl ib;
             while(c.moveToNext()){
                 ib = new Vendor_pay_Impl(this.c);
@@ -201,7 +199,7 @@ public class Vendor_pay_Impl implements IVendor_pay {
                 Log.d("name -> ",ib.name);
                 Log.d("cat -> ",ib.cat);
                 Log.d("amt -> ",ib.amt);
-                Log.d("desc -> ",ib.desc);*/
+                Log.d("desc -> ",ib.desc);
                 b.add(ib);
             }
             return b;
@@ -214,7 +212,7 @@ public class Vendor_pay_Impl implements IVendor_pay {
             return b;
         }
 
-    }
+    }*/
     @Override
     public Vendor_pay_Impl getVendorPaybyid(int id,int vendorid,int eventid) {
         String[] cols = {"id",Vendor_pay_table.V_ID,Vendor_pay_table.EID,table.NAME,table.AMOUNT,table.STATUS,table.NOTE};

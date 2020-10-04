@@ -14,6 +14,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.testapplication.constants.ConstantBundleKeys;
+import com.example.testapplication.db.category.Category;
+import com.example.testapplication.db.category.ICategory;
 import com.example.testapplication.db.event.Event_Impl;
 
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
@@ -27,9 +29,10 @@ public class homepg extends AppCompatActivity {
     -----------patches-------------
     patch 1: budget root: connected
     patch 2: task root: connected
-    patch 3: guest root:
-    patch 4: vendor root:
+    patch 3: guest root: connected
+    patch 4: vendor root: connected
      */
+    private boolean allowActivityLaunch = false;
     private Event_Impl event;
     private Bundle b = new Bundle();
     @Override
@@ -41,18 +44,25 @@ public class homepg extends AppCompatActivity {
         setSupportActionBar(toolbar);
         //get event data
         event = new Event_Impl(this);
-        String byDefault = "";
+        String byDefault = "Default";
         try {
             event = event.getEventById(event.getSelectEvent());
-            if (event != null) {
+            Log.d("homepg>>","event id -> " +event.id);
+            Log.d("homepg>>","event name -> " +event.ename);
+            if (event.ename != null) {
                 ((TextView) findViewById(R.id.tv_event)).setText(event.ename);
                 b.putInt(ConstantBundleKeys.EVENT_ID,event.id);
+                allowActivityLaunch = true;
+                ICategory category = new Category(this);
+                category.setDefault(getResources().getStringArray(R.array.default_categories));
             }else{
                 b.putInt(ConstantBundleKeys.EVENT_ID,0);
                 ((TextView) findViewById(R.id.tv_event)).setText(byDefault);
+                allowActivityLaunch = false;
             }
         }catch (NullPointerException e){
             ((TextView) findViewById(R.id.tv_event)).setText(byDefault);
+            allowActivityLaunch = false;
         }
         Log.d("Homepage>>","Eid passed -> " + event.id);
     }
@@ -79,57 +89,62 @@ public class homepg extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
     public void openEvents(View view){
+        Intent intent = new Intent(this, eventList.class);
 
-        Intent intent = new Intent(this,eventList.class);
-
-        Toast.makeText(this,"Opening Events...",Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Opening Events...", Toast.LENGTH_SHORT).show();
 
         startActivity(intent);
-
-
     }
     public void openBudgets(View view){
+        if(allowActivityLaunch) {
+            Intent intent = new Intent(this, ListBudgetsActivity.class);
 
-        Intent intent = new Intent(this,ListBudgetsActivity.class);
-
-        Toast.makeText(this,"Opening Budgets...",Toast.LENGTH_SHORT).show();
-        intent.putExtras(b);
-        startActivity(intent);
-
-
+            Toast.makeText(this, "Opening Budgets...", Toast.LENGTH_SHORT).show();
+            intent.putExtras(b);
+            startActivity(intent);
+        }else{
+            Toast.makeText(getApplicationContext(), "Add Event to continue", Toast.LENGTH_SHORT).show();
+        }
     }
     public void openTasks(View view){
+        if(allowActivityLaunch) {
+            Intent intent = new Intent(this, taskList.class);
 
-        Intent intent = new Intent(this,taskList.class);
-
-        Toast.makeText(this,"Opening Tasks...",Toast.LENGTH_SHORT).show();
-        intent.putExtras(b);
-        startActivity(intent);
+            Toast.makeText(this, "Opening Tasks...", Toast.LENGTH_SHORT).show();
+            intent.putExtras(b);
+            startActivity(intent);
+        }else{
+            Toast.makeText(getApplicationContext(), "Add Event to continue", Toast.LENGTH_SHORT).show();
+        }
     }
     public void openGuests(View view){
+        if(allowActivityLaunch) {
+            Intent intent = new Intent(this, ViewGuest.class);
 
-        Intent intent = new Intent(this,ViewGuest.class);
-
-        Toast.makeText(this,"Opening Guests...",Toast.LENGTH_SHORT).show();
-        intent.putExtras(b);
-        startActivity(intent);
-
+            Toast.makeText(this, "Opening Guests...", Toast.LENGTH_SHORT).show();
+            intent.putExtras(b);
+            startActivity(intent);
+        }else{
+            Toast.makeText(getApplicationContext(), "Add Event to continue", Toast.LENGTH_SHORT).show();
+        }
 
     }
     public void openVendors(View view){
+        if(allowActivityLaunch) {
+            Intent intent = new Intent(this, Vendorview.class);
 
-        Intent intent = new Intent(this,Vendorview.class);
-
-        Toast.makeText(this,"Opening Guests...",Toast.LENGTH_SHORT).show();
-        intent.putExtras(b);
-        startActivity(intent);
+            Toast.makeText(this, "Opening Guests...", Toast.LENGTH_SHORT).show();
+            intent.putExtras(b);
+            startActivity(intent);
+        }else{
+            Toast.makeText(getApplicationContext(), "Add Event to continue", Toast.LENGTH_SHORT).show();
+        }
     }
     public void openSummary(View view){
-        Intent intent = new Intent(this,Summary.class);
+        Intent intent = new Intent(this, Summary.class);
 
-        Toast.makeText(this,"Opening Summary...",Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Opening Summary...", Toast.LENGTH_SHORT).show();
         startActivity(intent);
-        setContentView(R.layout.activity_about_us);
     }
     @Override
     protected void onRestart() {

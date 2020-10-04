@@ -82,8 +82,8 @@
 
     <EditText
         android:id="@+id/editTxt_bud_amt"
-        android:layout_width="275dp"
-        android:layout_height="40dp"
+        android:layout_width="273dp"
+        android:layout_height="43dp"
         android:ems="10"
         android:inputType="numberDecimal"
         app:layout_constraintEnd_toEndOf="parent"
@@ -221,8 +221,8 @@
 
     <EditText
         android:id="@+id/editTxt_bud_name"
-        android:layout_width="272dp"
-        android:layout_height="40dp"
+        android:layout_width="273dp"
+        android:layout_height="47dp"
         android:ems="10"
         android:hint="@string/name"
         android:inputType="textPersonName"

@@ -193,6 +193,10 @@ public class Budget_Impl_updated implements Ibudget {
 
     @Override
     public void removeBudget(int budgetID) {
+        Budget_payments bp = new Budget_payments(c);
+        for(Budget_payments b : bp.getBudgetPaymentList(eid,budgetID)){
+            b.removePayment(eid,budgetID,b.payment_id);
+        }
         db.delete(Budget_table.tableName,getWhereEidaBidStatement(budgetID),null);
     }
 
