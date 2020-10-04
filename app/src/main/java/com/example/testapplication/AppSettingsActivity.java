@@ -11,23 +11,24 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 
+import com.example.testapplication.db.category.Category;
+import com.example.testapplication.db.category.ICategory;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class AppSettingsActivity extends AppCompatActivity {
+
 
     private String pre_intent = "home", is_in_setting = "false",edit = "none", is_in_cat = "false", has_title="none";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app_settings);
+        ICategory category = new Category(this);//db
         //read bundle data from previous intent
         Bundle b = getIntent().getExtras();
         if(b!=null){
@@ -67,14 +68,14 @@ public class AppSettingsActivity extends AppCompatActivity {
                     b.putString("is_in_setting", "false");
                     j.putExtras(b);
                     startActivity(j);
-                }else if(pre_intent.equalsIgnoreCase("listBudget")){
-                    Intent i = new Intent(getApplicationContext(), ListBudgetsActivity.class);
+               } /*  else if(pre_intent.equalsIgnoreCase("listBudget")){
+                   Intent i = new Intent(getApplicationContext(), ListBudgetsActivity.class);
                     startActivity(i);
                 }else{
                     //default
                     Intent i = new Intent(getApplicationContext(), MainActivityEmu.class);
                     startActivity(i);
-                }
+                }*/
                 Log.d("BACK BUTTON","previous activity = " + pre_intent);
                 Log.d("BACK BUTTON","is_in_setting = " + is_in_setting);
                 Log.d("BACK BUTTON","is_in_cat = " + is_in_cat);
@@ -94,12 +95,13 @@ public class AppSettingsActivity extends AppCompatActivity {
             //after clicking on a Setting Option
             if(edit.equalsIgnoreCase(option_names[0])){
                 Log.d("SETTINGS GEN","Loading Number Standard");
-                Intent k = new Intent(getApplicationContext(), NumberStandardActivity.class);
-                startActivity(k);
+               // Intent k = new Intent(getApplicationContext(), NumberStandardActivity.class);
+              //  startActivity(k);
 
             }else if(edit.equalsIgnoreCase(option_names[1])){
                 Log.d("SETTINGS GEN","Loading Categories");
-                option_names = getResources().getStringArray(R.array.default_categories);
+                option_names = getResources().getStringArray(R.array.default_categories); //escapes default
+                //option_names = null;
                 generateSettingsList(pre_intent, option_names,"true",edit);
 
                 addCategory.setVisibility(View.VISIBLE);
@@ -107,14 +109,35 @@ public class AppSettingsActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         //go to Add Category
+                        Intent k = new Intent(getApplicationContext(), EditCategoryActivity.class);
+                        Bundle data = new Bundle();
+                        data.putString("cat_edit","Add New Category");
+                        data.putString("pre_activity",pre_intent);
+                        data.putString("set_to_cat","true");
+                        data.putString("is_in_setting","true");
+                        k.putExtras(data);
+                        startActivity(k);
+
                     }
                 });
 
 
             }else {
                 addCategory.setVisibility(View.INVISIBLE);
-                option_names = getResources().getStringArray(R.array.default_categories);
-                if(edit.equalsIgnoreCase(option_names[Arrays.asList(option_names).indexOf(edit)])){
+                //option_names = getResources().getStringArray(R.array.default_categories); //escapes default
+                List<String> ar =  new ArrayList<>(category.getAllCategory());
+                boolean exec = false;
+                for(int i=0;i<ar.size();i++){
+                    //Log.d("AppSettingsAct"," ar[" + i + "] -> " + ar.get(i));
+                    //Log.d("AppSettingsAct", "edit -> " + edit);
+                    if(ar.get(i).equals(edit)){
+                        exec = true;
+                        //Log.d("AppSettingsAct", "exec -> TRUE");
+                    }
+                }
+                //if(edit.equalsIgnoreCase(option_names[Arrays.asList(option_names).indexOf(edit)])){
+                if(exec){
+                    Log.d("SETTINGS GEN","Loading type of Category: " + edit);
                     Intent k = new Intent(getApplicationContext(), EditCategoryActivity.class);
                     Bundle data = new Bundle();
                     data.putString("cat_edit",edit);
@@ -124,14 +147,39 @@ public class AppSettingsActivity extends AppCompatActivity {
                     k.putExtras(data);
                     startActivity(k);
                 }
-                Log.d("SETTINGS GEN","Loading type of Category: " + edit);
             }
         }
     }
     private void generateSettingsList(String previous_activity, String[] options, final String set_to_cat, final String title){
+        ICategory category = new Category(this);//db
+        Log.d("SETTINGS>>","GENERATING...!");
         ListView list = findViewById(R.id.listview);
-        String[] option_names = options;
-        List<String> option_list = new ArrayList<String>(Arrays.asList(option_names));
+        List<String> ar =  new ArrayList<>();
+        //boolean is_cat = false;
+
+        if(options != null && set_to_cat.equals("false")) {
+            for (int i = 0; i < options.length; i++) {
+                ar.add(options[i]);
+            }
+        }
+
+        if(set_to_cat.equals("true")) {
+            try {
+                List<String> cats = new ArrayList();
+                cats = category.getAllCategory();
+                //Log.d("SETTINGS>>", "cat[0] -> " + cats.get(0) + " size -> " + category.getAllCategory().size());
+                //if (!(cats.isEmpty())) {
+                for (int i = 0; i < category.getAllCategory().size(); i++) {
+                    ar.add(cats.get(i));
+                }
+                //}
+            } catch (Exception e) {
+                Log.d("SETTINGS ERROR:", "NPEx " + e.getMessage());
+            }
+        }
+        //String[] option_names = ar.toArray(new String[0]);
+        //List<String> option_list = new ArrayList<String>(Arrays.asList(option_names));
+        List<String> option_list = new ArrayList<String>(ar);
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,option_list);
         list.setAdapter(arrayAdapter);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {

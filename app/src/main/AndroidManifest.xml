@@ -1,29 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.testapplication">
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="Budget"
+        android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-        tools:node="replace">
-        <activity android:name=".NumberStandardActivity"></activity>
-        <activity android:name=".EditCategoryActivity" />
-        <activity android:name=".AppSettingsActivity" />
-        <activity android:name=".ListBudgetsActivity" />
-        <activity android:name=".MainActivityEmu">
+        android:theme="@style/AppTheme">
+        <activity
+            android:name="com.example.com.example.testapplication.Vendorview"
+            android:label="@string/title_activity_vendorview"
+            android:theme="@style/AppTheme.DarkActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
-        <activity android:name=".GraphActivity" /> <!-- android:theme="@style/AppTheme"> -->
-        <activity android:name=".AddBudgetActivity" />
+        <activity android:name="com.example.com.example.testapplication.Editpayment">
+
+    </activity>
+        <activity android:name="com.example.com.example.testapplication.Editvendor">
+
+        </activity>
+        <activity android:name="com.example.com.example.testapplication.Addpayment">
+
+        </activity>
+        <activity android:name="com.example.com.example.testapplication.Addvendor">
+
+        </activity>
+        <activity android:name="com.example.com.example.testapplication.EditCategoryActivity" />
+
+        <activity android:name="com.example.com.example.testapplication.AppSettingsActivity" />
+        <activity android:name="com.example.com.example.testapplication.Vendorpaymentview">
+
+        </activity>
     </application>
 
 </manifest>
