@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -21,12 +22,14 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.testapplication.constants.ConstantBundleKeys;
 import com.example.testapplication.db.event.Event_Impl;
 import com.example.testapplication.db.event.IEvent;
 
+import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -50,6 +53,7 @@ public class AddEvent extends AppCompatActivity {
              event_ =new Event_Impl(c);
             this.c=c;
         }
+        public TimePicker timePicker;
         public Event_Impl event_;
         public void InitVariables(){
            /* rdstatus=(RadioGroup)findViewById(R.id.rdStatus);
@@ -61,16 +65,16 @@ public class AddEvent extends AppCompatActivity {
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(c,android.R.layout.simple_spinner_item,categoryType);
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinnerT.setAdapter(adapter); */
-
+            timePicker = ((TimePicker)findViewById(R.id.Etime));
+            timePicker.setIs24HourView(true);
         }
         public void loadValuesFromLayout(){
 
             this.event_.ename = ((EditText)findViewById(R.id.eName)).getText().toString();
 
-
-
-
-            this.event_.etime = ((EditText)findViewById(R.id.Etime)).getText().toString();
+            String time = timePicker.getCurrentHour() + ":" + timePicker.getCurrentMinute();
+            //this.event_.etime = ((EditText)findViewById(R.id.Etime)).getText().toString();
+            this.event_.etime = time;
             //this.task_.category = ((EditText)findViewById(R.id.ca)).getText().toString();
             this.event_.edate = ((EditText)findViewById(R.id.Edate)).getText().toString();
 
@@ -79,10 +83,10 @@ public class AddEvent extends AppCompatActivity {
 
         public void setValuesToLayout(int id){
 
-            this.event_=event_.getEventById(id);
-            ((EditText)findViewById(R.id.eName)).setText(this.event_.ename, TextView.BufferType.EDITABLE);
-            ((EditText)findViewById(R.id.Edate)).setText(this.event_.etime, TextView.BufferType.EDITABLE);
-            ((EditText)findViewById(R.id.Etime)).setText(this.event_.edate, TextView.BufferType.EDITABLE);
+            //this.event_=event_.getEventById(id);
+           // ((EditText)findViewById(R.id.eName)).setText(this.event_.ename, TextView.BufferType.EDITABLE);
+          //  ((EditText)findViewById(R.id.Edate)).setText(this.event_.etime, TextView.BufferType.EDITABLE);
+            //((EditText)findViewById(R.id.Etime)).setText(this.event_.edate, TextView.BufferType.EDITABLE);
 
         }
 

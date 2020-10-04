@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.testapplication.constants.ConstantBundleKeys;
@@ -38,18 +39,31 @@ public class editEvent extends AppCompatActivity {
         String eventname, date, time;
         public int id = 0;
         private Context c;
-
+        public TimePicker timePicker;
         public EventLayoutClass(Context c) {
             event_ = new Event_Impl(c);
             this.c = c;
         }
         public Event_Impl event_;
+        public void InitVariables(){
+           /* rdstatus=(RadioGroup)findViewById(R.id.rdStatus);
+            rdPend=(RadioButton)findViewById(R.id.rdPend);
+            rdComplete=(RadioButton)findViewById(R.id.rdComplete);
+
+            spinnerT = (Spinner)findViewById(R.id.spinnerT);
+
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(c,android.R.layout.simple_spinner_item,categoryType);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinnerT.setAdapter(adapter); */
+            timePicker = ((TimePicker)findViewById(R.id.editTime));
+            timePicker.setIs24HourView(true);
+        }
 
         public void loadValuesFromLayout() {
-
             this.event_.ename = ((EditText) findViewById(R.id.editName)).getText().toString();
             this.event_.edate = ((EditText) findViewById(R.id.editDate)).getText().toString();
-            this.event_.etime = ((EditText) findViewById(R.id.editTime)).getText().toString();
+            String time = timePicker.getCurrentHour() + ":" + timePicker.getCurrentMinute();
+            this.event_.etime = time;
         }
 
         public void setValuesToLayout(int id) {
@@ -58,7 +72,21 @@ public class editEvent extends AppCompatActivity {
             this.event_ = event_.getEventById(id);
             ((EditText) findViewById(R.id.editName)).setText(this.event_.ename, TextView.BufferType.EDITABLE);
             ((EditText) findViewById(R.id.editDate)).setText(this.event_.edate, TextView.BufferType.EDITABLE);
-            ((EditText) findViewById(R.id.editTime)).setText(this.event_.etime, TextView.BufferType.EDITABLE);
+            //((EditText) findViewById(R.id.editTime)).setText(this.event_.etime, TextView.BufferType.EDITABLE);
+            //((EditText) findViewById(R.id.editTime)).setText(this.event_.etime, TextView.BufferType.EDITABLE);
+            //((EditText) findViewById(R.id.editTime)).setText(this.event_.etime, TextView.BufferType.EDITABLE);
+            String time = event_.etime;
+            int hour = 0, min = 0;
+            try{
+                String[] a = time.split(":");
+                hour = Integer.parseInt(a[0]);
+                min = Integer.parseInt(a[1]);
+            }catch (NumberFormatException e){
+                //set defaults
+            }
+            timePicker.setCurrentHour(hour);
+            timePicker.setCurrentMinute(min);
+
         }
 
     }
@@ -83,7 +111,7 @@ public class editEvent extends AppCompatActivity {
             });
 
             elayout=new EventLayoutClass(this);
-
+            elayout.InitVariables();
             Bundle b = getIntent().getExtras();
             if(b!=null){
 
