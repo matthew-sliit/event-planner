@@ -107,7 +107,6 @@ public class Budget_Impl_updated implements Ibudget {
 
     @Override
     public List<Budget_Impl_updated> getBudgetList() {
-        Log.d("BudgetImpl>>","Reading budget using eid -> " + this.eid);
         try {
             Cursor c = db.readAllWitSelection(table.getColumns(), Budget_table.tableName,getWhereEidStatement()); //where eid like..
             List<Budget_Impl_updated> b = new ArrayList<>();
@@ -120,12 +119,6 @@ public class Budget_Impl_updated implements Ibudget {
                 ib.cat = c.getString(c.getColumnIndexOrThrow(Budget_table.CATEGORY));
                 ib.amt = c.getString(c.getColumnIndexOrThrow(Budget_table.AMOUNT));
                 ib.desc = c.getString(c.getColumnIndexOrThrow(Budget_table.DESC));
-                /*Log.d("Budget_Impl>>","================ Printing Read Values ================");
-                Log.d("id -> ",""+ib.id);
-                Log.d("name -> ",ib.name);
-                Log.d("cat -> ",ib.cat);
-                Log.d("amt -> ",ib.amt);
-                Log.d("desc -> ",ib.desc);*/
                 b.add(ib);
             }
             return b;
@@ -149,12 +142,6 @@ public class Budget_Impl_updated implements Ibudget {
                 ib.cat = c.getString(c.getColumnIndexOrThrow(Budget_table.CATEGORY));
                 ib.amt = c.getString(c.getColumnIndexOrThrow(Budget_table.AMOUNT));
                 ib.desc = c.getString(c.getColumnIndexOrThrow(Budget_table.DESC));
-                /*Log.d("Budget_Impl_updated>>","================ Printing Read Values ================");
-                Log.d("id -> ",""+ib.id);
-                Log.d("name -> ",ib.name);
-                Log.d("cat -> ",ib.cat);
-                Log.d("amt -> ",ib.amt);
-                Log.d("desc -> ",ib.desc);*/
                 b.add(ib);
             }
             return b;
@@ -193,10 +180,13 @@ public class Budget_Impl_updated implements Ibudget {
 
     @Override
     public void removeBudget(int budgetID) {
+        //get all payments for budget
         Budget_payments bp = new Budget_payments(c);
         for(Budget_payments b : bp.getBudgetPaymentList(eid,budgetID)){
+            //remove payments initiated from budget
             b.removePayment(eid,budgetID,b.payment_id);
         }
+        //delete budget
         db.delete(Budget_table.tableName,getWhereEidaBidStatement(budgetID),null);
     }
 
@@ -212,8 +202,6 @@ public class Budget_Impl_updated implements Ibudget {
         cv.put(Budget_table.AMOUNT,obj.amt);
         cv.put(Budget_table.CATEGORY,obj.cat);
         cv.put(Budget_table.DESC,obj.desc);
-        //String id2Str = "" + obj.id;
-        //db.update(cv,"id",id2Str,table.tableName);//update using id
         db.update(cv,getUpdateWhere(obj.eid,obj.id),Budget_table.tableName);
     }
     private String getWhereEidStatement(){

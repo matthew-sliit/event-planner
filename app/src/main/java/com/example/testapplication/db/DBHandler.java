@@ -21,7 +21,7 @@ import static android.content.Context.MODE_PRIVATE;
 import static android.database.sqlite.SQLiteDatabase.openOrCreateDatabase;
 
 public class DBHandler extends SQLiteOpenHelper {
-    public static final boolean debugger_mode = true;
+    public static final boolean debugger_mode = false;
     public static final String DB_NAME = "EventPlans.sqlite";
     public Context context = null;
     public static final String DBPath = Environment.getDataDirectory().getName()+"//data//com.example.testapplication//databases//";

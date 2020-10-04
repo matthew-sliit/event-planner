@@ -47,13 +47,6 @@ public class Budget_payments {
         cv.put(PaymentTable.NAME,name);
         cv.put(PaymentTable.AMOUNT,amt);
         cv.put(PaymentTable.STATUS,status);
-        //get current date
-        /*
-        Date currentTime = Calendar.getInstance().getTime();
-        SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
-        String formattedDate = df.format(currentTime);
-        Log.d("Budget_Payment>>","Setting Date as " + formattedDate);
-         */
         cv.put(PaymentTable.RECEIVED_DATE, df.format(rdate));
         //insert
         db.insert(cv,tableColNames.tableName);
@@ -69,8 +62,7 @@ public class Budget_payments {
         cv.put(PaymentTable.NAME,name);
         cv.put(PaymentTable.AMOUNT,amt);
         cv.put(PaymentTable.STATUS,status);
-        Date currentTime = Calendar.getInstance().getTime();
-        cv.put(PaymentTable.RECEIVED_DATE, df.format(currentTime));
+        cv.put(PaymentTable.RECEIVED_DATE, df.format(rdate));
         db.update(cv,getWhereStatementWOWhere(event_id,budget_id,payment_id),tableColNames.tableName);
     }
     public Budget_payments getPaymentById(int event_id, int budget_id, int payment_id){
@@ -120,8 +112,6 @@ public class Budget_payments {
                     rdate = null;
                     Log.d("Budget_Payment>>", "Parsing Datetime Failed FOR " + date);
                 }
-                //Log.d("Budget_Payment>>","name -> " + bp.name);
-                //Log.d("Budget_Payment>>","status -> " + bp.status);
                 bps.add(bp);
             }
             return bps;

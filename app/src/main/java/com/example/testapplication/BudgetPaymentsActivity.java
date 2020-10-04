@@ -188,8 +188,14 @@ public class BudgetPaymentsActivity extends AppCompatActivity {
         ((ImageButton)findViewById(R.id.bp_btn_save)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                paylayout.readValuesFromLayout();
-                paylayout.payment_model.addPayment(event_id,budget_id);//added
+                paylayout.readValuesFromLayout();//get values after save button pressed
+                if(editor){
+                    //if in Edit Payment
+                    paylayout.payment_model.updatePayment(event_id,budget_id,pid);//update
+                }else {
+                    //if in Add Payment
+                    paylayout.payment_model.addPayment(event_id, budget_id);//added
+                }
                 Intent i = new Intent(getApplicationContext(), AddEditBudgetActivity.class);
                 Bundle bp = new Bundle();
                 bp.putInt(ConstantBundleKeys.EVENT_ID,event_id);
