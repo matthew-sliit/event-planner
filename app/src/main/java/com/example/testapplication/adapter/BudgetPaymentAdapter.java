@@ -1,6 +1,9 @@
 package com.example.testapplication.adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,7 +11,9 @@ import android.view.ViewGroup;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.testapplication.AddEditBudgetActivity;
 import com.example.testapplication.R;
+import com.example.testapplication.constants.ConstantBundleKeys;
 import com.example.testapplication.db.budget.Budget_payments;
 import com.example.testapplication.viewholder.BudgetPaymentViewHolder;
 
@@ -122,7 +127,17 @@ public class BudgetPaymentAdapter extends RecyclerView.Adapter {
                     //tell adapter
                     //notifyItemChanged(position);
                     notifyDataSetChanged();
-
+                    //fixed activity not refreshing when clicking on paid from adapter
+                    //also causes a bit instability
+                    Intent i = new Intent(context.getApplicationContext(), AddEditBudgetActivity.class);
+                    Bundle b = new Bundle();
+                    b.putInt(ConstantBundleKeys.EVENT_ID,eid);//int pk
+                    b.putInt(ConstantBundleKeys.ID,bid);//int pk
+                    b.putString("title","Edit Budget");
+                    i.putExtras(b);
+                    i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    context.startActivity(i);
+                    ((Activity)context).finish();
                 }
             });
         }

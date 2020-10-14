@@ -91,6 +91,7 @@ public class AddEditBudgetActivity extends AppCompatActivity{
             showBalance.setText("0.00");
         }
         public void setShowBalance(){
+            Log.d("AddEditBudget>>","setShowBalance!");
             List<Budget_payments> budget_paymentsList = new ArrayList<>(budget_payments.getBudgetPaymentList(eid,id));
             double paidSum = 0;
             //not empty list
@@ -137,6 +138,7 @@ public class AddEditBudgetActivity extends AppCompatActivity{
         setContentView(R.layout.activity_add_edit_budget);
         final Context context = this;
         //budget = new Budget_Impl_updated(this,eid);
+        Log.d("AddEditBudget>>","onCreate Called!");
         Ibudget ibudget;
         Bundle b = getIntent().getExtras();
         blayout = new BudgetLayoutClass(this);
@@ -354,6 +356,7 @@ public class AddEditBudgetActivity extends AppCompatActivity{
     protected void onRestart() {
         super.onRestart();
         //refresh activity
+        Log.d("AddEditBudget>>","onRestart Called!");
         finish();
         startActivity(getIntent());
     }
