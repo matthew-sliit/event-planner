@@ -12,6 +12,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+//import org.mockito.Mock;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
@@ -29,6 +30,9 @@ public class BudgetDBUnitTest {
     private Budget_Impl_updated budget_model, budget_model_result;
     private int event_id = 0, budget_id = 0;
     private Context context;
+
+
+
     @Before
     public void setUp() {
         //context = new RenamingDelegatingContext(InstrumentationRegistry.getTargetContext(), "test_");

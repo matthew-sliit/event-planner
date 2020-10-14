@@ -4,11 +4,16 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.CursorIndexOutOfBoundsException;
+import android.database.sqlite.SQLiteException;
 import android.util.Log;
 
 import com.example.testapplication.db.DBHandler;
+import com.example.testapplication.db.budget.Budget_Impl_updated;
 import com.example.testapplication.db.commontables.EventsTable;
 import com.example.testapplication.db.commontables.SelectEvent;
+import com.example.testapplication.db.guest.Guest_Impl;
+import com.example.testapplication.db.task.Task_Impl;
+import com.example.testapplication.db.vendor.Vendor_impl;
 
 
 import java.util.ArrayList;
@@ -202,7 +207,32 @@ public class Event_Impl implements IEvent{
         String[] idValue = {"" + eventID};
         db.delete(EventsTable.EVENT_ID,idValue,EventsTable.TABLENAME);
         Log.d("Delete>>","del= "+eventID);
-
+        //changed
+        //will delete all data mapped to event
+        try{
+            //budget
+            Budget_Impl_updated budget = new Budget_Impl_updated(c,eventID);
+            for(Budget_Impl_updated b : budget.getBudgetList()){
+                b.removeBudget(b.id);
+            }
+            //tasks
+            Task_Impl task = new Task_Impl(c,eventID);
+            for(Task_Impl t : task.getTaskList()){
+                t.removeTask(t.id);
+            }
+            //vendors
+            Vendor_impl vendor = new Vendor_impl(c,eventID);
+            for(Vendor_impl v : vendor.getVendor()){
+                v.removeVendor(v.id);
+            }
+            //guests
+            Guest_Impl guest = new Guest_Impl(c,eventID);
+            for(Guest_Impl g : guest.getGuestList()){
+                g.removeGuest(g.id);
+            }
+        }catch (SQLiteException e){
+            //skip
+        }
     }
 
     @Override

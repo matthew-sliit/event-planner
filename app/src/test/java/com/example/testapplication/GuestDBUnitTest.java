@@ -2,7 +2,7 @@ package com.example.testapplication;
 import android.content.Context;
 import android.database.CursorIndexOutOfBoundsException;
 import android.test.RenamingDelegatingContext;
-import androidx.test.InstrumentationRegistry;
+//import androidx.test.InstrumentationRegistry;
 import com.example.testapplication.db.guest.Guest_Impl;
 import static org.junit.Assert.*;
 
