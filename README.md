@@ -10,10 +10,10 @@ includes the management of:
 ## About Project
 The project is developed by the group of members aka *EagleEyes* for our SLIIT MAD module
 
-| Role | Maintainers | Code Branch |
-| --- | --- | --- |
-| Vendors | [vidurasathsara99](https://github.com/vidurasathsara99) | tasklist-patch-only |
+| Role | Maintainers |
+| --- | --- |
+| Vendors | [vidurasathsara99](https://github.com/vidurasathsara99) |
 | Budget | myself | master |
-| EventGuests | [amandaaaim](https://github.com/amandaaaim) | guests-patch-only |
-| TaskList | [DeshaniMAWD](https://github.com/DeshaniMAWD) | vendors-patch-only |
+| EventGuests | [amandaaaim](https://github.com/amandaaaim) |
+| TaskList | [DeshaniMAWD](https://github.com/DeshaniMAWD) |
 
